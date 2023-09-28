@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import Image from 'next/image';
 import styles from './index.module.scss';
+import publicLogo from '@/assets/images/public_logo.png';
 import cName from 'classnames';
-
 interface ILink {
   label: string;
   link?: string;
@@ -14,13 +14,13 @@ interface ILinkList {
 }
 
 interface IQRCode {
-  image: string;
+  image: any;
   text: string;
 }
 
 export interface IFooterProps {
   linkList: ILinkList[];
-  qrCode?: IQRCode;
+  qrCode: IQRCode;
   copyRight: string;
   siteNumber: string; // 站点备案号
   publicNumber: string; // 公安备案号
@@ -76,19 +76,19 @@ export const Footer: FC<IFooterProps> = ({
       </div>
       <div className={styles.bottomArea}>
         <div className={styles.codeArea}>
-          {/* <div>
-            <Image src={qrCode?.image} alt={qrCode?.text} width={56} height={56}></Image>
-          </div> */}
-          <div className={styles.text}>{qrCode?.text}</div>
+          <div>
+            <Image src={qrCode.image} alt={qrCode.text} width={56} height={56}></Image>
+          </div>
+          <div className={styles.text}>{qrCode.text}</div>
         </div>
         <div className={styles.numArea}>
           <span>{copyRight}</span>
           <span>{siteNumber}</span>
           <div className={styles.publicLogo}>
-            {/* <div className={styles.logo}>
-              <Image src={'/qingYouLogo.svg'} alt={publicNumber} width={20} height={20}></Image>
-            </div> */}
-            <span>{publicNumber}</span>
+            <div className={styles.logo}>
+              <Image src={publicLogo} alt={publicNumber} width={20} height={20}></Image>
+              <span>{publicNumber}</span>
+            </div>
           </div>
         </div>
       </div>

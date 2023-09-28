@@ -34,21 +34,22 @@ export default function NavBar() {
   const renderHorizontal = () => {
     return (
       <div className={styles.navBar}>
-        <a href="http://127.0.0.1:3000/">
-          <div className={styles.logoIcon}></div>
-        </a>
-        4234
-        <div className={styles.themeArea}>
-          <div
-            className={styles.themeIcon}
-            onClick={(): void => {
-              if (localStorage.getItem('theme') === Themes.light) {
-                setTheme(Themes.dark);
-              } else {
-                setTheme(Themes.light);
-              }
-            }}
-          ></div>
+        <div className={styles.navCon}>
+          <a href="http://127.0.0.1:3000/">
+            <div className={styles.logoIcon}></div>
+          </a>
+          <div className={styles.themeArea}>
+            <div
+              className={styles.themeIcon}
+              onClick={(): void => {
+                if (localStorage.getItem('theme') === Themes.light) {
+                  setTheme(Themes.dark);
+                } else {
+                  setTheme(Themes.light);
+                }
+              }}
+            ></div>
+          </div>
         </div>
       </div>
     );

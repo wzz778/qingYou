@@ -1,20 +1,24 @@
 @import '~@douyinfe/semi-ui/dist/css/semi.min.css';
 
 html[data-theme='dark'] {
-  --primary-color: #ffffff;
-  --primary-background-color: rgba(14, 14, 14, 1);
+  --primary-color: #c1c1c1;
+  --grey-primary-color: rgb(174 188 205 / 80%);
+  --grey-background-color: rgb(36, 36, 36);
+  --primary-background-color: rgb(29, 29, 29);
   --footer-background-color: rgba(36, 36, 36, 1);
-  --navbar-background-color: rgba(0, 0, 0, 0.5);
+  --navbar-background-color: #242424;
   --secondary-color: rgba(255, 255, 255, 0.5);
   --link-color: #34a8eb;
   --semi-page-active-color: rgb(84, 169, 255);
   --semi-page-active-background-color: rgba(84, 169, 255, 0.2);
-  --semi-page-hover-background-color: rgb(23, 23, 23);
+  --semi-page-hover-background-color: rgb(15, 15, 15);
   --theme-icon: url('../../public/images/theme_dark.png');
 }
 
 html[data-theme='light'] {
   --primary-color: #333333;
+  --grey-primary-color: #818181;
+  --grey-background-color: rgb(243, 243, 243);
   --primary-background-color: rgba(255, 255, 255, 1);
   --footer-background-color: #f4f5f5;
   --navbar-background-color: rgba(234, 234, 234, 0.5);

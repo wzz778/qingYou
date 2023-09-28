@@ -5,6 +5,8 @@
   padding: 2.375rem 4.0625rem;
   background-color: var(--footer-background-color);
   .topArea {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -61,6 +63,8 @@
   }
 
   .bottomArea {
+    max-width: 1200px;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
     .codeArea {
