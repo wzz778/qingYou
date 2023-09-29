@@ -27,11 +27,6 @@ export default function App({ Component, pageProps }: AppProps) {
   } else {
     LayoutComponent = FrontLayout;
   }
-  // const LayoutComponent = isAdminRoute
-  //   ? AdminLayout
-  //   : isWorkSplaceRoute
-  //   ? WorkSplaceLayout
-  //   : FrontLayout;
   return (
     <LayoutComponent>
       <Component {...pageProps} />
