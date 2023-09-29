@@ -18,8 +18,8 @@
     justify-content: space-between;
   }
   .logoIcon {
-    width: 8rem;
-    height: 3rem;
+    width: 5.5rem;
+    height: 2.2rem;
     background-image: url('../../../../../public/qingYouLogo.svg');
     background-size: cover;
     background-repeat: no-repeat;
@@ -53,6 +53,7 @@
       height: 1.25rem;
       background-image: var(--theme-icon);
       background-size: 1.25rem 1.25rem;
+      margin-right: 1rem;
       background-repeat: no-repeat;
       cursor: pointer;
     }

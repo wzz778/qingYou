@@ -10,8 +10,8 @@
     "prettier": "prettier --write ."
   },
   "dependencies": {
+    "@douyinfe/semi-icons": "^2.44.0",
     "@douyinfe/semi-ui": "^2.44.0",
-    "@reduxjs/toolkit": "^1.9.5",
     "@types/node": "20.6.0",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
@@ -28,7 +28,8 @@
     "react-dom": "18.2.0",
     "react-redux": "^8.1.2",
     "semi-ui": "^2.42.5",
-    "typescript": "5.2.2"
+    "typescript": "5.2.2",
+    "zustand": "^4.4.1"
   },
   "devDependencies": {
     "@types/antd": "^1.0.0",

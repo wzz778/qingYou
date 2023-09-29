@@ -1,4 +1,4 @@
-// import { getInfo } from '@/api/user';
+import { getInfo } from '@/api/user';
 import { Modal, Toast } from '@douyinfe/semi-ui';
 import type { FormApi } from '@douyinfe/semi-ui/lib/es/form';
 import type { Dispatch, SetStateAction } from 'react';
@@ -118,16 +118,16 @@ export function randomString(length = 6) {
   return resStr;
 }
 
-// export function getUserInfo(): Promise<User> {
-//   return new Promise((resolve) => {
-//     getInfo()
-//       .then((res) => {
-//         const userinfo: User = res.data;
-//         resolve(userinfo);
-//       })
-//       .catch(() => {});
-//   });
-// }
+export function getUserInfo(): Promise<User> {
+  return new Promise((resolve) => {
+    getInfo()
+      .then((res) => {
+        const userinfo: User = res.data;
+        resolve(userinfo);
+      })
+      .catch(() => {});
+  });
+}
 
 export function clearUserToken() {
   localStorage.setItem('bearerToken', '');
