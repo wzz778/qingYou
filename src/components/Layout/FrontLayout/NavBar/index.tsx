@@ -7,6 +7,7 @@ import { useContext } from 'react';
 import { ThemeContext } from '@/store/theme';
 import useUserStore from '@/store/user';
 import AuthRightBox from '../../components/AuthRightBox';
+import QButton from '@/components/qButton';
 
 export default function NavBar() {
   const { push } = useRouter();
@@ -17,15 +18,8 @@ export default function NavBar() {
 
     return (
       <div className={styles.unAuth}>
-        <Button style={{ color: '#07C160' }} onClick={() => push('/login')}>
-          登录
-        </Button>
-        <Button
-          type="primary"
-          style={{ background: '#07C160' }}
-          theme="solid"
-          onClick={() => push('/login/register')}
-        >
+        <QButton onclick={() => push('/login')}>登录</QButton>
+        <Button style={{ color: '#07C160' }} onClick={() => push('/login/register')}>
           注册
         </Button>
       </div>

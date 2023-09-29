@@ -1,21 +1,66 @@
-import { memo } from 'react';
-// import classNames from "classnames";
-
-//type
-import type { FC } from 'react';
 import styles from './index.module.scss';
-interface IProps {
-  datas?: any[];
-}
+import { Button } from '@douyinfe/semi-ui';
+import { useRouter } from 'next/router';
+// import { githubClientId } from '@/api/github';
+import cName from 'classnames';
+import QButton from '@/components/qButton';
+export default function Login() {
+  const { push } = useRouter();
+  //const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${githubClientId}`;
 
-const Login: FC<IProps> = (props) => {
-  const { datas = [] } = props;
+  // const githubAuth = () => {
+  //   window.location.href = githubAuthUrl;
+  // };
+
   return (
-    <div className={styles.demo}>
-      <div>Login</div>
-    </div>
+    <main className={styles.loginScreen}>
+      <div className={styles.loginCard}>
+        <div className={styles.loginHeader}>
+          <h1 className={styles.title}>qingYou</h1>
+        </div>
+        <div className={styles.loginPath}>
+          <QButton className={styles.loginPathButton} onclick={() => push('/login/email')}>
+            邮箱登录
+          </QButton>
+          <Button
+            type="primary"
+            block
+            className={styles.loginPathButton}
+            onClick={() => push('/login/code')}
+          >
+            验证码登录
+          </Button>
+          {/* <Button
+            type='primary'
+            theme='solid'
+            block
+            className={styles.loginPathButton}
+            onClick={githubAuth}
+          >
+            Github 授权
+          </Button> */}
+        </div>
+        <div className={styles.forgetContainer}>
+          <Button
+            theme="borderless"
+            type="tertiary"
+            block
+            className={styles.loginPathButton}
+            onClick={() => push('/login/register')}
+          >
+            注册
+          </Button>
+          {/* //TODO: 忘记密码 */}
+          {/* <Button
+            theme='borderless'
+            type='tertiary'
+            block
+            className={styles.loginPathButton}
+          >
+            忘记密码
+          </Button> */}
+        </div>
+      </div>
+    </main>
   );
-};
-
-export default memo(Login);
-Login.displayName = 'Login';
+}

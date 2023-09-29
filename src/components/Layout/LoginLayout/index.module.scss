@@ -1,6 +1,8 @@
 .layout {
-  background-color: var(--primary-background-color);
+  // background-color: var(--primary-background-color);
   .main {
-    min-height: calc(100vh - 34.85rem);
+    margin: 0 auto;
+    max-width: 1100px;
+    min-height: 200px;
   }
 }

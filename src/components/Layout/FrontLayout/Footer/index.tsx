@@ -41,8 +41,8 @@ export const Footer: FC<IFooterProps> = ({
             src={'/qingYouBorder.svg'}
             priority
             alt={publicNumber}
-            width={120}
-            height={50}
+            width={90}
+            height={35}
           ></Image>
         </h1>
         <div className={styles.linkListArea}>
