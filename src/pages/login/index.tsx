@@ -1,6 +1,7 @@
 import styles from './index.module.scss';
 import { Button } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 // import { githubClientId } from '@/api/github';
 import cName from 'classnames';
 import QButton from '@/components/qButton';
@@ -16,7 +17,15 @@ export default function Login() {
     <main className={styles.loginScreen}>
       <div className={styles.loginCard}>
         <div className={styles.loginHeader}>
-          <h1 className={styles.title}>qingYou</h1>
+          <h1 className={styles.title}>
+            <Image
+              src={'/qingYouLogo.svg'}
+              priority
+              alt="qingYouLogo"
+              width={150}
+              height={60}
+            ></Image>
+          </h1>
         </div>
         <div className={styles.loginPath}>
           <QButton className={styles.loginPathButton} onclick={() => push('/login/email')}>
@@ -25,6 +34,7 @@ export default function Login() {
           <Button
             type="primary"
             block
+            style={{ color: '#06C05F' }}
             className={styles.loginPathButton}
             onClick={() => push('/login/code')}
           >
