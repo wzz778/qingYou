@@ -1,5 +1,5 @@
-@import '~@douyinfe/semi-ui/dist/css/semi.min.css';
-
+// @import '~@douyinfe/semi-ui/dist/css/semi.min.css';
+@import '~@semi-bot/semi-theme-wzz/semi.min.css';
 html[data-theme='dark'] {
   --primary-color: #c1c1c1;
   --grey-primary-color: rgb(174 188 205 / 80%);
@@ -12,7 +12,7 @@ html[data-theme='dark'] {
   --semi-page-active-color: rgb(84, 169, 255);
   --semi-page-active-background-color: rgba(84, 169, 255, 0.2);
   --semi-page-hover-background-color: rgb(15, 15, 15);
-  --theme-icon: url('../../public/images/theme_dark.png');
+  --theme-icon: url('../../public/images/theme_dark.svg');
 }
 
 html[data-theme='light'] {
@@ -48,6 +48,7 @@ body {
     sans-serif;
   color: var(--primary-color);
   overflow: hidden;
+  --semi-color-primary-light-default: #c9e5a9;
 }
 a {
   color: inherit;
@@ -66,11 +67,4 @@ a {
 #__next {
   height: 100vh;
   overflow: auto;
-}
-
-.qB {
-  background-color: #07c05f;
-}
-.qB:hover {
-  background-color: #0b8546;
 }

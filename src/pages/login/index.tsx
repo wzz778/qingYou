@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 // import { githubClientId } from '@/api/github';
 import cName from 'classnames';
-import QButton from '@/components/qButton';
 export default function Login() {
   const { push } = useRouter();
   //const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${githubClientId}`;
@@ -28,9 +27,9 @@ export default function Login() {
           </h1>
         </div>
         <div className={styles.loginPath}>
-          <QButton className={styles.loginPathButton} onclick={() => push('/login/email')}>
+          <Button className={styles.loginPathButton} onClick={() => push('/login/email')}>
             邮箱登录
-          </QButton>
+          </Button>
           <Button
             type="primary"
             block

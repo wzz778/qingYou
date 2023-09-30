@@ -6,7 +6,7 @@ import Router, { useRouter } from 'next/router';
 import { Provider } from 'react-redux';
 
 import AdminLayout from '@/components/Layout/AdminLayout/Layout';
-import WorkSplaceLayout from '@/components/Layout/WorkSplaceLayout/Layout';
+import WorkSplaceLayout from '@/components/Layout/WorkSplaceLayout';
 import FrontLayout from '@/components/Layout/FrontLayout/Layout';
 import LoginLayout from '@/components/Layout/LoginLayout/Layout';
 

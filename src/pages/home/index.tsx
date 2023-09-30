@@ -6,7 +6,6 @@ import type { FC } from 'react';
 import styles from './index.module.scss';
 import { Button } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
-import QButton from '@/components/qButton';
 interface IProps {
   datas?: any[];
 }
@@ -45,19 +44,19 @@ const Home: FC<IProps> = (props) => {
           是一个智能国际化翻译平台，为团队提供高效专业的【平台+服务】解决方案，简化本地化管理流程，提高多语言内容管理效率，助力产品国际化转型。
         </p>
         <p className={cName([styles.text1, styles.fade3])}>60+ 业务线已经接入 XXX</p>
-        <QButton className={cName([styles.button, styles.fade2])} onclick={() => push('/login')}>
+        <Button
+          className={cName([styles.button, styles.fade2])}
+          theme="solid"
+          onClick={() => push('/login')}
+        >
           开始使用
-        </QButton>
+        </Button>
       </div>
 
       <div className={cName([styles.rootModule, 'fadeClass'])}>
         <div className={styles.rectangle47} />
         <p className={cName([styles.text, styles.fade1])}>
-          <Button
-            style={{ color: '#07C160' }}
-            className={styles.fade2}
-            onClick={() => push('/login')}
-          >
+          <Button className={styles.fade2} onClick={() => push('/login')}>
             开始使用
           </Button>
         </p>
@@ -68,11 +67,7 @@ const Home: FC<IProps> = (props) => {
         <p className={cName([styles.text2, styles.fade1])}>文案管理</p>
         <p className={cName([styles.text3, styles.fade1])}>协同管理产品文案，一键发布快速生效</p>
         <p className={cName([styles.text4, styles.fade1])}>
-          <Button
-            style={{ color: '#07C160' }}
-            className={styles.fade2}
-            onClick={() => push('/login')}
-          >
+          <Button className={styles.fade2} onClick={() => push('/login')}>
             开始使用
           </Button>
         </p>
@@ -147,9 +142,7 @@ const Home: FC<IProps> = (props) => {
               XXX 译员端拥有丰富的翻译资源，目前已支持 80+ 的翻译语言，为用户的翻译任务保驾护航。
             </p>
             <p className={cName([styles.text2, styles.fade2])}>
-              <Button style={{ color: '#07C160' }} onClick={() => push('/login')}>
-                开始使用
-              </Button>
+              <Button onClick={() => push('/login')}>开始使用</Button>
             </p>
           </div>
         </div>
@@ -173,9 +166,7 @@ const Home: FC<IProps> = (props) => {
           </div>
         </div>
         <p className={cName([styles.text1, styles.fade1])}>
-          <Button style={{ color: '#07C160' }} onClick={() => push('/login')}>
-            开始使用
-          </Button>
+          <Button onClick={() => push('/login')}>开始使用</Button>
         </p>
       </div>
     </div>
