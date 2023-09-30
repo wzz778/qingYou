@@ -3,6 +3,7 @@ import { Form, Button } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ToastSuccess } from '@/utils/common';
+import { IconHelpCircle, IconMail } from '@douyinfe/semi-icons';
 
 export default function Email() {
   const [loading, setLoading] = useState(false);
@@ -43,12 +44,14 @@ export default function Email() {
                   label="邮箱"
                   style={{ width: '100%' }}
                   placeholder="请输入邮箱"
+                  prefix={<IconMail />}
                 ></Form.Input>
                 <Form.Input
                   field="password"
                   label="密码"
                   type="password"
                   mode="password"
+                  prefix={<IconHelpCircle />}
                   style={{ width: '100%' }}
                   placeholder="请输入密码"
                 ></Form.Input>

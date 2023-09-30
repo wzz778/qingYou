@@ -17,7 +17,9 @@ export default function NavBar() {
 
     return (
       <div className={styles.unAuth}>
-        <Button onClick={() => push('/login')}>登录</Button>
+        <Button theme="solid" onClick={() => push('/login')}>
+          登录
+        </Button>
         <Button onClick={() => push('/login/register')}>注册</Button>
       </div>
     );

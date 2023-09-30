@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ToastSuccess } from '@/utils/common';
 import useUserStore from '@/store/user';
+import { IconHelpCircle, IconMail } from '@douyinfe/semi-icons';
 
 export default function Email() {
   const [loading, setLoading] = useState(false);
@@ -53,6 +54,7 @@ export default function Email() {
                 <Form.Input
                   field="email"
                   label="邮箱"
+                  prefix={<IconMail />}
                   style={{ width: '100%' }}
                   placeholder="输入你的邮箱"
                 ></Form.Input>
@@ -61,6 +63,7 @@ export default function Email() {
                   label="密码"
                   type="password"
                   mode="password"
+                  prefix={<IconHelpCircle />}
                   style={{ width: '100%' }}
                   placeholder="输入密码"
                 ></Form.Input>
