@@ -4,7 +4,9 @@ export default function LoginLayout({ children }: { children: React.ReactNode })
   return (
     <div className={styles.layout}>
       <NavBar />
-      <main className={styles.main}>{children}</main>
+      <main className={styles.main}>
+        <div className={styles.loginBox}>{children}</div>
+      </main>
     </div>
   );
 }
