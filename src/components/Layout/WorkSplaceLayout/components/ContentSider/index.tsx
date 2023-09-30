@@ -2,7 +2,7 @@ import { FC, useEffect, useMemo, useState } from 'react';
 import { Layout, Nav } from '@douyinfe/semi-ui';
 import { MenuItem, DOC_CONFIG, PROJECT_CONFIG } from './config';
 import { useRouter } from 'next/router';
-
+import styles from './index.module.scss';
 const { Sider } = Layout;
 
 function findMenuByPath(menus: MenuItem[], path: string, keys: any[]): any {
@@ -49,7 +49,7 @@ const ContentSider: FC<ContentSiderProps> = ({ contentSiderType, children }) => 
     return menuList.map((e) => {
       return {
         ...e,
-        // text: formatMessage({ id: e.text }),
+        text: e.text,
         icon: e?.icon
       };
     });
@@ -96,7 +96,7 @@ const ContentSider: FC<ContentSiderProps> = ({ contentSiderType, children }) => 
           </Sider>
         </Layout>
       ) : (
-        <>{children}</>
+        <div className={styles.contentBox}>{children}</div>
       )}
     </>
   );

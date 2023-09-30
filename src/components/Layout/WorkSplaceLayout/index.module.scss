@@ -8,7 +8,8 @@
 
       .layout-content {
         position: relative;
-        margin: 24px;
+        margin: 15px;
+        background-color: #f0f2f5;
 
         > :last-child {
           height: 100%;
@@ -47,8 +48,7 @@
         overflow-y: scroll;
       }
 
-      .semi-navigation-vertical
-        .semi-navigation-header-list-outer::-webkit-scrollbar {
+      .semi-navigation-vertical .semi-navigation-header-list-outer::-webkit-scrollbar {
         width: 0;
       }
     }
