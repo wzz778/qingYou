@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
-import { Layout, Nav, RadioGroup, Radio } from '@douyinfe/semi-ui';
+import { Layout, Nav, RadioGroup, Radio, Button } from '@douyinfe/semi-ui';
 import AuthRightBox from '@/components/Layout/components/AuthRightBox';
-
 const { Header } = Layout;
 
 const Index: FC = () => {

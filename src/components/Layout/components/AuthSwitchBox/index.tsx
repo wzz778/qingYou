@@ -1,13 +1,12 @@
 import { logout } from '@/api/user';
-import CustomAvatar from '@/components/CustomAvatar';
 import useUserStore from '@/store/user';
 import { ToastSuccess, clearUserToken } from '@/utils/common';
-import { Button, Dropdown, DropdownDivider, Spin } from '@douyinfe/semi-ui';
+import { IconBranch } from '@douyinfe/semi-icons';
+import { Button, Dropdown, DropdownDivider, Spin, Tag } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import AuthSwitchBox from '../AuthSwitchBox';
 
-const AuthRightBox = () => {
+const AuthSwitchBox = () => {
   const { push, pathname } = useRouter();
   const [logoutIsLoading, setLogoutIsLoading] = useState(false);
   const { user, clearUser } = useUserStore();
@@ -29,31 +28,36 @@ const AuthRightBox = () => {
   };
   return (
     <>
-      <AuthSwitchBox />
       <Dropdown
         position="bottomLeft"
+        style={{ width: '220px' }}
         render={
           <Dropdown.Menu>
+            <Dropdown.Title>个人版</Dropdown.Title>
+            <Dropdown.Item onClick={() => push('/workspace/project')}>用户名</Dropdown.Item>
+            <DropdownDivider />
+            <Dropdown.Title>团队版</Dropdown.Title>
             <Dropdown.Item onClick={() => push('/workspace/project')}>应用列表</Dropdown.Item>
             <Dropdown.Item onClick={() => push('/workspace/doc')}>知识库列表</Dropdown.Item>
             <Dropdown.Item onClick={() => push('/workspace/account')}>账号设置</Dropdown.Item>
-            <DropdownDivider />
-            <Dropdown.Item onClick={logoutHandle}>
-              {logoutIsLoading && <Spin />}
-              退出
-            </Dropdown.Item>
           </Dropdown.Menu>
         }
       >
-        <CustomAvatar
-          id={user?.id}
-          src={user?.profile?.avatar ?? ''}
-          username={user?.username as string}
-          size="small"
-        />
-        <div />
+        <Button
+          theme="borderless"
+          style={{
+            color: 'var(--semi-color-text-2)',
+            marginRight: '40px'
+          }}
+        >
+          <Tag size="large" color="light-green" prefixIcon={<IconBranch />}>
+            个人版
+          </Tag>
+          <span style={{ padding: '0 10px', color: '#009A4B' }}>111</span>
+          的空间
+        </Button>
       </Dropdown>
     </>
   );
 };
-export default AuthRightBox;
+export default AuthSwitchBox;

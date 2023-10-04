@@ -42,7 +42,7 @@ function CustomAvatar({
   ...rest
 }: AvatarProps) {
   // const color = colors[username.length % colors.length] as AvatarColor;
-  const color = colors[1] as AvatarColor;
+  const color = colors[3] as AvatarColor;
   const userAvatarClick = () => {
     userLink && id && open(`/user/${id}`);
   };
