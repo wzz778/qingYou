@@ -2,7 +2,7 @@ import { logout } from '@/api/user';
 import CustomAvatar from '@/components/CustomAvatar';
 import useUserStore from '@/store/user';
 import { ToastSuccess, clearUserToken } from '@/utils/common';
-import { Button, Dropdown, DropdownDivider, Spin } from '@douyinfe/semi-ui';
+import { Dropdown, DropdownDivider, Spin } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import AuthSwitchBox from '../AuthSwitchBox';
@@ -34,9 +34,9 @@ const AuthRightBox = () => {
         position="bottomLeft"
         render={
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => push('/workspace/project')}>应用列表</Dropdown.Item>
-            <Dropdown.Item onClick={() => push('/workspace/doc')}>知识库列表</Dropdown.Item>
             <Dropdown.Item onClick={() => push('/workspace/account')}>账号设置</Dropdown.Item>
+            <Dropdown.Item onClick={() => push('/workspace/mails')}>邮箱设置</Dropdown.Item>
+            <Dropdown.Item onClick={() => push('/workspace/program-list')}>我的流程</Dropdown.Item>
             <DropdownDivider />
             <Dropdown.Item onClick={logoutHandle}>
               {logoutIsLoading && <Spin />}

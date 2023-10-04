@@ -58,7 +58,7 @@ const Index: FC = () => {
         items={navList}
         className={styles.reSemi}
         // openKeys={openKeys}
-        openKeys={['2', '3']}
+        defaultOpenKeys={['2', '3']}
         selectedKeys={selectedKeys}
         onSelect={onSelect}
         onOpenChange={onOpenChange}
