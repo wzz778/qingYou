@@ -1,0 +1,46 @@
+.simple-wrap {
+  width: 400px;
+}
+.simple-verify {
+  overflow: hidden;
+  line-height: 40px;
+  width: 400px;
+  height: 40px;
+  border-radius: 3px;
+  display: flex;
+  flex-wrap: wrap;
+  .simple-left {
+    user-select: none;
+    text-align: center;
+    color: #ffffff;
+    height: 100%;
+    width: 120px;
+    width: 0;
+  }
+  .simple-slider {
+    user-select: none;
+    cursor: pointer;
+    border-radius: 0 3px 3px 0;
+    text-align: center;
+    width: 60px;
+    height: 100%;
+    font-size: 20px;
+    color: #ffffff;
+    background-color: #27b96d;
+    &:hover {
+      background-color: #06c05f;
+    }
+  }
+  .simple-right {
+    user-select: none;
+    text-align: center;
+    color: #06c060e6;
+    width: 339px;
+    height: 100%;
+    border-radius: 0 3px 3px 0;
+    background-color: #f5f4f4;
+    &:hover {
+      background-color: #edecec;
+    }
+  }
+}

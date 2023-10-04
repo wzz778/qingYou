@@ -36,13 +36,13 @@ export default function Email() {
                 <Form.Input
                   field="username"
                   label="用户名"
-                  style={{ width: '100%' }}
+                  style={{ width: '100%', height: 40 }}
                   placeholder="输入用户名"
                 ></Form.Input>
                 <Form.Input
                   field="email"
                   label="邮箱"
-                  style={{ width: '100%' }}
+                  style={{ width: '100%', height: 40 }}
                   placeholder="请输入邮箱"
                   prefix={<IconMail />}
                 ></Form.Input>
@@ -52,7 +52,7 @@ export default function Email() {
                   type="password"
                   mode="password"
                   prefix={<IconHelpCircle />}
-                  style={{ width: '100%' }}
+                  style={{ width: '100%', height: 40 }}
                   placeholder="请输入密码"
                 ></Form.Input>
                 {/* <VerificationCodeInput email={values.email} /> */}

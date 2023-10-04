@@ -7,7 +7,7 @@ import styles from './index.module.scss';
 // import SuspendFallbackLoading from '@/components/FallbackLoading';
 import ContentSider, { ContentSiderType } from './components/ContentSider';
 import { useRouter } from 'next/router';
-// import Wfooter from './components/Footer';
+import Wfooter from './components/Footer';
 
 const { Content } = Layout;
 
@@ -45,7 +45,7 @@ const WorkSplaceLayout: React.FC<WorkSplaceLayoutProps> = ({ children }) => {
               {/* </Suspense> */}
             </ContentSider>
           </Content>
-          {/* <Wfooter></Wfooter> */}
+          <Wfooter></Wfooter>
         </Layout>
       </Layout>
     </div>

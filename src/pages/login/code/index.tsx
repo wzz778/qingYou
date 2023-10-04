@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ToastSuccess } from '@/utils/common';
 import useUserStore from '@/store/user';
+import SliderVerify from '@/components/Layout/LoginLayout/SliderVerify';
+import { IconMail } from '@douyinfe/semi-icons';
 // import VerificationCodeInput from '@/components/VerificationCodeInput';
 
 export default function Code() {
@@ -37,7 +39,23 @@ export default function Code() {
     push('/workspace');
     ToastSuccess('欢迎回来 👏');
   };
-
+  const [showSlider, setShowSlider] = useState(false);
+  const showClick = () => {
+    setShowSlider(true);
+  };
+  const hidClick = () => {
+    setShowSlider(false);
+  };
+  const resultClick = (e: number) => {
+    if (e) {
+      console.log('成功');
+      setTimeout(() => {
+        setShowSlider(false);
+      }, 600);
+    } else if (e == 1) {
+      console.log('失败');
+    }
+  };
   return (
     <main className={styles.loginScreen}>
       <div className={styles.loginCard}>
@@ -54,10 +72,15 @@ export default function Code() {
                 <Form.Input
                   field="email"
                   label="邮箱"
-                  style={{ width: '100%' }}
+                  style={{ width: '100%', height: 40 }}
+                  prefix={<IconMail />}
                   placeholder="输入你的邮箱"
                 ></Form.Input>
+                <Form.Slot label={{ text: '安全验证' }}>
+                  <SliderVerify resultClick={resultClick}></SliderVerify>
+                </Form.Slot>
                 {/* <VerificationCodeInput email={values.email} /> */}
+
                 <Form.Checkbox field="agree" noLabel>
                   我已阅读并同意服务条款
                 </Form.Checkbox>
