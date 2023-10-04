@@ -1,7 +1,7 @@
-import React, { useRef, useState, useEffect, MutableRefObject } from 'react';
+import React, { useRef, useState, MutableRefObject } from 'react';
 import styles from './index.module.scss';
 import { Spin } from '@douyinfe/semi-ui';
-import { LoadingOutlined } from '@ant-design/icons';
+import { IconSpin } from '@douyinfe/semi-icons';
 export default function Slider(props: any) {
   const leftRef: MutableRefObject<any> = useRef();
   const rootRef: MutableRefObject<any> = useRef();
@@ -10,7 +10,7 @@ export default function Slider(props: any) {
   const [successText, setSuccessText] = useState<any>('');
   const [textTitle, setTextTitle] = useState('请移动滑块至最右边');
   const [loading, setLoading] = useState(false);
-  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const antIcon = <IconSpin style={{ fontSize: 24 }} spin />;
   const lashen = (events: any) => {
     var mouseDownX = events.clientX; // 左边位置
     var Wl = leftRef.current.clientWidth;
