@@ -10,7 +10,7 @@ const AuthRightBox = () => {
   const { push, pathname } = useRouter();
   const [logoutIsLoading, setLogoutIsLoading] = useState(false);
   const { user, clearUser } = useUserStore();
-  if (!user) return null;
+  // if (!user) return null;
 
   const logoutHandle = async () => {
     setLogoutIsLoading(true);
@@ -29,18 +29,12 @@ const AuthRightBox = () => {
   return (
     <>
       <Dropdown
-        position='bottomLeft'
+        position="bottomLeft"
         render={
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => push('/workspace/project')}>
-              应用列表
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => push('/workspace/doc')}>
-              知识库列表
-            </Dropdown.Item>
-            <Dropdown.Item onClick={() => push('/workspace/account')}>
-              账号设置
-            </Dropdown.Item>
+            <Dropdown.Item onClick={() => push('/workspace/project')}>应用列表</Dropdown.Item>
+            <Dropdown.Item onClick={() => push('/workspace/doc')}>知识库列表</Dropdown.Item>
+            <Dropdown.Item onClick={() => push('/workspace/account')}>账号设置</Dropdown.Item>
             <DropdownDivider />
             <Dropdown.Item onClick={logoutHandle}>
               {logoutIsLoading && <Spin />}
@@ -53,7 +47,7 @@ const AuthRightBox = () => {
           id={user?.id}
           src={user?.profile?.avatar ?? ''}
           username={user?.username as string}
-          size='small'
+          size="small"
         />
         <div />
       </Dropdown>

@@ -6,7 +6,9 @@ export default function NavBar() {
   const UnAuthRightBox = () => {
     return (
       <div className={styles.unAuth}>
-        <Button onClick={() => push('/login')}>登录</Button>
+        <Button onClick={() => push('/login')} theme={'solid'}>
+          登录
+        </Button>
         <Button onClick={() => push('/login/register')}>注册</Button>
       </div>
     );
@@ -24,5 +26,5 @@ export default function NavBar() {
       </div>
     );
   };
-  return <div>{renderHorizontal()}</div>;
+  return <>{renderHorizontal()}</>;
 }

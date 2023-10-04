@@ -1,4 +1,4 @@
-import { Button, Typography } from '@douyinfe/semi-ui';
+import { Button, Typography, Tooltip } from '@douyinfe/semi-ui';
 import Image from 'next/image';
 import styles from './index.module.scss';
 import { useRouter } from 'next/router';
@@ -37,16 +37,18 @@ export default function NavBar() {
             <div className={styles.logoIcon}></div>
           </a>
           <div className={styles.themeArea}>
-            <div
-              className={styles.themeIcon}
-              onClick={(): void => {
-                if (localStorage.getItem('theme') === Themes.light) {
-                  setTheme(Themes.dark);
-                } else {
-                  setTheme(Themes.light);
-                }
-              }}
-            ></div>
+            <Tooltip content={'切换显示模式'}>
+              <div
+                className={styles.themeIcon}
+                onClick={(): void => {
+                  if (localStorage.getItem('theme') === Themes.light) {
+                    setTheme(Themes.dark);
+                  } else {
+                    setTheme(Themes.light);
+                  }
+                }}
+              ></div>
+            </Tooltip>
             {renderRightBox()}
           </div>
         </div>

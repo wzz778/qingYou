@@ -32,7 +32,7 @@ const Home: FC<IProps> = (props) => {
   }, []);
   return (
     <div className={styles.home}>
-      <div className={cName([styles.rootFront, styles.withAnimation, 'fadeClass'])}>
+      <div className={cName([styles.rootFront, styles.withAnimation])}>
         <div className={styles.rectangle333} />
         <img
           src="https://p26-semi-asset.byteimg.com/tos-cn-i-acvclvrq33/f5aaa0c848ba4d46860919f992fb3ecb.png"
@@ -53,7 +53,7 @@ const Home: FC<IProps> = (props) => {
         </Button>
       </div>
 
-      <div className={cName([styles.rootModule, 'fadeClass'])}>
+      <div className={cName([styles.rootModule, styles.withAnimation])}>
         <div className={styles.rectangle47} />
         <p className={cName([styles.text, styles.fade1])}>
           <Button className={styles.fade2} onClick={() => push('/login')}>
