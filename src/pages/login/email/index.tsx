@@ -55,7 +55,7 @@ export default function Email() {
                   field="email"
                   label="邮箱"
                   prefix={<IconMail />}
-                  style={{ width: '100%', height: 40 }}
+                  style={{ width: '100%', height: 35 }}
                   placeholder="输入你的邮箱"
                 ></Form.Input>
                 <Form.Input
@@ -64,7 +64,7 @@ export default function Email() {
                   type="password"
                   mode="password"
                   prefix={<IconHelpCircle />}
-                  style={{ width: '100%', height: 40 }}
+                  style={{ width: '100%', height: 35 }}
                   placeholder="输入密码"
                 ></Form.Input>
                 <Form.Checkbox field="agree" noLabel>
@@ -84,7 +84,7 @@ export default function Email() {
                       //   color: 'var(--semi-color-primary)',
                       //   cursor: 'pointer',
                       // }}
-                      onClick={() => push('/login/forger')}
+                      onClick={() => push('/login/forget')}
                       disabled
                     >
                       忘记密码

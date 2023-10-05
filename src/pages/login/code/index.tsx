@@ -72,7 +72,7 @@ export default function Code() {
                 <Form.Input
                   field="email"
                   label="邮箱"
-                  style={{ width: '100%', height: 40 }}
+                  style={{ width: '100%', height: 35 }}
                   prefix={<IconMail />}
                   placeholder="输入你的邮箱"
                 ></Form.Input>
@@ -98,7 +98,7 @@ export default function Code() {
                         color: 'var(--semi-color-primary)',
                         cursor: 'pointer'
                       }}
-                      onClick={() => push('/login/forger')}
+                      onClick={() => push('/login/forget')}
                     >
                       忘记密码
                     </Button>

@@ -1,9 +1,8 @@
 import 'normalize.css';
-import 'antd/dist/reset.css';
+import 'reset-css';
 import '@/styles/globals.scss';
 import type { AppProps } from 'next/app';
 import Router, { useRouter } from 'next/router';
-import { Provider } from 'react-redux';
 
 import AdminLayout from '@/components/Layout/AdminLayout/Layout';
 import WorkSplaceLayout from '@/components/Layout/WorkSplaceLayout';
