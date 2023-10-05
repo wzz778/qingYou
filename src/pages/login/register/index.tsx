@@ -3,7 +3,7 @@ import { Form, Button } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ToastSuccess } from '@/utils/common';
-import { IconHelpCircle, IconMail } from '@douyinfe/semi-icons';
+import { IconHelpCircle, IconMail, IconUser } from '@douyinfe/semi-icons';
 
 export default function Email() {
   const [loading, setLoading] = useState(false);
@@ -35,9 +35,10 @@ export default function Email() {
               <>
                 <Form.Input
                   field="username"
-                  label="用户名"
+                  label="昵称"
                   style={{ width: '100%', height: 35 }}
-                  placeholder="输入用户名"
+                  prefix={<IconUser />}
+                  placeholder="请输入您要注册的用户名"
                 ></Form.Input>
                 <Form.Input
                   field="email"

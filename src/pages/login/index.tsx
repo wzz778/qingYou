@@ -27,17 +27,21 @@ export default function Login() {
           </h1>
         </div>
         <div className={styles.loginPath}>
-          <Button className={styles.loginPathButton} onClick={() => push('/login/email')}>
+          <Button
+            theme={'solid'}
+            className={styles.loginPathButton}
+            onClick={() => push('/login/email')}
+          >
             邮箱登录
           </Button>
-          <Button
+          {/* <Button
             block
-            theme={'solid'}
+            
             className={styles.loginPathButton}
             onClick={() => push('/login/code')}
           >
             验证码登录
-          </Button>
+          </Button> */}
           {/* <Button
             type='primary'
             theme='solid'
@@ -50,8 +54,10 @@ export default function Login() {
         </div>
         <div className={styles.forgetContainer}>
           <Button
-            theme="borderless"
-            type="tertiary"
+            // theme="borderless"
+            // type="tertiary"
+            // block
+            type="primary"
             block
             className={styles.loginPathButton}
             onClick={() => push('/login/register')}
@@ -59,12 +65,7 @@ export default function Login() {
             注册
           </Button>
           {/* //TODO: 忘记密码 */}
-          {/* <Button
-            theme='borderless'
-            type='tertiary'
-            block
-            className={styles.loginPathButton}
-          >
+          {/* <Button theme="borderless" type="tertiary" block className={styles.loginPathButton}>
             忘记密码
           </Button> */}
         </div>

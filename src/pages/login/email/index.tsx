@@ -80,12 +80,11 @@ export default function Email() {
                   <p>
                     <Button
                       theme="borderless"
-                      // style={{
-                      //   color: 'var(--semi-color-primary)',
-                      //   cursor: 'pointer',
-                      // }}
+                      style={{
+                        color: 'var(--semi-color-primary)',
+                        cursor: 'pointer'
+                      }}
                       onClick={() => push('/login/forget')}
-                      disabled
                     >
                       忘记密码
                     </Button>
