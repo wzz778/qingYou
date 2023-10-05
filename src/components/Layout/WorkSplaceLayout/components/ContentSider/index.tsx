@@ -1,10 +1,10 @@
 import { FC, useEffect, useMemo, useState } from 'react';
-import { Layout, Nav } from '@douyinfe/semi-ui';
-import { MenuItem, DOC_CONFIG, PROJECT_CONFIG } from './config';
+import { Breadcrumb, Layout, Nav } from '@douyinfe/semi-ui';
+import { MenuItem, DOC_CONFIG, PROJECT_CONFIG, Work_CONFIG, MenuCItem } from './config';
 import { useRouter } from 'next/router';
 import styles from './index.module.scss';
+import { IconHome, IconMonitorStroked } from '@douyinfe/semi-icons';
 const { Sider } = Layout;
-
 function findMenuByPath(menus: MenuItem[], path: string, keys: any[]): any {
   for (const menu of menus) {
     if (menu.path === path) {
@@ -33,6 +33,7 @@ const { Content } = Layout;
 const ContentSider: FC<ContentSiderProps> = ({ contentSiderType, children }) => {
   const { pathname, push, query } = useRouter();
   const [openKeys, setOpenKeys] = useState<string[]>([]);
+  const [openTitle, setopenTitle] = useState<MenuCItem>();
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
   const menuList = useMemo(() => {
@@ -65,11 +66,18 @@ const ContentSider: FC<ContentSiderProps> = ({ contentSiderType, children }) => 
   const onOpenChange = (data: any) => {
     setOpenKeys([...data.openKeys]);
   };
-
+  const changeTitle = () => {
+    for (let item of Work_CONFIG) {
+      if (item.path == pathname) {
+        setopenTitle(item);
+      }
+    }
+  };
   useEffect(() => {
     const keys: string[] = findMenuByPath(menuList, pathname, []);
     setSelectedKeys([keys.pop() as string]);
     setOpenKeys(Array.from(new Set([...openKeys, ...keys])));
+    changeTitle();
   }, [pathname]);
 
   return (
@@ -96,7 +104,21 @@ const ContentSider: FC<ContentSiderProps> = ({ contentSiderType, children }) => 
           </Sider>
         </Layout>
       ) : (
-        <div className={styles.contentBox}>{children}</div>
+        <div className={styles.contentBox}>
+          <Breadcrumb
+            compact={false}
+            style={{
+              marginBottom: '10px',
+              borderBottom: '1.5px #6363631E solid'
+            }}
+          >
+            <Breadcrumb.Item icon={<IconHome />}>首页</Breadcrumb.Item>
+            <Breadcrumb.Item icon={<IconMonitorStroked />}>工作台</Breadcrumb.Item>
+            <Breadcrumb.Item>{openTitle?.text}</Breadcrumb.Item>
+          </Breadcrumb>
+
+          {children}
+        </div>
       )}
     </>
   );

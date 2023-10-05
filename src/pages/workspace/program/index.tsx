@@ -27,16 +27,14 @@ const Program: FC<IProps> = (props) => {
   return (
     <div className={styles.Project}>
       <div>
-        <Form style={{ width: 560 }} onSubmit={(values) => console.log(values)}>
-          <Section text={'基本信息'}>
-            <Input
-              field="name"
-              label="考试名称"
-              initValue="TCS任务平台使用"
-              style={{ width: 560 }}
-            />
-          </Section>
-
+        <Form
+          wrapperCol={{ span: 20 }}
+          labelCol={{ span: 3 }}
+          labelPosition="left"
+          labelAlign="right"
+          onSubmit={(values) => console.log(values)}
+        >
+          <Input field="name" label="考试名称" initValue="TCS任务平台使用" style={{ width: 560 }} />
           <DatePicker
             field="date"
             type="dateTime"
@@ -44,31 +42,13 @@ const Program: FC<IProps> = (props) => {
             style={{ width: 272 }}
             label={{ text: '开始时间', required: true }}
           />
-          <div style={{ display: 'flex' }}>
-            <Input
-              field="time"
-              label="考试时长"
-              style={{ width: 176 }}
-              initValue={'60'}
-              addonAfter="分钟"
-            />
-            <Checkbox
-              initValue={true}
-              noLabel
-              field="auto"
-              style={{ paddingTop: 30, marginLeft: 12 }}
-            >
-              到时间自动交卷
-            </Checkbox>
-          </div>
-          <div style={{ display: 'flex' }}>
-            <Switch
-              field="open"
-              label={{ text: '对外开放', required: true }}
-              checkedText="开"
-              uncheckedText="关"
-            ></Switch>
-          </div>
+
+          <Switch
+            field="open"
+            label={{ text: '对外开放', required: true }}
+            checkedText="开"
+            uncheckedText="关"
+          ></Switch>
           <Select
             field="users"
             label={{ text: '考生', required: true }}
