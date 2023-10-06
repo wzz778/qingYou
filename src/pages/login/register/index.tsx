@@ -1,33 +1,11 @@
 import styles from './index.module.scss';
-import { Form, Button } from '@douyinfe/semi-ui';
+import { Form, Button, AutoComplete } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { ToastSuccess } from '@/utils/common';
 import { IconHelpCircle, IconMail, IconUser } from '@douyinfe/semi-icons';
 import VerificationCodeInput from '@/components/VerificationCodeInput';
-import { RegisterByEmail } from '@/api/user';
-const handleSubmit = (values: RegisterByEmail) => {
-  console.log(values);
-
-  // setLoading(true);
-  // register(values)
-  //   .then(() => {
-  //     ToastSuccess('注册成功');
-  //     return Promise.resolve();
-  //   })
-  //   .then(() => {
-  //     return loginApi(values);
-  //   })
-  //   .then((res) => {
-  //     const { user, accessToken } = res.data;
-  //     localStorage.setItem('bearerToken', accessToken);
-  //     afterLoginSuccess(user);
-  //   })
-  //   .catch((err) => {})
-  //   .finally(() => {
-  //     setLoading(false);
-  //   });
-};
+import { RegisterByEmail, checkEmail } from '@/api/login';
 export default function Email() {
   const [loading, setLoading] = useState(false);
   // const { setUser } = useUserStore();
@@ -45,7 +23,32 @@ export default function Email() {
     push('/workspace');
     ToastSuccess('欢迎 👏');
   };
+  const handleSubmit = async (values: RegisterByEmail) => {
+    console.log(values);
 
+    setLoading(true);
+    let checkEmailForm = { mail: values.email, code: values.code };
+    const res = await checkEmail(checkEmailForm);
+    if (res.code == 'sada') {
+    }
+    // register(values)
+    //   .then(() => {
+    //     ToastSuccess('注册成功');
+    //     return Promise.resolve();
+    //   })
+    //   .then(() => {
+    //     return loginApi(values);
+    //   })
+    //   .then((res) => {
+    //     const { user, accessToken } = res.data;
+    //     localStorage.setItem('bearerToken', accessToken);
+    //     afterLoginSuccess(user);
+    //   })
+    //   .catch((err) => {})
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
+  };
   return (
     <main className={styles.loginScreen}>
       <div className={styles.loginCard}>
@@ -62,6 +65,7 @@ export default function Email() {
                   style={{ width: '100%', height: 35 }}
                   prefix={<IconUser />}
                   placeholder="请输入您要注册的用户名"
+                  rules={[{ required: true, message: '请输入您要注册的用户名' }]}
                 ></Form.Input>
                 <Form.Input
                   field="email"
@@ -69,6 +73,7 @@ export default function Email() {
                   style={{ width: '100%', height: 35 }}
                   placeholder="请输入您的邮箱"
                   prefix={<IconMail />}
+                  rules={[{ required: true, message: '请输入您要注册的邮箱' }]}
                 ></Form.Input>
                 <VerificationCodeInput email={formState.values.email} />
                 <Form.Input
@@ -78,6 +83,7 @@ export default function Email() {
                   mode="password"
                   prefix={<IconHelpCircle />}
                   style={{ width: '100%', height: 35 }}
+                  rules={[{ required: true, message: '请输入您要注册的设置的密码' }]}
                   placeholder="请输入您设置的密码"
                 ></Form.Input>
                 <div

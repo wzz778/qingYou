@@ -1,6 +1,6 @@
 import { Button, Form } from '@douyinfe/semi-ui';
 import { useEffect, useRef, useState } from 'react';
-import { sendCode } from '@/api/user';
+import { sendCode } from '@/api/login';
 import { Toast } from '@douyinfe/semi-ui';
 function VerificationCodeInput({ email }: any) {
   const [countdown, setCountdown] = useState(0);
@@ -64,6 +64,7 @@ function VerificationCodeInput({ email }: any) {
       label="验证码"
       placeholder="请输入验证码"
       showClear
+      rules={[{ required: true, message: '请输入邮箱验证码' }]}
       suffix={
         <Button
           block
