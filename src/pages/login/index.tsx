@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 // import { githubClientId } from '@/api/github';
 import cName from 'classnames';
+import { useEffect } from 'react';
 export default function Login() {
   const { push } = useRouter();
   //const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${githubClientId}`;
@@ -11,7 +12,11 @@ export default function Login() {
   // const githubAuth = () => {
   //   window.location.href = githubAuthUrl;
   // };
-
+  useEffect(() => {
+    // getHomeInfoData().then((res) => {
+    //   console.log(res);
+    // });
+  });
   return (
     <main className={styles.loginScreen}>
       <div className={styles.loginCard}>

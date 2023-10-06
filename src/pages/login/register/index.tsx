@@ -4,7 +4,30 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ToastSuccess } from '@/utils/common';
 import { IconHelpCircle, IconMail, IconUser } from '@douyinfe/semi-icons';
+import VerificationCodeInput from '@/components/VerificationCodeInput';
+import { RegisterByEmail } from '@/api/user';
+const handleSubmit = (values: RegisterByEmail) => {
+  console.log(values);
 
+  // setLoading(true);
+  // register(values)
+  //   .then(() => {
+  //     ToastSuccess('注册成功');
+  //     return Promise.resolve();
+  //   })
+  //   .then(() => {
+  //     return loginApi(values);
+  //   })
+  //   .then((res) => {
+  //     const { user, accessToken } = res.data;
+  //     localStorage.setItem('bearerToken', accessToken);
+  //     afterLoginSuccess(user);
+  //   })
+  //   .catch((err) => {})
+  //   .finally(() => {
+  //     setLoading(false);
+  //   });
+};
 export default function Email() {
   const [loading, setLoading] = useState(false);
   // const { setUser } = useUserStore();
@@ -30,7 +53,7 @@ export default function Email() {
           <h1 className={styles.title}>注册</h1>
         </div>
         <div className={styles.loginPath}>
-          <Form style={{ width: 400 }}>
+          <Form style={{ width: 400 }} onSubmit={(values) => handleSubmit(values)}>
             {({ formState, values, formApi }) => (
               <>
                 <Form.Input
@@ -44,9 +67,10 @@ export default function Email() {
                   field="email"
                   label="邮箱"
                   style={{ width: '100%', height: 35 }}
-                  placeholder="请输入邮箱"
+                  placeholder="请输入您的邮箱"
                   prefix={<IconMail />}
                 ></Form.Input>
+                <VerificationCodeInput email={formState.values.email} />
                 <Form.Input
                   field="password"
                   label="密码"
@@ -54,9 +78,8 @@ export default function Email() {
                   mode="password"
                   prefix={<IconHelpCircle />}
                   style={{ width: '100%', height: 35 }}
-                  placeholder="请输入密码"
+                  placeholder="请输入您设置的密码"
                 ></Form.Input>
-                {/* <VerificationCodeInput email={values.email} /> */}
                 <div
                   style={{
                     display: 'flex',
