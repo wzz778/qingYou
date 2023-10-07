@@ -1,6 +1,6 @@
 // import http from '@/utils/http';
 
-import { Hyrequire } from '..';
+import { Hyrequire } from '../';
 
 // //登录
 

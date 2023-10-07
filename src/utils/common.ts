@@ -1,4 +1,4 @@
-import { getInfo } from '@/api/user';
+import { getInfo } from '@/api/modules/user';
 import { Modal, Toast } from '@douyinfe/semi-ui';
 import type { FormApi } from '@douyinfe/semi-ui/lib/es/form';
 import type { Dispatch, SetStateAction } from 'react';

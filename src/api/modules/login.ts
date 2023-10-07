@@ -20,6 +20,17 @@ export const sendCode = (email: string) =>
 export const checkEmail = (data: any) =>
   Hyrequire.post({
     url: '/email/checkEmail',
-    // data: email
+    params: data
+  });
+//检验邮箱：
+export const register = (data: any) =>
+  Hyrequire.post({
+    url: '/user/userRegister',
+    params: data
+  });
+
+export const loginApi = (data: any) =>
+  Hyrequire.post({
+    url: '/oauth/token',
     params: data
   });

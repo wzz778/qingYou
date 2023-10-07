@@ -2,52 +2,44 @@ import styles from './index.module.scss';
 import { Form, Button, AutoComplete } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
 import { SetStateAction, useState } from 'react';
-import { ToastSuccess } from '@/utils/common';
+import { ToastError, ToastSuccess, ToastWaring } from '@/utils/common';
 import { IconHelpCircle, IconMail, IconUser } from '@douyinfe/semi-icons';
 import VerificationCodeInput from '@/components/VerificationCodeInput';
-import { RegisterByEmail, checkEmail } from '@/api/login';
+import { RegisterByEmail, checkEmail, register } from '@/api/modules/login';
 export default function Email() {
   const [loading, setLoading] = useState(false);
   // const { setUser } = useUserStore();
   const { push } = useRouter();
-
-  const afterLoginSuccess = (user: User) => {
-    const { roles } = user;
-    // setUser(user);
-    // const isAdmin =
-    //   roles.findIndex(
-    //     (item) => item.name === 'super' || item.name === 'admin'
-    //   ) !== -1;
-    // 判断权限
-    // push(isAdmin ? '/admin' : '/');
-    push('/workspace');
-    ToastSuccess('欢迎 👏');
-  };
-  const handleSubmit = async (values: RegisterByEmail) => {
+  const handleSubmit = async (values: any) => {
     console.log(values);
 
     setLoading(true);
     let checkEmailForm = { mail: values.email, code: values.code };
     const res = await checkEmail(checkEmailForm);
-    if (res.code == 'sada') {
+    if (res.msg == '验证码校验失败！') {
+      ToastError(res.msg);
+      setLoading(false);
+      return;
+    } else {
+      let registerForm = {
+        password: values.password,
+        username: values.email,
+        nickname: values.nickname
+      };
+      register(registerForm)
+        .then((res) => {
+          if (res.code == 200) {
+            ToastSuccess('注册成功');
+            push('/login/email');
+          } else if (res.code == 444) {
+            ToastWaring('此邮箱已注册用户！');
+          } else {
+            ToastError('注册失败');
+          }
+          setLoading(false);
+        })
+        .catch((err) => {});
     }
-    // register(values)
-    //   .then(() => {
-    //     ToastSuccess('注册成功');
-    //     return Promise.resolve();
-    //   })
-    //   .then(() => {
-    //     return loginApi(values);
-    //   })
-    //   .then((res) => {
-    //     const { user, accessToken } = res.data;
-    //     localStorage.setItem('bearerToken', accessToken);
-    //     afterLoginSuccess(user);
-    //   })
-    //   .catch((err) => {})
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
   };
   return (
     <main className={styles.loginScreen}>
@@ -60,7 +52,7 @@ export default function Email() {
             {({ formState, values, formApi }) => (
               <>
                 <Form.Input
-                  field="username"
+                  field="nickname"
                   label="昵称"
                   style={{ width: '100%', height: 35 }}
                   prefix={<IconUser />}

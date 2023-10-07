@@ -10,6 +10,16 @@ const Hyrequire = new HYrequest({
         // config.headers['authorization'] = 'Bearer ' + bearerToken;
       }
       return config;
+    },
+    requestFailFn: (err) => {
+      return err;
+    },
+    responseSuccessFn: (res) => {
+      return res;
+    },
+    responseFailFn(err) {
+      console.log(err);
+      return err;
     }
   }
 });
