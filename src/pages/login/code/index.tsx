@@ -19,7 +19,7 @@ export default function Code() {
   //   smsLogin(values)
   //     .then((res) => {
   //       const { user, accessToken } = res.data;
-  //       localStorage.setItem('bearerToken', accessToken);
+  //       localStorage.setItem('qyBearerToken', accessToken);
   //       afterLoginSuccess(user);
   //     })
   //     .catch((err) => {})
@@ -29,8 +29,6 @@ export default function Code() {
   // };
 
   const afterLoginSuccess = (user: User) => {
-    const { roles } = user;
-    setUser(user);
     // const isAdmin =
     //   roles.findIndex(
     //     (item) => item.name === 'super' || item.name === 'admin'

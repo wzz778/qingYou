@@ -8,10 +8,12 @@ import AdminLayout from '@/components/Layout/AdminLayout/Layout';
 import WorkSplaceLayout from '@/components/Layout/WorkSplaceLayout';
 import FrontLayout from '@/components/Layout/FrontLayout/Layout';
 import LoginLayout from '@/components/Layout/LoginLayout/Layout';
+import useFetchUserInfo from '@/hooks/useFetchUserInfo';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   // console.log(router.pathname);
+  useFetchUserInfo();
   const isAdminRoute = router.pathname.startsWith('/admin');
   const isWorkSplaceRoute = router.pathname.startsWith('/workspace');
   const isLoginRoute = router.pathname.startsWith('/login');

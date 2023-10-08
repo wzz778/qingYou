@@ -122,6 +122,8 @@ export function getUserInfo(): Promise<User> {
   return new Promise((resolve) => {
     getInfo()
       .then((res) => {
+        console.log('getInfo');
+        console.log(res);
         const userinfo: User = res.data;
         resolve(userinfo);
       })
@@ -130,7 +132,7 @@ export function getUserInfo(): Promise<User> {
 }
 
 export function clearUserToken() {
-  localStorage.setItem('bearerToken', '');
+  localStorage.setItem('qyBearerToken', '');
 }
 
 interface CompareResult {

@@ -1,26 +1,22 @@
 declare enum ProfileGenderEnum {
   male = 'male',
   female = 'female',
-  other = 'other',
+  other = 'other'
 }
 
 declare enum UserAccountTypeEnum {
   email = 'email',
-  github = 'github',
+  github = 'github'
 }
 
 declare interface User {
   id: string;
-  githubId?: string | null;
   username: string;
-  email?: string | null;
-  password?: string | null;
-  accountType: UserAccountTypeEnum;
-  createdAt: Date;
-  logs: Log[];
-  profile?: Profile | null;
-  roles: UsersRole[];
-  Project: Project[];
+  password: string;
+  nickname: string;
+  enabled: number;
+  img: any;
+  status: string;
 }
 
 declare interface Profile {
@@ -60,10 +56,10 @@ declare interface UsersRole {
 declare enum Gender {
   MALE = 'male',
   FEMALE = 'female',
-  OTHER = 'other',
+  OTHER = 'other'
 }
 
 declare enum AccountType {
   EMAIL = 'email',
-  GITHUB = 'github',
+  GITHUB = 'github'
 }

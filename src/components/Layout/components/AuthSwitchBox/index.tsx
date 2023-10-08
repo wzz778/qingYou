@@ -1,4 +1,3 @@
-import { logout } from '@/api/user';
 import useUserStore from '@/store/user';
 import { ToastSuccess, clearUserToken } from '@/utils/common';
 import { IconBranch } from '@douyinfe/semi-icons';
@@ -14,17 +13,10 @@ const AuthSwitchBox = () => {
 
   const logoutHandle = async () => {
     setLogoutIsLoading(true);
-    logout()
-      .then(() => {
-        ToastSuccess('退出成功');
-        push('/login');
-        clearUserToken();
-        clearUser();
-      })
-      .catch(() => {})
-      .finally(() => {
-        setLogoutIsLoading(false);
-      });
+    ToastSuccess('退出成功');
+    push('/login');
+    clearUserToken();
+    clearUser();
   };
   return (
     <>

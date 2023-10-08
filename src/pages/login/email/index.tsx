@@ -12,7 +12,7 @@ interface loginRoot {
 }
 export default function Email() {
   const [loading, setLoading] = useState(false);
-  const { setUser } = useUserStore();
+  const { getUser } = useUserStore();
 
   const { push } = useRouter();
   const handleSubmit = (values: any) => {
@@ -30,14 +30,14 @@ export default function Email() {
     loginApi(loginForm)
       .then((res) => {
         console.log(res);
-        ToastError('邮箱或密码错误！');
         if (res.code != 200) {
-          setLoading(false);
+          ToastError('邮箱或密码错误！');
           return;
         }
         const { accessToken } = res.data;
-        localStorage.setItem('bearerToken', accessToken);
-        // afterLoginSuccess(user);
+        localStorage.setItem('qyBearerToken', accessToken);
+        afterLoginSuccess(accessToken);
+        return Promise.resolve();
       })
       .catch((err) => {})
       .finally(() => {
@@ -45,9 +45,20 @@ export default function Email() {
       });
   };
 
-  const afterLoginSuccess = (user: User) => {
-    const { roles } = user;
-    setUser(user);
+  const afterLoginSuccess = (accessToken: User) => {
+    if (accessToken) {
+      getUser().then((data) => {
+        console.log(data);
+        // if (data.isRefresh) {
+        //   setUserInfo(data.user);
+        // }
+        if (data.user.status == '0') {
+          push('/workspace');
+        } else {
+          push('/admin');
+        }
+      });
+    }
     // const isAdmin =
     //   roles.findIndex(
     //     (item) => item.name === 'super' || item.name === 'admin'

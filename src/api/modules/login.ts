@@ -1,4 +1,4 @@
-import { Hyrequire } from '..';
+import { Hyrequire2 } from '..';
 //发送邮箱
 export type RegisterByEmail = {
   email: 'string';
@@ -8,7 +8,7 @@ export type RegisterByEmail = {
 };
 
 export const sendCode = (email: string) =>
-  Hyrequire.get({
+  Hyrequire2.get({
     url: '/email/sendEmail',
     // data: email
     params: {
@@ -18,19 +18,19 @@ export const sendCode = (email: string) =>
 
 //检验邮箱：
 export const checkEmail = (data: any) =>
-  Hyrequire.post({
+  Hyrequire2.post({
     url: '/email/checkEmail',
     params: data
   });
 //检验邮箱：
 export const register = (data: any) =>
-  Hyrequire.post({
+  Hyrequire2.post({
     url: '/user/userRegister',
     params: data
   });
 
 export const loginApi = (data: any) =>
-  Hyrequire.post({
+  Hyrequire2.post({
     url: '/oauth/token',
     params: data
   });

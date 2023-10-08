@@ -1,4 +1,3 @@
-import { logout } from '@/api/user';
 import CustomAvatar from '@/components/CustomAvatar';
 import useUserStore from '@/store/user';
 import { ToastSuccess, clearUserToken } from '@/utils/common';
@@ -15,17 +14,11 @@ const AuthRightBox = () => {
 
   const logoutHandle = async () => {
     setLogoutIsLoading(true);
-    logout()
-      .then(() => {
-        ToastSuccess('退出成功');
-        push('/login');
-        clearUserToken();
-        clearUser();
-      })
-      .catch(() => {})
-      .finally(() => {
-        setLogoutIsLoading(false);
-      });
+
+    ToastSuccess('退出成功');
+    push('/login');
+    clearUserToken();
+    clearUser();
   };
   return (
     <>
@@ -47,7 +40,7 @@ const AuthRightBox = () => {
       >
         <CustomAvatar
           id={user?.id}
-          src={user?.profile?.avatar ?? ''}
+          src={user?.img?.avatar ?? ''}
           username={user?.username as string}
           size="small"
         />

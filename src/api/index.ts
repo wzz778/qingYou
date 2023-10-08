@@ -5,9 +5,9 @@ const Hyrequire = new HYrequest({
   timeout: TIME_OUT,
   interceptor: {
     requestSuccessFn(config) {
-      const bearerToken = localStorage.getItem('bearerToken') || '';
-      if (bearerToken.length !== 0) {
-        // config.headers['authorization'] = 'Bearer ' + bearerToken;
+      const qyBearerToken = localStorage.getItem('qyBearerToken') || '';
+      if (qyBearerToken.length !== 0) {
+        config.headers!.Authorization = 'Bearer ' + qyBearerToken;
       }
       return config;
     },
@@ -28,7 +28,6 @@ const Hyrequire2 = new HYrequest({
   timeout: TIME_OUT,
   interceptor: {
     requestSuccessFn(config) {
-      console.log('InternalAxiosRequestConfig拦截器');
       return config;
     },
     requestFailFn: (err) => {

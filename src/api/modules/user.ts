@@ -7,14 +7,6 @@ import { Hyrequire } from '../';
 // 获取用户信息
 export const getInfo = () => {
   return Hyrequire.get({
-    url: '/types/type'
+    url: '/user/name'
   });
 };
-
-// // 获取用户信息
-// export const logout = () => {
-//   return http({
-//     url: '/types/type',
-//     method: 'get'
-//   });
-// };
