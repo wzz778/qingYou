@@ -6,8 +6,10 @@ const Hyrequire = new HYrequest({
   interceptor: {
     requestSuccessFn(config) {
       const qyBearerToken = localStorage.getItem('qyBearerToken') || '';
+      console.log(qyBearerToken);
       if (qyBearerToken.length !== 0) {
         config.headers!.Authorization = 'Bearer ' + qyBearerToken;
+        config.headers!['Content-Type'] = 'application/json';
       }
       return config;
     },

@@ -38,12 +38,6 @@ export default function Code() {
     ToastSuccess('欢迎回来 👏');
   };
   const [showSlider, setShowSlider] = useState(false);
-  const showClick = () => {
-    setShowSlider(true);
-  };
-  const hidClick = () => {
-    setShowSlider(false);
-  };
   const resultClick = (e: number) => {
     if (e) {
       console.log('成功');

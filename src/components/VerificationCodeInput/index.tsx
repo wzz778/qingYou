@@ -1,6 +1,6 @@
 import { Button, Form } from '@douyinfe/semi-ui';
 import { useEffect, useRef, useState } from 'react';
-import { sendCode } from '@/api/login';
+import { sendCode } from '@/api/modules/login';
 import { Toast } from '@douyinfe/semi-ui';
 function VerificationCodeInput({ email }: any) {
   const [countdown, setCountdown] = useState(0);
