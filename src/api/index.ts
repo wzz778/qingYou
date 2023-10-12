@@ -9,7 +9,7 @@ const Hyrequire = new HYrequest({
       console.log(qyBearerToken);
       if (qyBearerToken.length !== 0) {
         config.headers!.Authorization = 'Bearer ' + qyBearerToken;
-        config.headers!['Content-Type'] = 'application/json';
+        // config.headers!['Content-Type'] = 'application/json';
       }
       return config;
     },
@@ -30,15 +30,19 @@ const Hyrequire2 = new HYrequest({
   timeout: TIME_OUT,
   interceptor: {
     requestSuccessFn(config) {
+      console.log('InternalAxiosRequestConfig拦截器');
       return config;
     },
     requestFailFn: (err) => {
+      console.log('InternalAxiosRequestConfig拦截器2');
       return err;
     },
     responseSuccessFn: (res) => {
+      console.log('InternalAxiosRequestConfig拦截器3');
       return res;
     },
     responseFailFn(err) {
+      console.log('InternalAxiosRequestConfig拦截器4');
       return err;
     }
   }

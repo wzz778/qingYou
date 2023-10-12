@@ -1,9 +1,11 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 // import classNames from "classnames";
 
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
+import { queryEmailTemplatesPage } from '@/api/modules/email';
+import axios from 'axios';
 interface IProps {
   datas?: any[];
 }

@@ -5,7 +5,7 @@ import { SetStateAction, useState } from 'react';
 import { ToastError, ToastSuccess, ToastWaring } from '@/utils/common';
 import { IconHelpCircle, IconMail, IconUser } from '@douyinfe/semi-icons';
 import VerificationCodeInput from '@/components/VerificationCodeInput';
-import { RegisterByEmail, checkEmail, register } from '@/api/modules/login';
+import { checkEmail, queryPasswordByName } from '@/api/modules/login';
 import SliderVerify from '@/components/Layout/LoginLayout/SliderVerify';
 export default function Forget() {
   const [loading, setLoading] = useState(false);
@@ -13,7 +13,6 @@ export default function Forget() {
   const { push } = useRouter();
   const [showSlider, setShowSlider] = useState(false);
   const handleSubmit = async (values: any) => {
-    console.log(values);
     setLoading(true);
     let checkEmailForm = { mail: values.email, code: values.code };
     const res = await checkEmail(checkEmailForm);
@@ -24,13 +23,12 @@ export default function Forget() {
     } else {
       let registerForm = {
         password: values.password,
-        username: values.email,
-        nickname: values.nickname
+        username: values.email
       };
-      register(registerForm)
+      queryPasswordByName(registerForm)
         .then((res) => {
           if (res.code == 200) {
-            ToastSuccess('注册成功');
+            ToastSuccess('修改失败！');
             push('/login/email');
           } else if (res.code == 444) {
             ToastWaring('此邮箱已注册用户！');

@@ -22,10 +22,17 @@ export const checkEmail = (data: any) =>
     url: '/email/checkEmail',
     params: data
   });
-//检验邮箱：
+//注册：
+
 export const register = (data: any) =>
   Hyrequire2.post({
     url: '/user/userRegister',
+    params: data
+  });
+
+export const queryPasswordByName = (data: any) =>
+  Hyrequire2.put({
+    url: '/user/queryPasswordByName',
     params: data
   });
 

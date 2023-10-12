@@ -7,43 +7,40 @@ import { ToastSuccess } from '@/utils/common';
 import useUserStore from '@/store/user';
 import SliderVerify from '@/components/Layout/LoginLayout/SliderVerify';
 import { IconMail } from '@douyinfe/semi-icons';
+import { queryPasswordByName } from '@/api/modules/login';
 // import VerificationCodeInput from '@/components/VerificationCodeInput';
 
 export default function Code() {
   const [loading, setLoading] = useState(false);
-  const { setUser } = useUserStore();
-
+  // const { setUser } = useUserStore();
   const { push } = useRouter();
-  // const handleSubmit = (values: LoginByPasswordParams) => {
-  //   setLoading(true);
-  //   smsLogin(values)
-  //     .then((res) => {
-  //       const { user, accessToken } = res.data;
-  //       localStorage.setItem('qyBearerToken', accessToken);
-  //       afterLoginSuccess(user);
-  //     })
-  //     .catch((err) => {})
-  //     .finally(() => {
-  //       setLoading(false);
-  //     });
-  // };
+  const [showSlider, setShowSlider] = useState(true);
+  const handleSubmit = async (values: any) => {
+    setLoading(true);
+    let registerForm = {
+      password: values.password,
+      username: values.email
+    };
+    queryPasswordByName(registerForm)
+      .then((res) => {
+        console.log(res);
 
-  const afterLoginSuccess = (user: User) => {
-    // const isAdmin =
-    //   roles.findIndex(
-    //     (item) => item.name === 'super' || item.name === 'admin'
-    //   ) !== -1;
-    // 判断权限
-    push('/workspace');
-    ToastSuccess('欢迎回来 👏');
+        // if (res.code == 200) {
+        //   ToastSuccess('修改失败！');
+        //   push('/login/email');
+        // } else if (res.code == 444) {
+        //   ToastWaring('此邮箱已注册用户！');
+        // } else {
+        //   ToastError('注册失败');
+        // }
+        setLoading(false);
+      })
+      .catch((err) => {});
   };
-  const [showSlider, setShowSlider] = useState(false);
   const resultClick = (e: number) => {
     if (e) {
       console.log('成功');
-      setTimeout(() => {
-        setShowSlider(false);
-      }, 600);
+      setShowSlider(true);
     } else if (e == 1) {
       console.log('失败');
     }
@@ -52,30 +49,29 @@ export default function Code() {
     <main className={styles.loginScreen}>
       <div className={styles.loginCard}>
         <div className={styles.loginHeader}>
-          <h1 className={styles.title}>验证码登录</h1>
+          <h1 className={styles.title}>修改密码</h1>
         </div>
         <div className={styles.loginPath}>
-          <Form
-            // onSubmit={(values) => handleSubmit(values)}
-            style={{ width: 400 }}
-          >
+          <Form style={{ width: 400 }} onSubmit={(values) => handleSubmit(values)}>
             {({ formState, values, formApi }) => (
               <>
                 <Form.Input
                   field="email"
                   label="邮箱"
                   style={{ width: '100%', height: 35 }}
+                  placeholder="请输入您的邮箱"
                   prefix={<IconMail />}
-                  placeholder="输入你的邮箱"
+                  rules={[{ required: true, message: '请输入您要注册的邮箱' }]}
                 ></Form.Input>
-                <Form.Slot label={{ text: '安全验证' }}>
-                  <SliderVerify resultClick={resultClick}></SliderVerify>
-                </Form.Slot>
-                {/* <VerificationCodeInput email={values.email} /> */}
-
-                <Form.Checkbox field="agree" noLabel>
-                  我已阅读并同意服务条款
-                </Form.Checkbox>
+                <Form.Input
+                  field="password"
+                  label="新密码"
+                  type="password"
+                  mode="password"
+                  style={{ width: '100%', height: 35 }}
+                  rules={[{ required: true, message: '请输入您要注册的设置的密码' }]}
+                  placeholder="请输入您要设置的新密码"
+                ></Form.Input>
                 <div
                   style={{
                     display: 'flex',
@@ -83,26 +79,14 @@ export default function Code() {
                     alignItems: 'center'
                   }}
                 >
-                  <p>
-                    <Button
-                      theme="borderless"
-                      style={{
-                        color: 'var(--semi-color-primary)',
-                        cursor: 'pointer'
-                      }}
-                      onClick={() => push('/login/forget')}
-                    >
-                      忘记密码
-                    </Button>
-                  </p>
                   <Button
-                    disabled={!values.agree}
+                    disabled={!showSlider}
                     htmlType="submit"
                     type="primary"
                     theme="solid"
                     loading={loading}
                   >
-                    登录
+                    提交
                   </Button>
                 </div>
               </>
