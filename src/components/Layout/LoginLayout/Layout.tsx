@@ -1,4 +1,4 @@
-import NavBar from './NavBar';
+import NavBar from './../FrontLayout/NavBar';
 import styles from './index.module.scss';
 export default function LoginLayout({ children }: { children: React.ReactNode }) {
   return (

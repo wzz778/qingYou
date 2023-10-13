@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useCallback, useEffect, useState } from 'react';
 import { Layout } from '@douyinfe/semi-ui';
 import Header from './components/Header';
 import Sider from './components/MenuSider';
@@ -8,15 +8,24 @@ import styles from './index.module.scss';
 import ContentSider, { ContentSiderType } from './components/ContentSider';
 import { useRouter } from 'next/router';
 import Wfooter from './components/Footer';
+import usePageIntercept from '@/hooks/usePageIntercept';
 
 const { Content } = Layout;
 
 interface WorkSplaceLayoutProps {
   children: React.ReactNode;
 }
-
 const WorkSplaceLayout: React.FC<WorkSplaceLayoutProps> = ({ children }) => {
-  const { pathname } = useRouter();
+  const { pathname, push } = useRouter();
+  let pageIntercept = usePageIntercept('w');
+  useEffect(() => {
+    if (!pageIntercept) {
+      push('/login');
+    }
+    // if (!orIntercept) {
+    //   push('/login');
+    // }
+  }, []);
 
   const isSubRoute = (path: string, baseRoute: string) => {
     return pathname.startsWith(baseRoute) && pathname !== baseRoute;
@@ -35,7 +44,7 @@ const WorkSplaceLayout: React.FC<WorkSplaceLayoutProps> = ({ children }) => {
       <Layout className="layout-page">
         <Sider />
         <Layout>
-          <Header />
+          {/* <Header /> */}
           <Content className="layout-content">
             <ContentSider contentSiderType={contentSiderType}>
               {/* <Suspense

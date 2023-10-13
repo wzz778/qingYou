@@ -12,9 +12,8 @@ export default function NavBar() {
   const { push } = useRouter();
   const { user, clearUser } = useUserStore();
   const { setTheme } = useContext(ThemeContext);
-  const UnAuthRightBox = () => {
-    const { Text } = Typography;
 
+  const UnAuthRightBox = () => {
     return (
       <div className={styles.unAuth}>
         <Button theme="solid" onClick={() => push('/login')}>

@@ -1,6 +1,6 @@
 import useUserStore from '@/store/user';
 import { useState, useEffect } from 'react';
-
+import Router from 'next/router';
 const useFetchUserInfo = () => {
   const [userInfo, setUserInfo] = useState<User>();
   const { getUser } = useUserStore();
@@ -17,7 +17,6 @@ const useFetchUserInfo = () => {
       });
     }
   }, []);
-
   return userInfo;
 };
 

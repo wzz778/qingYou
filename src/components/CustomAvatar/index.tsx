@@ -41,8 +41,10 @@ function CustomAvatar({
   clickHandle,
   ...rest
 }: AvatarProps) {
-  // const color = colors[username.length % colors.length] as AvatarColor;
-  const color = colors[3] as AvatarColor;
+  console.log(' username');
+  console.log(username);
+
+  const color = colors[username.length % colors.length] as AvatarColor;
   const userAvatarClick = () => {
     userLink && id && open(`/user/${id}`);
   };
@@ -61,7 +63,7 @@ function CustomAvatar({
       {...rest}
       onClick={clickHandle}
     >
-      {/* {username.split('')[0]} */}11
+      {username.split('')[0]}
     </AvatarSemi>
   );
 }

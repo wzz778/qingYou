@@ -26,6 +26,8 @@ const useUserStore = create<UseUserStore>((set, get) => ({
         });
       } else {
         getUserInfo().then((data) => {
+          console.log(data);
+
           get().setUser(data);
           resolve({
             user: data,

@@ -10,15 +10,17 @@ const AuthRightBox = () => {
   const { push, pathname } = useRouter();
   const [logoutIsLoading, setLogoutIsLoading] = useState(false);
   const { user, clearUser } = useUserStore();
+  console.log(user);
+
   // if (!user) return null;
 
   const logoutHandle = async () => {
     setLogoutIsLoading(true);
 
     ToastSuccess('退出成功');
-    push('/login');
     clearUserToken();
     clearUser();
+    push('/login');
   };
   return (
     <>
@@ -40,8 +42,8 @@ const AuthRightBox = () => {
       >
         <CustomAvatar
           id={user?.id}
-          src={user?.img?.avatar ?? ''}
-          username={user?.username as string}
+          src={user?.img ?? ''}
+          username={user?.nickname as string}
           size="small"
         />
         <div />
