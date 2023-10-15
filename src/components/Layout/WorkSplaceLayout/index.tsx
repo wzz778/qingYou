@@ -17,16 +17,7 @@ interface WorkSplaceLayoutProps {
 }
 const WorkSplaceLayout: React.FC<WorkSplaceLayoutProps> = ({ children }) => {
   const { pathname, push } = useRouter();
-  let pageIntercept = usePageIntercept('w');
-  useEffect(() => {
-    if (!pageIntercept) {
-      push('/login');
-    }
-    // if (!orIntercept) {
-    //   push('/login');
-    // }
-  }, []);
-
+  // usePageIntercept('w');
   const isSubRoute = (path: string, baseRoute: string) => {
     return pathname.startsWith(baseRoute) && pathname !== baseRoute;
   };
@@ -44,7 +35,7 @@ const WorkSplaceLayout: React.FC<WorkSplaceLayoutProps> = ({ children }) => {
       <Layout className="layout-page">
         <Sider />
         <Layout>
-          {/* <Header /> */}
+          <Header />
           <Content className="layout-content">
             <ContentSider contentSiderType={contentSiderType}>
               {/* <Suspense

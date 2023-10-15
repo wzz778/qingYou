@@ -2,7 +2,6 @@ import axios from 'axios';
 import type { AxiosInstance } from 'axios';
 // AxiosRequestConfig进行扩展 拦截器接口  可选
 import { AxiosRequestConfig2 } from './type';
-import { ToastError } from '@/utils/common';
 class HYrequest {
   instance: AxiosInstance;
   interceptor?: AxiosRequestConfig2;

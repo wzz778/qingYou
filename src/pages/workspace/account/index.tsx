@@ -4,20 +4,13 @@ import { memo, useEffect } from 'react';
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
-import { tryPage } from '@/api/modules/email';
 interface IProps {
   datas?: any[];
 }
 
 const Account: FC<IProps> = (props) => {
   const { datas = [] } = props;
-  useEffect(() => {
-    tryPage().then((res) => {
-      console.log('res');
-      console.log(res);
-      console.log('res');
-    });
-  }, []);
+  useEffect(() => {}, []);
   return (
     <div className={styles.Account}>
       <div>Account</div>

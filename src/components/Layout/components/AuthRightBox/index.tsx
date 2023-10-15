@@ -10,9 +10,7 @@ const AuthRightBox = () => {
   const { push, pathname } = useRouter();
   const [logoutIsLoading, setLogoutIsLoading] = useState(false);
   const { user, clearUser } = useUserStore();
-  console.log(user);
-
-  // if (!user) return null;
+  if (!user) return null;
 
   const logoutHandle = async () => {
     setLogoutIsLoading(true);
@@ -46,6 +44,7 @@ const AuthRightBox = () => {
           username={user?.nickname as string}
           size="small"
         />
+
         <div />
       </Dropdown>
     </>

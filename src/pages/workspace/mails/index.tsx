@@ -1,5 +1,4 @@
 import { memo } from 'react';
-// import classNames from "classnames";
 
 //type
 import type { FC } from 'react';
@@ -10,6 +9,7 @@ interface IProps {
 
 const Mails: FC<IProps> = (props) => {
   const { datas = [] } = props;
+
   return (
     <div className={styles.Mails}>
       <div>Mails</div>

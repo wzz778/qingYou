@@ -2,7 +2,7 @@ import styles from './index.module.scss';
 import { Form, Button } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { ToastError, ToastSuccess } from '@/utils/common';
+import { ToastError, ToastSuccess, getUserInfo } from '@/utils/common';
 import useUserStore from '@/store/user';
 import { IconHelpCircle, IconMail } from '@douyinfe/semi-icons';
 import { loginApi } from '@/api/modules/login';
@@ -12,7 +12,7 @@ interface loginRoot {
 }
 export default function Email() {
   const [loading, setLoading] = useState(false);
-  const { getUser } = useUserStore();
+  const { getUser, setUser } = useUserStore();
 
   const { push } = useRouter();
   const handleSubmit = (values: any) => {
@@ -36,8 +36,15 @@ export default function Email() {
         }
         const { accessToken } = res.data;
         localStorage.setItem('qyBearerToken', accessToken);
-        afterLoginSuccess(accessToken);
         return Promise.resolve();
+      })
+      .then(() => {
+        return getUserInfo();
+      })
+      .then((user) => {
+        console.log('user');
+        console.log(user);
+        afterLoginSuccess(user);
       })
       .catch((err) => {})
       .finally(() => {
@@ -45,27 +52,15 @@ export default function Email() {
       });
   };
 
-  const afterLoginSuccess = (accessToken: User) => {
-    if (accessToken) {
-      getUser().then((data) => {
-        console.log(data);
-        // if (data.isRefresh) {
-        //   setUserInfo(data.user);
-        // }
-        if (data.user.status == '0') {
-          push('/workspace');
-        } else {
-          push('/admin');
-        }
-      });
+  const afterLoginSuccess = (user: User) => {
+    const { status } = user;
+    setUser(user);
+    if (status == '0') {
+      push('/workspace');
+    } else {
+      push('/admin');
     }
-    // const isAdmin =
-    //   roles.findIndex(
-    //     (item) => item.name === 'super' || item.name === 'admin'
-    //   ) !== -1;
-    // 判断权限
-    push('/workspace');
-    ToastSuccess('欢迎回来 👏');
+    ToastSuccess('欢迎 👏');
   };
 
   return (

@@ -124,7 +124,7 @@ export function getUserInfo(): Promise<User> {
       .then((res) => {
         console.log('getInfo');
         console.log(res);
-        // if(res.)
+
         const userinfo: User = res.data;
         resolve(userinfo);
       })

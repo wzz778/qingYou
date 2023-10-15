@@ -1,3 +1,4 @@
+import { Handle401 } from '@/utils/http';
 import { BASE_URL, TIME_OUT } from './config';
 import HYrequest from './request';
 const Hyrequire = new HYrequest({
@@ -14,7 +15,10 @@ const Hyrequire = new HYrequest({
     requestFailFn: (err) => {
       return err;
     },
-    responseSuccessFn: (res) => {
+    responseSuccessFn: (res: any) => {
+      if (res.code == 'ERR_BAD_REQUEST') {
+        Handle401(res.message);
+      }
       return res;
     },
     responseFailFn(err) {

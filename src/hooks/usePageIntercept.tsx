@@ -1,21 +1,24 @@
 import useUserStore from '@/store/user';
+import useMount from './useMount';
+import { useRouter } from 'next/router';
+import { ToastError } from '@/utils/common';
 const usePageIntercept = (page: string) => {
   const { user } = useUserStore();
-  console.log(user);
-
-  if (!user) {
-    console.log('!user');
-
-    return false;
-  } else {
-    if (user.status == '1') {
-      return true;
+  const { push } = useRouter();
+  const pushLoginFn = () => {
+    ToastError('网络错误！');
+    push('/login');
+  };
+  useMount(() => {
+    console.log(user);
+    if (!user) {
+      pushLoginFn();
     } else {
-      if (page == 'a') {
-        return false;
+      if (page == 'a' && user.status == '0') {
+        pushLoginFn();
       }
     }
-  }
+  });
 };
 
 export default usePageIntercept;
