@@ -28,9 +28,14 @@ const UserNameSettingCard = () => {
     setLoading(true);
     updateUserInfo({ id: user?.id, nickname: inputValue })
       .then((res) => {
-        setUser(res.data);
-        setInputValue(res.data.nickname);
-        setIsExternallyDisabled(true);
+        console.log({ user, nickname: inputValue });
+        console.log(res);
+
+        if (res.code == 200) {
+          // setUser(res.data);
+          setInputValue(res.data.nickname);
+          setIsExternallyDisabled(true);
+        }
       })
       .catch((err) => err)
       .finally(() => {

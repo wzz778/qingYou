@@ -17,7 +17,7 @@ const Hyrequire = new HYrequest({
     },
     responseSuccessFn: (res: any) => {
       if (res.code == 'ERR_BAD_REQUEST') {
-        Handle401(res.message);
+        // Handle401(res.message);---
       }
       return res;
     },
