@@ -10,3 +10,20 @@ export const getInfo = () => {
     url: '/user/name'
   });
 };
+
+interface UpdateUserDto {
+  id: string;
+
+  username?: string;
+
+  nickname?: string;
+
+  img?: string;
+}
+
+export function updateUserInfo(data: UpdateUserDto) {
+  return Hyrequire.put({
+    url: '/user/update',
+    data
+  });
+}

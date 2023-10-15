@@ -1,3 +1,26 @@
-.Account {
-  color: #000;
+.settingPage {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 15px 0;
+
+  .settingContainer {
+    // width: 960px;
+    width: 100%;
+    display: flex;
+    gap: 32px;
+    .settingView {
+      flex: 1;
+
+      .settingBaseTitle {
+        font-size: 24px;
+        font-weight: 500;
+        padding: 8px 0;
+      }
+
+      .settingViewItem {
+        margin-bottom: 10px;
+      }
+    }
+  }
 }

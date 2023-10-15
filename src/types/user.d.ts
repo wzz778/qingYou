@@ -22,8 +22,8 @@ declare interface User {
 declare interface Profile {
   id: string;
   gender: ProfileGenderEnum;
-  avatar?: string | null;
-  photo?: string | null;
+  img?: string | null;
+  // photo?: string | null;
   description?: string | null;
   githubLogin?: string | null;
   githubName?: string | null;

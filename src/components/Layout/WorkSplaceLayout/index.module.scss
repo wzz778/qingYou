@@ -8,9 +8,9 @@
 
       .layout-content {
         position: relative;
-        margin: 10px;
-        background-color: #f0f2f5;
-
+        margin: 10px 0 10px 10px;
+        background-color: white;
+        border-radius: 3px;
         > :last-child {
           height: 100%;
         }
