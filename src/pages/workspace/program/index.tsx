@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import classNames from 'classnames';
 
 //type
@@ -13,6 +13,7 @@ interface IProps {
 const Program: FC<IProps> = (props) => {
   const { datas = [] } = props;
   const { Input, DatePicker, Select, Switch } = Form;
+  let [date, setDate] = useState<string>();
   return (
     <div className={styles.Project}>
       <Form
@@ -29,13 +30,6 @@ const Program: FC<IProps> = (props) => {
               label="考试名称"
               initValue="TCS任务平台使用"
               style={{ width: 560 }}
-            />
-            <DatePicker
-              field="date"
-              type="dateTime"
-              initValue={new Date()}
-              style={{ width: 272 }}
-              label={{ text: '开始时间', required: true }}
             />
             <Select
               field="users"
@@ -57,7 +51,7 @@ const Program: FC<IProps> = (props) => {
             ></Switch>
             {formState.values.open ? (
               <Form.Slot label={{ text: '时间选择' }}>
-                <CronInput />
+                <CronInput onChange={(cron) => setDate(cron)} />
               </Form.Slot>
             ) : null}
             <Space>
