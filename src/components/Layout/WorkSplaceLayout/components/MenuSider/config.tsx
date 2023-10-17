@@ -10,16 +10,26 @@ export interface MenuItem {
 }
 const MENU_CONFIG: MenuItem[] = [
   {
-    itemKey: '1',
-    text: '邮箱发送',
-    icon: <IconMailStroked1 />,
-    path: '/workspace/program'
-  },
-  {
-    itemKey: '11',
-    text: '邮箱绑定',
+    text: '邮箱',
     icon: <IconMail />,
-    path: '/workspace/mails'
+    itemKey: '1',
+    items: [
+      {
+        itemKey: '11',
+        text: '邮箱发送',
+        path: '/workspace/program'
+      },
+      {
+        itemKey: '12',
+        text: '邮箱绑定',
+        path: '/workspace/mails'
+      },
+      {
+        itemKey: '13',
+        text: '邮箱模板',
+        path: '/workspace/mail-template'
+      }
+    ]
   },
   {
     text: '流程',
