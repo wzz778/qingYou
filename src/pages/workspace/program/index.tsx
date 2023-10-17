@@ -55,7 +55,11 @@ const Program: FC<IProps> = (props) => {
               checkedText="开"
               uncheckedText="关"
             ></Switch>
-            {formState.values.open ? <CronInput /> : null}
+            {formState.values.open ? (
+              <Form.Slot label={{ text: '时间选择' }}>
+                <CronInput />
+              </Form.Slot>
+            ) : null}
             <Space>
               <Button
                 type="primary"
