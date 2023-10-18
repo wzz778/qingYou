@@ -1,3 +1,3 @@
 # qingYou
 
-Next + React Hooks + TS + semi + design 分布式邮箱发布系统。
+Next + React Hooks + TS + semi-design + zustand + swr 分布式邮箱发布系统。

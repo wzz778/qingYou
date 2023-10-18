@@ -4,7 +4,7 @@ import { Select } from '@douyinfe/semi-ui';
 import moment from 'moment';
 //引入数据
 import { dayOfTheMonthOption, dayOfTheWeekData } from '@/utils/cron';
-
+moment.locale('zh-cn');
 const { Option } = Select;
 const format = 'HH:mm';
 const defaultCron = '0 * * * * ?';

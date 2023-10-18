@@ -1,37 +1,199 @@
-import { memo } from 'react';
-
+import { memo, useState } from 'react';
 //type
-import type { FC } from 'react';
+import type { FC, SetStateAction } from 'react';
 import styles from './index.module.scss';
-import { execConfirm } from '@/utils/common';
-import { Button } from '@douyinfe/semi-ui';
-interface IProps {
-  datas?: any[];
-}
+import { ToastError, ToastSuccess, execConfirm } from '@/utils/common';
+import {
+  Button,
+  Empty,
+  Form,
+  Modal,
+  Popconfirm,
+  Space,
+  Table,
+  Typography
+} from '@douyinfe/semi-ui';
+import { IconDelete } from '@douyinfe/semi-icons';
+import useSWR from 'swr';
+import { deleteEmailTemplates, updateEmailTemplates } from '@/api/modules/email';
+import { fetcher } from '@/utils/http';
+import { IllustrationNoContent, IllustrationNoContentDark } from '@douyinfe/semi-illustrations';
+import title from '@douyinfe/semi-ui/lib/es/typography/title';
 
-const mailTemplate: FC<IProps> = (props) => {
-  const { datas = [] } = props;
-  async function deleteItem() {
-    // 执行删除操作
-    console.log('执行删除操作');
+const { Text } = Typography;
+const MailTemplate = () => {
+  const [selectedRowKeys, setSelectedRowKeys] = useState<User>();
+  const [updateLoading, setUpdateLoading] = useState<boolean>(false);
+  const [updateVisible, setUpdateVisible] = useState(false);
+  const [templateDetail, setTemplateDetail] = useState<Template>();
+  const { data, isLoading, error, mutate } = useSWR(
+    `/email/templates/queryEmailTemplatesPage?page=1&limit=10&thing=`,
+    fetcher
+  );
+  if (isLoading) return <div>数据列表获取中...</div>;
+  if (error) return <div>数据列表获取失败</div>;
+  console.log(data);
+  const { records } = data;
+  if (records.length === 0) {
+    return (
+      <Empty
+        image={<IllustrationNoContent style={{ width: 150, height: 150 }} />}
+        darkModeImage={<IllustrationNoContentDark style={{ width: 150, height: 150 }} />}
+        title="无数据"
+        description="请先导入数据"
+      />
+    );
   }
+  const columns = [
+    {
+      title: '标题',
+      width: 200,
+      dataIndex: 'emailTitle',
+      render: (text: string) => {
+        return <Text ellipsis={{ showTooltip: true }}>{text}</Text>;
+      }
+    },
+    {
+      title: '内容',
+      width: 400,
+      dataIndex: 'emailContent',
+      render: (text: string) => {
+        return <Text ellipsis={{ showTooltip: true }}>{text}</Text>;
+      }
+    },
+    {
+      title: '操作',
+      dataIndex: 'id',
+      render: (id: string, record: any) => {
+        return (
+          <Space>
+            <Button onClick={() => updateTemplateOpenModal(record)}>更新</Button>
+            <Popconfirm title="确定要删除该数据吗" onConfirm={() => handleDeleteTemplate(id)}>
+              <Button style={{ color: '#f82c70' }} icon={<IconDelete />}></Button>
+            </Popconfirm>
+          </Space>
+        );
+      }
+    }
+  ];
 
-  const trys = () => {
-    console.log('133');
+  const handleDeleteTemplate = (id: string) => {
+    return new Promise((resolve, reject) => {
+      deleteEmailTemplates(id)
+        .then(() => {
+          ToastSuccess('删除成功');
+          resolve(null);
+          mutate();
+        })
+        .catch(() => {
+          ToastError('删除失败');
+          reject();
+        });
+    });
+  };
 
-    execConfirm(deleteItem, undefined, '34');
+  const rowSelection = {
+    onChange: (_: any, selectedRows: any) => {
+      setSelectedRowKeys(selectedRows);
+    }
+  };
+
+  const updateTemplateOpenModal = (record: SetStateAction<Template | undefined>) => {
+    console.log('-sdas-');
+
+    console.log(record);
+
+    setTemplateDetail(record);
+    setUpdateVisible(true);
+  };
+
+  const updateTemplateHandle = (values: any) => {
+    setUpdateLoading(true);
+    const records = {
+      id: templateDetail?.id,
+      ...values
+    };
+    updateEmailTemplates(records)
+      .then(() => {
+        mutate();
+        ToastSuccess('更新成功');
+      })
+      .catch(() => {
+        ToastError('更新失败');
+      })
+      .finally(() => {
+        setUpdateVisible(false);
+        setUpdateLoading(false);
+      });
   };
   return (
     <div className={styles.mailTemplate}>
-      <div>
-        mailTemplate
-        <div>
-          <Button onClick={trys}>1111 </Button>
-        </div>
-      </div>
+      <Table
+        columns={columns}
+        dataSource={records}
+        rowSelection={rowSelection}
+        pagination={records.length > 10 ? { pageSize: 10 } : false}
+        rowKey={(record) => record.id}
+      />
+      <Modal
+        header={null}
+        footer={null}
+        visible={updateVisible}
+        onCancel={() => setUpdateVisible(false)}
+        closeOnEsc
+        width={400}
+        zIndex={99999}
+      >
+        <Form
+          onSubmit={(values) => updateTemplateHandle(values)}
+          style={{
+            padding: '20px 10px'
+          }}
+        >
+          {() => (
+            <>
+              <Form.Input
+                field="title"
+                label="标题"
+                initValue={templateDetail?.emailTitle}
+                style={{ width: '100%' }}
+                placeholder="请输入内容"
+                rules={[{ required: true, message: '请输入内容' }]}
+              ></Form.Input>
+              <Form.TextArea
+                field="content"
+                label="内容"
+                initValue={templateDetail?.emailContent}
+                style={{ width: '100%' }}
+                placeholder="请输入内容"
+                rules={[{ required: true, message: '请输入内容' }]}
+              ></Form.TextArea>
+              <div
+                style={{
+                  width: '70%',
+                  margin: '0 auto',
+                  marginTop: 20
+                }}
+              >
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  theme="solid"
+                  loading={updateLoading}
+                  style={{
+                    width: '100%'
+                  }}
+                >
+                  更新
+                </Button>
+              </div>
+            </>
+          )}
+        </Form>
+      </Modal>
     </div>
   );
 };
 
-export default memo(mailTemplate);
-mailTemplate.displayName = 'mailTemplate';
+export default memo(MailTemplate);
+MailTemplate.displayName = 'mailTemplate';
