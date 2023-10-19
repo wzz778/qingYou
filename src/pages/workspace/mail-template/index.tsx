@@ -15,17 +15,22 @@ import {
 } from '@douyinfe/semi-ui';
 import { IconDelete } from '@douyinfe/semi-icons';
 import useSWR from 'swr';
-import { deleteEmailTemplates, updateEmailTemplates } from '@/api/modules/email';
+import { addEmailTemplates, deleteEmailTemplates, updateEmailTemplates } from '@/api/modules/email';
 import { fetcher } from '@/utils/http';
 import { IllustrationNoContent, IllustrationNoContentDark } from '@douyinfe/semi-illustrations';
-import title from '@douyinfe/semi-ui/lib/es/typography/title';
 import useUserStore from '@/store/user';
+import None from '@/components/dataAcquisition/None';
+import Loading from '@/components/dataAcquisition/Loading';
+import Failure from '@/components/dataAcquisition/Failure';
+import Error from '@/components/dataAcquisition/Error';
 
 const { Text } = Typography;
 const MailTemplate = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<User>();
   const [updateLoading, setUpdateLoading] = useState<boolean>(false);
+  const [addLoading, setAddLoading] = useState<boolean>(false);
   const [updateVisible, setUpdateVisible] = useState(false);
+  const [addVisible, setAddVisible] = useState(false);
   const [templateDetail, setTemplateDetail] = useState<Template>();
   const { user } = useUserStore();
   const { data, isLoading, error, mutate } = useSWR(
@@ -33,10 +38,24 @@ const MailTemplate = () => {
     fetcher
   );
 
-  if (isLoading) return <div>数据列表获取中...</div>;
-  if (error) return <div>数据列表获取失败</div>;
+  if (isLoading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  if (error)
+    return (
+      <div>
+        <Failure title={'请求失败！'} />
+      </div>
+    );
   if (!data) {
-    return <div>数据错误</div>;
+    return (
+      <div>
+        <Error title={'请求出错！'} />
+      </div>
+    );
   }
   // const createProject = (values) => {
   //   setConfirmLoading(true);
@@ -50,8 +69,12 @@ const MailTemplate = () => {
   //       setConfirmLoading(false);
   //     });
   // };
+  console.log(data);
+  if (!data) {
+    return <div>数据错误</div>;
+  }
   const { records } = data;
-  const isEmpty = data.length === 0;
+  const isEmpty = records.length === 0;
 
   const empty = () => (
     <Empty
@@ -141,14 +164,35 @@ const MailTemplate = () => {
         setUpdateLoading(false);
       });
   };
+
+  const addTemplateHandle = (values: any) => {
+    const addForm = {
+      userId: user?.id,
+      personOrTeam: 0,
+      ...values
+    };
+
+    addEmailTemplates(addForm)
+      .then(() => {
+        mutate();
+        ToastSuccess('添加成功');
+      })
+      .catch(() => {
+        ToastError('添加失败');
+      })
+      .finally(() => {
+        setAddVisible(false);
+        setAddLoading(false);
+      });
+  };
+
   return (
     <div className={styles.mailTemplate}>
-      {/* <div className={styles.header}>
-        <div className={styles.headerTitle}>应用列表</div>
-        <Button onClick={() => setVisible(true)}>创建应用</Button>
-      </div> */}
+      <div className={styles.header}>
+        <Button onClick={() => setAddVisible(true)}>创建应用</Button>
+      </div>
       {isEmpty ? (
-        empty()
+        <None title={'无数据'} description={'请先创建数据'} />
       ) : (
         <Table
           columns={columns}
@@ -208,6 +252,60 @@ const MailTemplate = () => {
                   }}
                 >
                   更新
+                </Button>
+              </div>
+            </>
+          )}
+        </Form>
+      </Modal>
+      <Modal
+        header={null}
+        footer={null}
+        visible={addVisible}
+        onCancel={() => setAddVisible(false)}
+        closeOnEsc
+        width={400}
+        zIndex={99999}
+      >
+        <Form
+          onSubmit={(values) => addTemplateHandle(values)}
+          style={{
+            padding: '20px 10px'
+          }}
+        >
+          {() => (
+            <>
+              <Form.Input
+                field="emailTitle"
+                label="标题"
+                style={{ width: '100%' }}
+                placeholder="请输入内容"
+                rules={[{ required: true, message: '请输入内容' }]}
+              ></Form.Input>
+              <Form.TextArea
+                field="emailContent"
+                label="内容"
+                style={{ width: '100%' }}
+                placeholder="请输入内容"
+                rules={[{ required: true, message: '请输入内容' }]}
+              ></Form.TextArea>
+              <div
+                style={{
+                  width: '70%',
+                  margin: '0 auto',
+                  marginTop: 20
+                }}
+              >
+                <Button
+                  htmlType="submit"
+                  type="primary"
+                  theme="solid"
+                  loading={addLoading}
+                  style={{
+                    width: '100%'
+                  }}
+                >
+                  添加
                 </Button>
               </div>
             </>
