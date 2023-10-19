@@ -19,6 +19,7 @@ import { deleteEmailTemplates, updateEmailTemplates } from '@/api/modules/email'
 import { fetcher } from '@/utils/http';
 import { IllustrationNoContent, IllustrationNoContentDark } from '@douyinfe/semi-illustrations';
 import title from '@douyinfe/semi-ui/lib/es/typography/title';
+import useUserStore from '@/store/user';
 
 const { Text } = Typography;
 const MailTemplate = () => {
@@ -26,24 +27,40 @@ const MailTemplate = () => {
   const [updateLoading, setUpdateLoading] = useState<boolean>(false);
   const [updateVisible, setUpdateVisible] = useState(false);
   const [templateDetail, setTemplateDetail] = useState<Template>();
+  const { user } = useUserStore();
   const { data, isLoading, error, mutate } = useSWR(
-    `/email/templates/queryEmailTemplatesPage?page=1&limit=10&thing=`,
+    `/email/templates/queryEmailTemplatesPersonal?page=1&limit=10&id=${user?.id}&personOrTeam=0`,
     fetcher
   );
+
   if (isLoading) return <div>数据列表获取中...</div>;
   if (error) return <div>数据列表获取失败</div>;
-  console.log(data);
-  const { records } = data;
-  if (records.length === 0) {
-    return (
-      <Empty
-        image={<IllustrationNoContent style={{ width: 150, height: 150 }} />}
-        darkModeImage={<IllustrationNoContentDark style={{ width: 150, height: 150 }} />}
-        title="无数据"
-        description="请先导入数据"
-      />
-    );
+  if (!data) {
+    return <div>数据错误</div>;
   }
+  // const createProject = (values) => {
+  //   setConfirmLoading(true);
+  //   createProjectApi(values)
+  //     .then((res) => {
+  //       ToastSuccess('创建成功');
+  //       setVisible(false);
+  //       mutate();
+  //     })
+  //     .finally(() => {
+  //       setConfirmLoading(false);
+  //     });
+  // };
+  const { records } = data;
+  const isEmpty = data.length === 0;
+
+  const empty = () => (
+    <Empty
+      image={<IllustrationNoContent style={{ width: 150, height: 150 }} />}
+      darkModeImage={<IllustrationNoContentDark style={{ width: 150, height: 150 }} />}
+      title="无数据"
+      description="请先创建数据"
+    />
+  );
   const columns = [
     {
       title: '标题',
@@ -99,20 +116,18 @@ const MailTemplate = () => {
   };
 
   const updateTemplateOpenModal = (record: SetStateAction<Template | undefined>) => {
-    console.log('-sdas-');
-
-    console.log(record);
-
     setTemplateDetail(record);
     setUpdateVisible(true);
   };
 
   const updateTemplateHandle = (values: any) => {
-    setUpdateLoading(true);
     const records = {
       id: templateDetail?.id,
+      userId: templateDetail?.userId,
+      personOrTeam: 0,
       ...values
     };
+
     updateEmailTemplates(records)
       .then(() => {
         mutate();
@@ -128,13 +143,21 @@ const MailTemplate = () => {
   };
   return (
     <div className={styles.mailTemplate}>
-      <Table
-        columns={columns}
-        dataSource={records}
-        rowSelection={rowSelection}
-        pagination={records.length > 10 ? { pageSize: 10 } : false}
-        rowKey={(record) => record.id}
-      />
+      {/* <div className={styles.header}>
+        <div className={styles.headerTitle}>应用列表</div>
+        <Button onClick={() => setVisible(true)}>创建应用</Button>
+      </div> */}
+      {isEmpty ? (
+        empty()
+      ) : (
+        <Table
+          columns={columns}
+          dataSource={records}
+          rowSelection={rowSelection}
+          pagination={records.length > 10 ? { pageSize: 10 } : false}
+          rowKey={(record) => record.id}
+        />
+      )}
       <Modal
         header={null}
         footer={null}
@@ -153,7 +176,7 @@ const MailTemplate = () => {
           {() => (
             <>
               <Form.Input
-                field="title"
+                field="emailTitle"
                 label="标题"
                 initValue={templateDetail?.emailTitle}
                 style={{ width: '100%' }}
@@ -161,7 +184,7 @@ const MailTemplate = () => {
                 rules={[{ required: true, message: '请输入内容' }]}
               ></Form.Input>
               <Form.TextArea
-                field="content"
+                field="emailContent"
                 label="内容"
                 initValue={templateDetail?.emailContent}
                 style={{ width: '100%' }}

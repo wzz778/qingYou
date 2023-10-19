@@ -4,6 +4,11 @@ import { memo } from 'react';
 import type { FC } from 'react';
 import styles from './index.module.scss';
 import { execConfirm } from '@/utils/common';
+import Loading from '@/components/dataAcquisition/Loading';
+import Failure from '@/components/dataAcquisition/Failure';
+import Error from '@/components/dataAcquisition/Error';
+import None from '@/components/dataAcquisition/None';
+
 interface IProps {
   datas?: any[];
 }
@@ -20,7 +25,15 @@ const Mails: FC<IProps> = (props) => {
   };
   return (
     <div className={styles.Mails}>
-      <div>Mails</div>
+      <div>
+        <Loading />
+        <hr />
+        <Failure />
+        <hr />
+        <Error />
+        <hr />
+        <None />
+      </div>
     </div>
   );
 };
