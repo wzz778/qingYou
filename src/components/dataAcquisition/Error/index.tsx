@@ -4,15 +4,24 @@ import { memo } from 'react';
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
+import { Empty } from '@douyinfe/semi-ui';
+import { IllustrationNoResult, IllustrationNoResultDark } from '@douyinfe/semi-illustrations';
 interface IProps {
-  datas?: any[];
+  title?: string;
+  description?: string;
 }
 
-const Error: FC<IProps> = (props) => {
-  const { datas = [] } = props;
+const Error: FC<IProps> = ({ title, description }) => {
   return (
     <div className={styles.Error}>
-      <div>Error</div>
+      <div>
+        <Empty
+          image={<IllustrationNoResult style={{ width: 150, height: 150 }} />}
+          darkModeImage={<IllustrationNoResultDark style={{ width: 150, height: 150 }} />}
+          title={title}
+          description={description}
+        />
+      </div>
     </div>
   );
 };
