@@ -28,11 +28,11 @@ const Mails: FC<IProps> = (props) => {
       <div>
         <Loading />
         <hr />
-        <Failure />
+        <Failure title={'请求失败！'} />
         <hr />
-        <Error />
+        <Error title={'请求出错！'} />
         <hr />
-        <None title={'sda'} description={'请先创建数据'} />
+        <None title={'无数据'} description={'请先创建数据'} />
       </div>
     </div>
   );

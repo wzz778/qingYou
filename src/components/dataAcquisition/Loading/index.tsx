@@ -4,8 +4,11 @@ import { memo } from 'react';
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
-import { Empty } from '@douyinfe/semi-ui';
-import { IllustrationNoContent, IllustrationNoContentDark } from '@douyinfe/semi-illustrations';
+import { Empty, Spin } from '@douyinfe/semi-ui';
+import {
+  IllustrationConstruction,
+  IllustrationConstructionDark
+} from '@douyinfe/semi-illustrations';
 interface IProps {
   title?: string;
   description?: string;
@@ -15,12 +18,14 @@ const Loading: FC<IProps> = ({ title, description }) => {
   return (
     <div className={styles.Loading}>
       <div>
-        <Empty
-          image={<IllustrationNoContent style={{ width: 150, height: 150 }} />}
-          darkModeImage={<IllustrationNoContentDark style={{ width: 150, height: 150 }} />}
-          title={title}
-          description={description}
-        />
+        <Spin delay={1000} tip="努力加载中..." size="large" spinning={true}>
+          <Empty
+            image={<IllustrationConstruction style={{ width: 150, height: 150 }} />}
+            darkModeImage={<IllustrationConstructionDark style={{ width: 150, height: 150 }} />}
+            title={title}
+            description={description}
+          />
+        </Spin>
       </div>
     </div>
   );
