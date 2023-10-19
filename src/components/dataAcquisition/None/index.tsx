@@ -16,8 +16,8 @@ const None: FC<IProps> = ({ title, description }) => {
     <div className={styles.None}>
       <div>
         <Empty
-          image={<IllustrationNoContent style={{ width: 150, height: 150 }} />}
-          darkModeImage={<IllustrationNoContentDark style={{ width: 150, height: 150 }} />}
+          image={<IllustrationNoContent style={{ width: 250, height: 250 }} />}
+          darkModeImage={<IllustrationNoContentDark style={{ width: 250, height: 250 }} />}
           title={title}
           description={description}
         />

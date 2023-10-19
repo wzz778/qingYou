@@ -57,33 +57,12 @@ const MailTemplate = () => {
       </div>
     );
   }
-  // const createProject = (values) => {
-  //   setConfirmLoading(true);
-  //   createProjectApi(values)
-  //     .then((res) => {
-  //       ToastSuccess('创建成功');
-  //       setVisible(false);
-  //       mutate();
-  //     })
-  //     .finally(() => {
-  //       setConfirmLoading(false);
-  //     });
-  // };
-  console.log(data);
   if (!data) {
     return <div>数据错误</div>;
   }
   const { records } = data;
   const isEmpty = records.length === 0;
 
-  const empty = () => (
-    <Empty
-      image={<IllustrationNoContent style={{ width: 150, height: 150 }} />}
-      darkModeImage={<IllustrationNoContentDark style={{ width: 150, height: 150 }} />}
-      title="无数据"
-      description="请先创建数据"
-    />
-  );
   const columns = [
     {
       title: '标题',

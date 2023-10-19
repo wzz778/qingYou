@@ -20,8 +20,8 @@ const Loading: FC<IProps> = ({ title, description }) => {
       <div>
         <Spin delay={1000} tip="努力加载中..." size="large" spinning={true}>
           <Empty
-            image={<IllustrationConstruction style={{ width: 150, height: 150 }} />}
-            darkModeImage={<IllustrationConstructionDark style={{ width: 150, height: 150 }} />}
+            image={<IllustrationConstruction style={{ width: 250, height: 250 }} />}
+            darkModeImage={<IllustrationConstructionDark style={{ width: 250, height: 250 }} />}
             title={title}
             description={description}
           />

@@ -16,8 +16,8 @@ const Failure: FC<IProps> = ({ title, description }) => {
     <div className={styles.Failure}>
       <div>
         <Empty
-          image={<IllustrationFailure style={{ width: 150, height: 150 }} />}
-          darkModeImage={<IllustrationFailureDark style={{ width: 150, height: 150 }} />}
+          image={<IllustrationFailure style={{ width: 250, height: 250 }} />}
+          darkModeImage={<IllustrationFailureDark style={{ width: 250, height: 250 }} />}
           title={title}
           description={description}
         />
