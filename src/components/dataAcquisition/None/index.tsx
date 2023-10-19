@@ -7,19 +7,19 @@ import styles from './index.module.scss';
 import { Empty } from '@douyinfe/semi-ui';
 import { IllustrationNoContent, IllustrationNoContentDark } from '@douyinfe/semi-illustrations';
 interface IProps {
-  datas?: any[];
+  title?: string;
+  description?: string;
 }
 
-const None: FC<IProps> = (props) => {
-  const { datas = [] } = props;
+const None: FC<IProps> = ({ title, description }) => {
   return (
     <div className={styles.None}>
       <div>
         <Empty
           image={<IllustrationNoContent style={{ width: 150, height: 150 }} />}
           darkModeImage={<IllustrationNoContentDark style={{ width: 150, height: 150 }} />}
-          title="无数据"
-          description="请先创建数据"
+          title={title}
+          description={description}
         />
       </div>
     </div>

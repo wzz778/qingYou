@@ -4,15 +4,24 @@ import { memo } from 'react';
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
+import { Empty } from '@douyinfe/semi-ui';
+import { IllustrationNoContent, IllustrationNoContentDark } from '@douyinfe/semi-illustrations';
 interface IProps {
-  datas?: any[];
+  title?: string;
+  description?: string;
 }
 
-const Loading: FC<IProps> = (props) => {
-  const { datas = [] } = props;
+const Loading: FC<IProps> = ({ title, description }) => {
   return (
     <div className={styles.Loading}>
-      <div>Loading</div>
+      <div>
+        <Empty
+          image={<IllustrationNoContent style={{ width: 150, height: 150 }} />}
+          darkModeImage={<IllustrationNoContentDark style={{ width: 150, height: 150 }} />}
+          title={title}
+          description={description}
+        />
+      </div>
     </div>
   );
 };

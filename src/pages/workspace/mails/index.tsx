@@ -32,7 +32,7 @@ const Mails: FC<IProps> = (props) => {
         <hr />
         <Error />
         <hr />
-        <None />
+        <None title={'sda'} description={'请先创建数据'} />
       </div>
     </div>
   );
