@@ -12,13 +12,8 @@ import { Button, Card, CardGroup, Form, Modal, Typography } from '@douyinfe/semi
 import useUserStore from '@/store/user';
 import useSWR from 'swr';
 import { fetcher } from '@/utils/http';
-import {
-  addEmailConfig,
-  deleteEmailConfig,
-  textMailKey,
-  updateEmailConfig
-} from '@/api/modules/email';
 import { IconBeaker, IconLink } from '@douyinfe/semi-icons';
+import { addTeam, deleteTeam, updateTeam } from '@/api/modules/team';
 interface IProps {
   datas?: any[];
 }
@@ -81,13 +76,10 @@ const Teams: FC<IProps> = (props) => {
       values.id = uploadId;
     }
     const addForm = {
-      userId: user?.id,
-      emailType: '0',
-      emailPort: '465',
-      sendHost: 'smtp.qq.com',
+      teamManager: user?.id,
       ...values
     };
-    const requestApi = uploadId == '0' ? addEmailConfig : updateEmailConfig;
+    const requestApi = uploadId == '0' ? addTeam : updateTeam;
     requestApi(addForm)
       .then(() => {
         mutate();
@@ -105,7 +97,7 @@ const Teams: FC<IProps> = (props) => {
 
   const deleteTemplateHandle = async () => {
     setDeleteLoading(false);
-    deleteEmailConfig(uploadId)
+    deleteTeam(uploadId)
       .then(() => {
         mutate();
         ToastSuccess(`删除成功`);
@@ -129,7 +121,7 @@ const Teams: FC<IProps> = (props) => {
             setTeamDetail(undefined);
           }}
         >
-          绑定邮箱
+          绑定团队
         </Button>
       </div>
 
@@ -150,7 +142,7 @@ const Teams: FC<IProps> = (props) => {
                   </Text>
                 }
               >
-                <Text>{item.updateTime.replace('T', ' ')}</Text>
+                <Text>{item.teamNotes}</Text>
               </Card>
             </div>
           ))}
@@ -218,7 +210,7 @@ const Teams: FC<IProps> = (props) => {
                       marginTop: '6px'
                     }}
                     onClick={() =>
-                      execConfirm(deleteTemplateHandle, undefined, '你确确定要删除这项邮箱配置？')
+                      execConfirm(deleteTemplateHandle, undefined, '你确确定要删除这项团队配置？')
                     }
                   >
                     删除

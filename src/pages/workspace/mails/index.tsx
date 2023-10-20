@@ -93,7 +93,6 @@ const Mails: FC<IProps> = (props) => {
         testForm.append('sendMailName', '青邮');
         testForm.append('receiveMail', accountEmail);
         testForm.append('sendSMTPHost', 'smtp.qq.com');
-        testForm.append('files', '');
         return Promise.resolve(testForm);
       })
       .then((testForm: any) => {
