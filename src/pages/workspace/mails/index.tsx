@@ -20,8 +20,6 @@ import {
   updateEmailConfig
 } from '@/api/modules/email';
 import { IconBeaker, IconLink } from '@douyinfe/semi-icons';
-import install from '@/utils/validator';
-import { useRouter } from 'next/router';
 interface IProps {
   datas?: any[];
 }
@@ -115,15 +113,6 @@ const Mails: FC<IProps> = (props) => {
       .finally(() => {
         setTestLoading(false);
       });
-
-    // textMailKey(testForm)
-    //   .then(() => {
-    //     mutate();
-    //     ToastSuccess('添加成功');
-    //   })
-    //   .catch(() => {
-    //     ToastError('添加失败');
-    //   })
   };
 
   const addTemplateHandle = (values: any) => {
