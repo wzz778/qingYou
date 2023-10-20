@@ -15,9 +15,14 @@ const AvatarettingCard = () => {
   const successHandle = (url: string) => {
     return new Promise((resolve, reject) => {
       if (!user) return;
-      updateUserInfo({ id: user?.id, img: url })
+      updateUserInfo({ id: user?.id, img: url, password: '' })
         .then((res) => {
-          setUser(res.data);
+          console.log(res);
+          const newUser: User = {
+            ...user,
+            img: url
+          };
+          setUser(newUser);
           resolve(res.data);
         })
         .catch(reject);
@@ -34,7 +39,7 @@ const AvatarettingCard = () => {
         {config.description}
         <UploadImg
           imageUrl={defaultAvatar}
-          username={user?.username || ''}
+          username={user?.nickname || ''}
           successHandle={successHandle}
         />
       </div>

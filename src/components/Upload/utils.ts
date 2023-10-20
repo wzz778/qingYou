@@ -1,6 +1,7 @@
 // import http from '@/utils/http';
 import { blobToHash } from '@/utils/generateHash';
-import { preUrl } from '.';
+// import { preUrl } from '.';
+import { upload } from '@/api/modules/user';
 
 export async function getFormData(md5: any) {}
 
@@ -35,16 +36,28 @@ export async function uploadFile(blob: Blob, fileName: string) {
 
     // 将blob对象添加到FormData对象中
     formData.append('file', blob, fileName);
-    // http({
-    //   url: '/oss',
-    //   method: 'POST',
-    //   data: formData,
-    // })
-    //   .then((res) => {
-    //     resolve(res.data.url);
-    //   })
-    //   .catch((error) => {
-    //     reject(error);
-    //   });
+    const data = await upload(formData);
+    if (data.code == 200) {
+      resolve(data.msg);
+    } else {
+      reject(data.msg);
+    }
   });
 }
+// export async function uploadFile(img: any) {
+//   return new Promise(async (resolve, reject) => {
+//     // 创建一个新的FormData对象
+//     const formData = new FormData();
+//     // 将blob对象添加到FormData对象中
+//     formData.append('file', img);
+//     const data = await upload(formData);
+//     console.log('upload');
+//     console.log(data);
+
+//     if (data.code == 200) {
+//       resolve(data.msg);
+//     } else {
+//       reject(data.msg);
+//     }
+//   });
+// }

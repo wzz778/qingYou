@@ -16,9 +16,9 @@ interface UploadImgProps {
   id?: number;
   successHandle: (url: string) => Promise<unknown>;
 }
-export const preUrl = 'https://qiniuyun.devlink.wiki/';
+// export const preUrl = 'https://qiniuyun.devlink.wiki/';
 // TODO: 带优化，抽离出物料，第二次无法上传
-const UPLOAD_SIZE = 10000000;
+const UPLOAD_SIZE = 5000000;
 const UploadImg: FC<UploadImgProps> = ({ imageUrl, successHandle, username }) => {
   const [image, setImage] = useState<string | null>(null);
   const [uploadUrl, setUploadUrl] = useState<string | null>(null);
@@ -30,8 +30,9 @@ const UploadImg: FC<UploadImgProps> = ({ imageUrl, successHandle, username }) =>
   const imgChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const files = e.target.files;
-    if (files && files[0].size > UPLOAD_SIZE * 10) {
+    if (files && files[0].size > UPLOAD_SIZE) {
       // TODO: Show a warning toast
+      ToastError('请上传5MB一下的头像！');
     } else if (files) {
       const reader = new FileReader();
       reader.onload = () => setImage(reader.result as string);
@@ -50,36 +51,37 @@ const UploadImg: FC<UploadImgProps> = ({ imageUrl, successHandle, username }) =>
   };
 
   const handleOk = async () => {
-    setModalText('上传中...');
-    setConfirmLoading(true);
+    // setModalText('上传中...');
+    // setConfirmLoading(true);
     //@ts-ignore
     const blob = await uploadRef.current.upload();
     const hash = await blobToHash(blob);
     const fileName = `${hash}.png`;
-    const isExistTmp = await isExistHandle(preUrl + fileName);
-    if (isExistTmp.isExist) {
-      setImage(null);
-      setUploadUrl(isExistTmp.url);
-      successHandle(isExistTmp.url);
-      setConfirmLoading(false);
-      setModalText('上传图片');
-    } else {
-      const url = (await uploadFile(blob, fileName)) as string;
-      setImage(null);
-      setUploadUrl(url);
-      successHandle(url)
-        .then(() => {
-          ToastSuccess('头像更换成功');
-        })
-        .catch(() => {
-          ToastError('上传失败');
-        })
-        .finally(() => {
-          setVisible(false);
-          setConfirmLoading(false);
-          setModalText('上传图片');
-        });
-    }
+    // const isExistTmp = await isExistHandle(preUrl + fileName);
+    // if (isExistTmp.isExist) {
+    //   setImage(null);
+    //   setUploadUrl(isExistTmp.url);
+    //   successHandle(isExistTmp.url);
+    //   setConfirmLoading(false);
+    //   setModalText('上传图片');
+    // } else {
+    const url = (await uploadFile(blob, fileName)) as string;
+
+    setImage(null);
+    setUploadUrl(url);
+    successHandle(url)
+      .then(() => {
+        ToastSuccess('头像更换成功');
+      })
+      .catch(() => {
+        ToastError('上传失败');
+      })
+      .finally(() => {
+        setVisible(false);
+        setConfirmLoading(false);
+        setModalText('上传图片');
+      });
+    // }
   };
 
   const handleCancel = () => setVisible(false);
@@ -93,7 +95,7 @@ const UploadImg: FC<UploadImgProps> = ({ imageUrl, successHandle, username }) =>
   return (
     <div>
       <div onClick={showModal}>
-        {!!imageUrl ? (
+        {imageUrl ? (
           <Avatar src={uploadUrl || imageUrl} size="large" hoverMask={hover} />
         ) : (
           <CustomAvatar username={username} hoverMask={hover} size="large" />
@@ -116,7 +118,7 @@ const UploadImg: FC<UploadImgProps> = ({ imageUrl, successHandle, username }) =>
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
         width={390}
-        zIndex={99999}
+        zIndex={99}
       >
         {image ? (
           <CropperCard imageUrl={image} ref={uploadRef} />

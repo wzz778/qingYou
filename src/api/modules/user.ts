@@ -19,11 +19,20 @@ interface UpdateUserDto {
   nickname?: string;
 
   img?: string;
+
+  password?: string;
 }
 
-export function updateUserInfo(data: UpdateUserDto) {
+export function updateUserInfo(params: UpdateUserDto) {
   return Hyrequire.put({
-    url: '/user/update',
+    url: '/user/updateUser',
+    params
+  });
+}
+
+export function upload(data: any) {
+  return Hyrequire.post({
+    url: '/user/file/upload',
     data
   });
 }
