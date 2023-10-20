@@ -1,4 +1,4 @@
-import { Hyrequire } from '../';
+import { Hyrequire, Hyrequire3 } from '../';
 
 // 获取用户信息
 export const tryPage = () => {
@@ -71,16 +71,16 @@ export const queryEmailConfigPersonal = (params: any) => {
 };
 
 //邮箱发送
-export const textMailKey = (params: any) => {
-  return Hyrequire.get({
+export const textMailKey = (data: any) => {
+  return Hyrequire3.post({
     url: '/email/superMails',
-    params
+    data
   });
 };
 
-export const sendMail = (params: any) => {
-  return Hyrequire.get({
+export const sendMail = (data: any) => {
+  return Hyrequire3.post({
     url: 'email/configMails',
-    params
+    data
   });
 };

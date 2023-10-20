@@ -14,14 +14,12 @@ interface IProps {
 const Error: FC<IProps> = ({ title, description }) => {
   return (
     <div className={styles.Error}>
-      <div>
-        <Empty
-          image={<IllustrationNoResult style={{ width: 150, height: 150 }} />}
-          darkModeImage={<IllustrationNoResultDark style={{ width: 150, height: 150 }} />}
-          title={title}
-          description={description}
-        />
-      </div>
+      <Empty
+        image={<IllustrationNoResult style={{ width: 250, height: 250 }} />}
+        darkModeImage={<IllustrationNoResultDark style={{ width: 250, height: 250 }} />}
+        title={title}
+        description={description}
+      />
     </div>
   );
 };

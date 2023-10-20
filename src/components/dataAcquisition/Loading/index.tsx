@@ -17,16 +17,14 @@ interface IProps {
 const Loading: FC<IProps> = ({ title, description }) => {
   return (
     <div className={styles.Loading}>
-      <div>
-        <Spin delay={1000} tip="努力加载中..." size="large" spinning={true}>
-          <Empty
-            image={<IllustrationConstruction style={{ width: 250, height: 250 }} />}
-            darkModeImage={<IllustrationConstructionDark style={{ width: 250, height: 250 }} />}
-            title={title}
-            description={description}
-          />
-        </Spin>
-      </div>
+      <Spin delay={1000} tip="努力加载中..." size="large" spinning={true}>
+        <Empty
+          image={<IllustrationConstruction style={{ width: 250, height: 250 }} />}
+          darkModeImage={<IllustrationConstructionDark style={{ width: 250, height: 250 }} />}
+          title={title}
+          description={description}
+        />
+      </Spin>
     </div>
   );
 };

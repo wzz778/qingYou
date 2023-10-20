@@ -32,7 +32,7 @@ export default function NavBar() {
     return (
       <div className={styles.navBar}>
         <div className={styles.navCon}>
-          <a href="http://127.0.0.1:3000/">
+          <a href="">
             <div className={styles.logoIcon}></div>
           </a>
           <div className={styles.themeArea}>

@@ -1,4 +1,4 @@
-import { memo, useRef, useState } from 'react';
+import { createRef, memo, useRef, useState } from 'react';
 
 //type
 import type { FC } from 'react';
@@ -13,9 +13,15 @@ import useUserStore from '@/store/user';
 import useSWR from 'swr';
 import { fetcher } from '@/utils/http';
 import { addEmailProgram } from '@/api/modules/dispatch';
-import { addEmailConfig, textMailKey } from '@/api/modules/email';
+import {
+  addEmailConfig,
+  deleteEmailConfig,
+  textMailKey,
+  updateEmailConfig
+} from '@/api/modules/email';
 import { IconBeaker, IconLink } from '@douyinfe/semi-icons';
-
+import install from '@/utils/validator';
+import { useRouter } from 'next/router';
 interface IProps {
   datas?: any[];
 }
@@ -24,10 +30,12 @@ const Mails: FC<IProps> = (props) => {
   const { datas = [] } = props;
   const { user } = useUserStore();
   const [addLoading, setAddLoading] = useState<boolean>(false);
+  const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [testLoading, setTestLoading] = useState<boolean>(false);
+  const [uploadId, setuploadId] = useState<string>('0');
   const [addVisible, setAddVisible] = useState(false);
   const [programDetail, setProgramDetail] = useState<Program>();
-  const testFormRef = useRef<HTMLFormElement>(null);
+  const testFormRef = useRef<any>();
   const { Text } = Typography;
   const { data, isLoading, error, mutate } = useSWR(
     `/email/config/queryEmailConfigPersonal?page=1&limit=10&id=${user?.id}`,
@@ -60,30 +68,34 @@ const Mails: FC<IProps> = (props) => {
   const { records } = data;
   const isEmpty = records.length === 0;
 
-  async function deleteItem() {
-    // 执行删除操作
-    console.log('执行删除操作');
-  }
-
-  const trys = () => {
-    execConfirm(deleteItem, undefined, '34');
+  const toUploadFrom = (data: Program) => {
+    setuploadId(data.id);
+    setAddVisible(true);
+    setProgramDetail(data);
+    // testFormRef.current.setValues(
+    //   { accountEmail: data.accountEmail, emailKey: data.emailKey },
+    //   { isOverride: true }
+    // );
+    // console.log(testFormRef.current.getFormState().values);
   };
 
   const testMail = (formApi: any) => {
     formApi
       .validate()
-      .then((values: any) => {
+      .then(() => {
         let { accountEmail, emailKey } = formApi.getValue();
-        const testForm = {
-          sendMail: accountEmail,
-          sendMailPwd: emailKey,
-          port: '465',
-          title: '测试账户',
-          content: '测试成功!!!',
-          sendMailName: '青邮',
-          receiveMail: accountEmail,
-          sendSMTPHost: 'smtp.qq.com'
-        };
+
+        setTestLoading(true);
+        const testForm = new FormData();
+        testForm.append('sendMail', accountEmail);
+        testForm.append('sendMailPwd', emailKey);
+        testForm.append('port', '465');
+        testForm.append('title', '测试账户');
+        testForm.append('content', '测试成功!!!');
+        testForm.append('sendMailName', '青邮');
+        testForm.append('receiveMail', accountEmail);
+        testForm.append('sendSMTPHost', 'smtp.qq.com');
+        testForm.append('files', '');
         return Promise.resolve(testForm);
       })
       .then((testForm: any) => {
@@ -91,10 +103,17 @@ const Mails: FC<IProps> = (props) => {
       })
       .then((res: any) => {
         console.log(res);
-        ToastSuccess('发送成功');
+        if (res.code == '200') {
+          ToastSuccess('发送成功');
+        } else {
+          ToastError('测试失败，请检查您设置的邮箱是否正确');
+        }
       })
       .catch((error: any) => {
         console.log(error);
+      })
+      .finally(() => {
+        setTestLoading(false);
       });
 
     // textMailKey(testForm)
@@ -105,13 +124,13 @@ const Mails: FC<IProps> = (props) => {
     //   .catch(() => {
     //     ToastError('添加失败');
     //   })
-    //   .finally(() => {
-    //     setAddVisible(false);
-    //     setAddLoading(false);
-    //   });
   };
 
   const addTemplateHandle = (values: any) => {
+    setAddLoading(true);
+    if (uploadId !== '0') {
+      values.id = uploadId;
+    }
     const addForm = {
       userId: user?.id,
       emailType: '0',
@@ -119,41 +138,72 @@ const Mails: FC<IProps> = (props) => {
       sendHost: 'smtp.qq.com',
       ...values
     };
-
-    addEmailConfig(addForm)
+    const requestApi = uploadId == '0' ? addEmailConfig : updateEmailConfig;
+    requestApi(addForm)
       .then(() => {
         mutate();
-        ToastSuccess('添加成功');
+
+        ToastSuccess(`${!uploadId ? '增加' : '更新'}成功`);
       })
       .catch(() => {
-        ToastError('添加失败');
+        ToastError(`${!uploadId ? '增加' : '更新'}失败`);
       })
       .finally(() => {
         setAddVisible(false);
         setAddLoading(false);
       });
   };
+
+  const deleteTemplateHandle = async () => {
+    setDeleteLoading(false);
+    deleteEmailConfig(uploadId)
+      .then(() => {
+        mutate();
+        ToastSuccess(`删除成功`);
+      })
+      .catch(() => {
+        ToastError(`删除失败`);
+      })
+      .finally(() => {
+        setAddVisible(false);
+        setDeleteLoading(false);
+      });
+  };
+
   return (
     <div className={styles.Mails}>
       <div className={styles.header}>
-        <Button onClick={() => setAddVisible(true)}>绑定邮箱</Button>
+        <Button
+          onClick={() => {
+            setAddVisible(true);
+            setuploadId('0');
+            setProgramDetail(undefined);
+          }}
+        >
+          绑定邮箱
+        </Button>
       </div>
 
       {isEmpty ? (
         <None title={'无数据'} description={'请先创建数据'} />
       ) : (
-        <CardGroup type="grid">
+        <CardGroup spacing={10}>
           {records.map((item: Program) => (
-            <Card
-              key={item.id}
-              shadows="hover"
-              title={item.accountEmail}
-              headerLine={false}
-              style={{ width: 260 }}
-              headerExtraContent={<Text link>More</Text>}
-            >
-              <Text>{item.updateTime}</Text>
-            </Card>
+            <div key={item.id} onClick={() => toUploadFrom(item)}>
+              <Card
+                shadows="hover"
+                title={item.accountEmail}
+                headerLine={false}
+                style={{ width: 300 }}
+                headerExtraContent={
+                  <Text onClick={() => toUploadFrom(item)} style={{ color: '#06C05F' }}>
+                    操作
+                  </Text>
+                }
+              >
+                <Text>{item.updateTime.replace('T', ' ')}</Text>
+              </Card>
+            </div>
           ))}
         </CardGroup>
       )}
@@ -165,10 +215,11 @@ const Mails: FC<IProps> = (props) => {
         onCancel={() => setAddVisible(false)}
         closeOnEsc
         width={400}
-        zIndex={99999}
+        zIndex={99}
       >
         <Form
           onSubmit={(values) => addTemplateHandle(values)}
+          getFormApi={(formApi) => (testFormRef.current = formApi)}
           style={{
             padding: '20px 10px'
           }}
@@ -177,9 +228,16 @@ const Mails: FC<IProps> = (props) => {
               <Form.Input
                 field="accountEmail"
                 label="邮箱"
+                initValue={programDetail?.accountEmail}
                 style={{ width: '100%' }}
                 placeholder="请输入内容"
-                rules={[{ required: true, message: '请输入内容' }]}
+                rules={[
+                  { required: true, message: '请输入内容' },
+                  {
+                    pattern: /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
+                    message: '邮箱格式不正确'
+                  }
+                ]}
                 extraText={
                   <div
                     style={{
@@ -205,6 +263,7 @@ const Mails: FC<IProps> = (props) => {
                 label="key"
                 style={{ width: '100%' }}
                 placeholder="请输入内容"
+                initValue={programDetail?.emailKey}
                 rules={[{ required: true, message: '请输入内容' }]}
                 extraText={
                   <div
@@ -249,8 +308,23 @@ const Mails: FC<IProps> = (props) => {
                     width: '100%'
                   }}
                 >
-                  添加
+                  {uploadId == '0' ? '增加' : '更新'}
                 </Button>
+                {uploadId !== '0' && (
+                  <Button
+                    type="danger"
+                    loading={deleteLoading}
+                    style={{
+                      width: '100%',
+                      marginTop: '6px'
+                    }}
+                    onClick={() =>
+                      execConfirm(deleteTemplateHandle, undefined, '你确确定要删除这项邮箱配置？')
+                    }
+                  >
+                    删除
+                  </Button>
+                )}
               </div>
             </>
           )}

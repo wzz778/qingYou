@@ -14,14 +14,12 @@ interface IProps {
 const None: FC<IProps> = ({ title, description }) => {
   return (
     <div className={styles.None}>
-      <div>
-        <Empty
-          image={<IllustrationNoContent style={{ width: 250, height: 250 }} />}
-          darkModeImage={<IllustrationNoContentDark style={{ width: 250, height: 250 }} />}
-          title={title}
-          description={description}
-        />
-      </div>
+      <Empty
+        image={<IllustrationNoContent style={{ width: 250, height: 250 }} />}
+        darkModeImage={<IllustrationNoContentDark style={{ width: 250, height: 250 }} />}
+        title={title}
+        description={description}
+      />
     </div>
   );
 };

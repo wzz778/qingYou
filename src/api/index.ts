@@ -7,6 +7,8 @@ const Hyrequire = new HYrequest({
   interceptor: {
     requestSuccessFn(config) {
       const qyBearerToken = localStorage.getItem('qyBearerToken') || '';
+      console.log(config);
+      console.log('config');
       if (qyBearerToken.length !== 0) {
         config.headers!.Authorization = 'Bearer ' + qyBearerToken;
       }
@@ -17,10 +19,10 @@ const Hyrequire = new HYrequest({
     },
     responseSuccessFn: (res: any) => {
       // console.log('responseSuccessFn');
-      // console.log(res);
-      if (res.code == 'ERR_BAD_REQUEST') {
-        Handle401(res.message);
-      }
+      console.log(res);
+      // if (res.code == 'ERR_BAD_REQUEST') {
+      //   Handle401(res.message);
+      // }
       return res;
     },
     responseFailFn(err) {
@@ -48,5 +50,37 @@ const Hyrequire2 = new HYrequest({
     }
   }
 });
-
-export { Hyrequire, Hyrequire2 };
+const Hyrequire3 = new HYrequest({
+  baseURL: BASE_URL,
+  timeout: TIME_OUT,
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  },
+  interceptor: {
+    requestSuccessFn(config) {
+      const qyBearerToken = localStorage.getItem('qyBearerToken') || '';
+      console.log(config);
+      console.log('config');
+      if (qyBearerToken.length !== 0) {
+        config.headers!.Authorization = 'Bearer ' + qyBearerToken;
+      }
+      return config;
+    },
+    requestFailFn: (err) => {
+      return err;
+    },
+    responseSuccessFn: (res: any) => {
+      // console.log('responseSuccessFn');
+      console.log(res);
+      // if (res.code == 'ERR_BAD_REQUEST') {
+      //   Handle401(res.message);
+      // }
+      return res;
+    },
+    responseFailFn(err) {
+      console.log(err);
+      return err;
+    }
+  }
+});
+export { Hyrequire, Hyrequire2, Hyrequire3 };

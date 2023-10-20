@@ -17,7 +17,6 @@ import { IconDelete } from '@douyinfe/semi-icons';
 import useSWR from 'swr';
 import { addEmailTemplates, deleteEmailTemplates, updateEmailTemplates } from '@/api/modules/email';
 import { fetcher } from '@/utils/http';
-import { IllustrationNoContent, IllustrationNoContentDark } from '@douyinfe/semi-illustrations';
 import useUserStore from '@/store/user';
 import None from '@/components/dataAcquisition/None';
 import Loading from '@/components/dataAcquisition/Loading';
@@ -188,7 +187,7 @@ const MailTemplate = () => {
         onCancel={() => setUpdateVisible(false)}
         closeOnEsc
         width={400}
-        zIndex={99999}
+        zIndex={99}
       >
         <Form
           onSubmit={(values) => updateTemplateHandle(values)}
@@ -244,7 +243,7 @@ const MailTemplate = () => {
         onCancel={() => setAddVisible(false)}
         closeOnEsc
         width={400}
-        zIndex={99999}
+        zIndex={99}
       >
         <Form
           onSubmit={(values) => addTemplateHandle(values)}
