@@ -4,6 +4,7 @@ import { Select } from '@douyinfe/semi-ui';
 import moment from 'moment';
 //引入数据
 import { dayOfTheMonthOption, dayOfTheWeekData } from '@/utils/cron';
+import CronViewer from './CronViewer';
 moment.locale('zh-cn');
 const { Option } = Select;
 const format = 'HH:mm';
@@ -164,6 +165,7 @@ const CronInput: React.FC<Props> = ({ onChange }) => {
         {defaultTimeType === 'everyMonth' && (
           <RenderSelect data={dayOfTheMonthOption} placeholder="请选择日期" />
         )}
+        {expression && <CronViewer cronExpression={expression} />}
       </div>
     </>
   );

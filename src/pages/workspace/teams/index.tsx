@@ -23,7 +23,6 @@ const Teams: FC<IProps> = (props) => {
   const { user } = useUserStore();
   const [addLoading, setAddLoading] = useState<boolean>(false);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
-  const [testLoading, setTestLoading] = useState<boolean>(false);
   const [uploadId, setuploadId] = useState<string>('0');
   const [addVisible, setAddVisible] = useState(false);
   const [programDetail, setTeamDetail] = useState<Team>();
