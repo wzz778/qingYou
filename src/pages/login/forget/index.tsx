@@ -64,7 +64,14 @@ export default function Forget() {
                   style={{ width: '100%', height: 35 }}
                   placeholder="请输入您的邮箱"
                   prefix={<IconMail />}
-                  rules={[{ required: true, message: '请输入您要注册的邮箱' }]}
+                  rules={[
+                    { required: true, message: '请输入您要注册的邮箱' },
+                    {
+                      pattern:
+                        /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
+                      message: '邮箱格式不正确'
+                    }
+                  ]}
                 ></Form.Input>
                 <VerificationCodeInput email={formState.values.email} />
                 <Form.Slot label={{ text: '安全验证' }}>

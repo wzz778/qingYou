@@ -79,6 +79,14 @@ export default function Email() {
                   prefix={<IconMail />}
                   style={{ width: '100%', height: 35 }}
                   placeholder="输入你的邮箱"
+                  rules={[
+                    { required: true, message: '请输入您要注册的邮箱' },
+                    {
+                      pattern:
+                        /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
+                      message: '邮箱格式不正确'
+                    }
+                  ]}
                 ></Form.Input>
                 <Form.Input
                   field="password"

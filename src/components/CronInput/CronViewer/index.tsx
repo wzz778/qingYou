@@ -12,6 +12,7 @@ const CronViewer: React.FC<CronViewerProps> = ({ cronExpression }) => {
 
   useEffect(() => {
     handleViewClick();
+    console.log(cronExpression);
   }, [cronExpression]);
 
   const handleViewClick = () => {
@@ -25,10 +26,7 @@ const CronViewer: React.FC<CronViewerProps> = ({ cronExpression }) => {
       const nextTimes: string[] = [];
       for (let i = 0; i < 3; i++) {
         const { value } = interval.next() as IteratorResult<CronDate>;
-        console.log(value);
-
         const date = value.toDate();
-
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');

@@ -8,7 +8,7 @@ import CronViewer from './CronViewer';
 moment.locale('zh-cn');
 const { Option } = Select;
 const format = 'HH:mm';
-const defaultCron = '0 * * * * ?';
+const defaultCron = '0 0 0 * * ?';
 const space = ' '; //空格
 //类型选择
 const timeTypes = [
