@@ -8,26 +8,74 @@ import { Form, Button, Space, ArrayField } from '@douyinfe/semi-ui';
 import CronInput from '@/components/CronInput';
 import React from 'react';
 import { IconMinusCircle, IconPlusCircle } from '@douyinfe/semi-icons';
-import { ToastWaring } from '@/utils/common';
+import { ToastError, ToastSuccess, ToastWaring } from '@/utils/common';
+import { sendMail } from '@/api/modules/email';
+import useUserStore from '@/store/user';
+import { addEmailProgram } from '@/api/modules/dispatch';
 interface IProps {
   datas?: any[];
 }
 
 const Program: FC<IProps> = (props) => {
   const { datas = [] } = props;
-  const { Input, DatePicker, Select, Switch } = Form;
+  const { Select, Switch } = Form;
+  const { user } = useUserStore();
   let [date, setDate] = useState<string>();
+  const [addLoading, setAddLoading] = useState<boolean>(false);
   let [receiveMailData, setReceiveMailData] = useState<string[]>(['@qq.com']);
   const testFormRef = useRef<any>();
   const addTemplateHandle = (data: any) => {
+    setAddLoading(true);
+    const mailForm = new FormData();
+    mailForm.append('accountEmail', data.accountEmail);
+    mailForm.append('title', data.title);
+    mailForm.append('content', data.content);
+    mailForm.append('sendMailName', '青邮');
+    mailForm.append('receiveMailName', '青邮receiveMailName');
+    mailForm.append('receiveMail', data.receiveMail[0]);
     if (data.open) {
       if (!date) {
         ToastWaring('请选择您要设置定时发送邮件的时间');
+        setAddLoading(false);
         return;
       } else {
-        data.cron = date;
+        mailForm.append('cron', date);
+        if (user) {
+          mailForm.append('userId', user?.id);
+        }
+        mailForm.append('personOrTeam', '0');
+        addEmailProgram(mailForm)
+          .then((res: any) => {
+            if (res.code == '200') {
+              ToastSuccess('发送成功');
+            } else {
+              ToastError('发送失败');
+            }
+          })
+          .catch((error: any) => {
+            console.log(error);
+          })
+          .finally(() => {
+            setAddLoading(false);
+          });
       }
+    } else {
+      sendMail(mailForm)
+        .then((res: any) => {
+          if (res.code == '200') {
+            ToastSuccess('发送成功');
+          } else {
+            ToastError('发送失败');
+          }
+        })
+        .catch((error: any) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setAddLoading(false);
+        });
     }
+
     console.log(data);
     // setAddLoading(true);
     // const addForm = {
@@ -146,6 +194,7 @@ const Program: FC<IProps> = (props) => {
                 type="primary"
                 theme="solid"
                 htmlType="submit"
+                loading={addLoading}
                 style={{ width: 120, marginTop: 12, marginLeft: 100 }}
               >
                 创建考试

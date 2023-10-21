@@ -12,7 +12,6 @@ const CronViewer: React.FC<CronViewerProps> = ({ cronExpression }) => {
 
   useEffect(() => {
     handleViewClick();
-    console.log(cronExpression);
   }, [cronExpression]);
 
   const handleViewClick = () => {
