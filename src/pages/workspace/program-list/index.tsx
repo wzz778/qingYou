@@ -171,7 +171,7 @@ const ProjectList = () => {
         <Button onClick={() => push('/workspace/program')}>创建应用</Button>
       </div>
       {isEmpty ? (
-        <None title={'无数据'} description={'请先创建数据'} />
+        <None title={'无数据'} noneHandle={() => push('/workspace/program')} />
       ) : (
         <Table
           columns={columns}

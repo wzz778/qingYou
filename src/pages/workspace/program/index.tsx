@@ -4,7 +4,7 @@ import classNames from 'classnames';
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
-import { Form, Button, Space, ArrayField } from '@douyinfe/semi-ui';
+import { Form, Button, Space, ArrayField, Modal } from '@douyinfe/semi-ui';
 import CronInput from '@/components/CronInput';
 import React from 'react';
 import { IconMinusCircle, IconPlusCircle } from '@douyinfe/semi-icons';
@@ -19,6 +19,7 @@ import Failure from '@/components/dataAcquisition/Failure';
 import Error from '@/components/dataAcquisition/Error';
 import None from '@/components/dataAcquisition/None';
 import { useRouter } from 'next/router';
+import SetTemplate from '../mail-template/setTemplate';
 interface IProps {
   datas?: any[];
 }
@@ -29,8 +30,10 @@ const Program: FC<IProps> = (props) => {
   const { user } = useUserStore();
   const { push } = useRouter();
   let [date, setDate] = useState<string>();
+  const [addVisible, setAddVisible] = useState(false);
   const [addLoading, setAddLoading] = useState<boolean>(false);
-  let [receiveMailData, setReceiveMailData] = useState<string[]>(['@qq.com']);
+  const [dataInitValue, setInitValue] = useState<string[]>(['', '']);
+  const [receiveMailData, setReceiveMailData] = useState<string[]>(['@qq.com']);
   const testFormRef = useRef<any>();
   const { data, isLoading, error, mutate } = useSWR(
     `/email/config/queryEmailConfigPersonal?page=1&limit=10&id=${user?.id}`,
@@ -120,11 +123,16 @@ const Program: FC<IProps> = (props) => {
   return (
     <div className={styles.Project}>
       {isEmpty ? (
-        <None title={'无数据'} description={'请先创建数据'} />
+        <None title={'无绑定邮箱'} noneHandle={() => push('/workspace/mails')} />
       ) : (
         <>
           <div className={styles.header}>
-            <Button onClick={() => push('/workspace/mails')}>绑定邮箱</Button>
+            <Button theme="solid" onClick={() => push('/workspace/mails')}>
+              添加绑定邮箱
+            </Button>
+            <Button type="secondary" style={{ marginLeft: 10 }} onClick={() => setAddVisible(true)}>
+              导入邮件模板
+            </Button>
           </div>
           <Form
             labelWidth="120px"
@@ -152,7 +160,7 @@ const Program: FC<IProps> = (props) => {
                 <Form.Input
                   field="title"
                   label={{ text: '邮件主题', required: true }}
-                  initValue="TCS任务平台使用"
+                  initValue={dataInitValue[0]}
                   style={{ width: '100%' }}
                   rules={[{ required: true, message: '请输入内容' }]}
                   maxLength={20}
@@ -160,7 +168,7 @@ const Program: FC<IProps> = (props) => {
                 <Form.TextArea
                   field="content"
                   label={{ text: '邮件正文', required: true }}
-                  initValue="TCS任务平台使用"
+                  initValue={dataInitValue[1]}
                   rules={[{ required: true, message: '请输入内容' }]}
                   style={{ width: '100%' }}
                   maxCount={400}
@@ -239,6 +247,21 @@ const Program: FC<IProps> = (props) => {
               </>
             )}
           </Form>
+          <Modal
+            title={'导入邮箱模板'}
+            footer={null}
+            visible={addVisible}
+            onCancel={() => setAddVisible(false)}
+            closeOnEsc
+            width={700}
+            zIndex={99}
+          >
+            {addVisible && (
+              <SetTemplate
+                setTemplate={(res) => setInitValue([res.emailTitle, res.emailContent])}
+              />
+            )}
+          </Modal>
         </>
       )}
     </div>

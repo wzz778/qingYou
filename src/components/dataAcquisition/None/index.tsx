@@ -6,15 +6,13 @@ import type { FC } from 'react';
 import styles from './index.module.scss';
 import { Button, Empty } from '@douyinfe/semi-ui';
 import { IllustrationNoContent, IllustrationNoContentDark } from '@douyinfe/semi-illustrations';
-import { useRouter } from 'next/router';
 interface IProps {
   title?: string;
   description?: string;
-  router?: string;
+  noneHandle?: () => void;
 }
 
-const None: FC<IProps> = ({ title, description, router }) => {
-  const { push } = useRouter();
+const None: FC<IProps> = ({ title, description, noneHandle }) => {
   return (
     <div className={styles.None}>
       <Empty
@@ -23,9 +21,9 @@ const None: FC<IProps> = ({ title, description, router }) => {
         title={title}
         description={description}
       >
-        {router && (
-          <Button onClick={() => push(router)} type="primary">
-            二级按钮
+        {noneHandle && (
+          <Button onClick={() => noneHandle()} type="primary">
+            创建数据
           </Button>
         )}
       </Empty>
