@@ -116,150 +116,130 @@ const Program: FC<IProps> = (props) => {
     }
 
     console.log(data);
-    // setAddLoading(true);
-    // const addForm = {
-    //   userId: user?.id,
-    //   emailType: '0',
-    //   emailPort: '465',
-    //   sendHost: 'smtp.qq.com',
-    //   ...values
-    // };
-
-    // requestApi(addForm)
-    //   .then(() => {
-    //     mutate();
-
-    //     ToastSuccess(`${!uploadId ? '增加' : '更新'}成功`);
-    //   })
-    //   .catch(() => {
-    //     ToastError(`${!uploadId ? '增加' : '更新'}失败`);
-    //   })
-    //   .finally(() => {
-    //     setAddVisible(false);
-    //     setAddLoading(false);
-    //   });
   };
   return (
     <div className={styles.Project}>
       {isEmpty ? (
-        <>
-          <Button onClick={() => push('/workspace/mails')}>绑定邮箱</Button>
-          <None title={'无数据'} description={'请先创建数据'} />
-        </>
+        <None title={'无数据'} description={'请先创建数据'} />
       ) : (
-        <Form
-          labelWidth="120px"
-          labelPosition="left"
-          labelAlign="right"
-          getFormApi={(formApi) => (testFormRef.current = formApi)}
-          onSubmit={(values) => addTemplateHandle(values)}
-        >
-          {({ formState, values, formApi }) => (
-            <>
-              <Select
-                field="accountEmail"
-                label={{ text: '邮箱选择', required: true }}
-                style={{ width: '100%' }}
-                rules={[{ required: true, message: '请选选择内容' }]}
-              >
-                {records.map((item: Program) => {
-                  return (
-                    <Select.Option key={item.id} value={item.accountEmail}>
-                      {item.accountEmail}
-                    </Select.Option>
-                  );
-                })}
-              </Select>
-              <Form.Input
-                field="title"
-                label={{ text: '邮件主题', required: true }}
-                initValue="TCS任务平台使用"
-                style={{ width: '100%' }}
-                rules={[{ required: true, message: '请输入内容' }]}
-                maxLength={20}
-              />
-              <Form.TextArea
-                field="content"
-                label={{ text: '邮件正文', required: true }}
-                initValue="TCS任务平台使用"
-                rules={[{ required: true, message: '请输入内容' }]}
-                style={{ width: '100%' }}
-                maxCount={400}
-              />
-              <Form.Input
-                field="sendMailName"
-                label={{ text: '发件人称呼' }}
-                style={{ width: '100%' }}
-                maxLength={15}
-              />
-              <ArrayField field="receiveMail" initValue={receiveMailData}>
-                {({ add, arrayFields }) => (
-                  <>
-                    {arrayFields.map(({ field, key, remove }, i) => (
-                      <div key={key} style={{ width: 1000, display: 'flex' }}>
-                        <Form.Input
-                          field={`${field}`}
-                          label={`收件人 ${i + 1} 邮箱`}
-                          style={{ width: 200 }}
-                          rules={[
-                            { required: true, message: '请输入内容' },
-                            {
-                              pattern:
-                                /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
-                              message: '邮箱格式不正确'
-                            }
-                          ]}
-                        />
-                        {arrayFields.length !== 1 && (
-                          <Button
-                            type="danger"
-                            theme="borderless"
-                            icon={<IconMinusCircle />}
-                            onClick={remove}
-                            style={{ margin: 12 }}
-                          />
-                        )}
-                      </div>
-                    ))}
-                    {arrayFields.length !== 3 && (
-                      <Button
-                        onClick={add}
-                        icon={<IconPlusCircle />}
-                        theme="light"
-                        style={{ marginLeft: 120 }}
-                      >
-                        添加收件人
-                      </Button>
-                    )}
-                  </>
-                )}
-              </ArrayField>
-              <Switch
-                field="open"
-                label={{ text: '定时邮箱', required: true }}
-                checkedText="开"
-                uncheckedText="关"
-              ></Switch>
-              {formState.values.open ? (
-                <Form.Slot label={{ text: '时间选择', required: true }}>
-                  <CronInput onChange={(cron) => setDate(cron)} />
-                </Form.Slot>
-              ) : null}
-              <Space>
-                <Button
-                  type="primary"
-                  theme="solid"
-                  htmlType="submit"
-                  loading={addLoading}
-                  style={{ width: 120, marginTop: 12, marginLeft: 100 }}
+        <>
+          <div className={styles.header}>
+            <Button onClick={() => push('/workspace/mails')}>绑定邮箱</Button>
+          </div>
+          <Form
+            labelWidth="120px"
+            labelPosition="left"
+            labelAlign="right"
+            getFormApi={(formApi) => (testFormRef.current = formApi)}
+            onSubmit={(values) => addTemplateHandle(values)}
+          >
+            {({ formState, values, formApi }) => (
+              <>
+                <Select
+                  field="accountEmail"
+                  label={{ text: '邮箱选择', required: true }}
+                  style={{ width: '100%' }}
+                  rules={[{ required: true, message: '请选选择内容' }]}
                 >
-                  发送邮箱
-                </Button>
-                <Button style={{ marginTop: 12 }}>预览</Button>
-              </Space>
-            </>
-          )}
-        </Form>
+                  {records.map((item: Program) => {
+                    return (
+                      <Select.Option key={item.id} value={item.accountEmail}>
+                        {item.accountEmail}
+                      </Select.Option>
+                    );
+                  })}
+                </Select>
+                <Form.Input
+                  field="title"
+                  label={{ text: '邮件主题', required: true }}
+                  initValue="TCS任务平台使用"
+                  style={{ width: '100%' }}
+                  rules={[{ required: true, message: '请输入内容' }]}
+                  maxLength={20}
+                />
+                <Form.TextArea
+                  field="content"
+                  label={{ text: '邮件正文', required: true }}
+                  initValue="TCS任务平台使用"
+                  rules={[{ required: true, message: '请输入内容' }]}
+                  style={{ width: '100%' }}
+                  maxCount={400}
+                />
+                <Form.Input
+                  field="sendMailName"
+                  label={{ text: '发件人称呼' }}
+                  style={{ width: '100%' }}
+                  maxLength={15}
+                />
+                <ArrayField field="receiveMail" initValue={receiveMailData}>
+                  {({ add, arrayFields }) => (
+                    <>
+                      {arrayFields.map(({ field, key, remove }, i) => (
+                        <div key={key} style={{ width: 1000, display: 'flex' }}>
+                          <Form.Input
+                            field={`${field}`}
+                            label={`收件人 ${i + 1} 邮箱`}
+                            style={{ width: 200 }}
+                            rules={[
+                              { required: true, message: '请输入内容' },
+                              {
+                                pattern:
+                                  /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
+                                message: '邮箱格式不正确'
+                              }
+                            ]}
+                          />
+                          {arrayFields.length !== 1 && (
+                            <Button
+                              type="danger"
+                              theme="borderless"
+                              icon={<IconMinusCircle />}
+                              onClick={remove}
+                              style={{ margin: 12 }}
+                            />
+                          )}
+                        </div>
+                      ))}
+                      {arrayFields.length !== 3 && (
+                        <Button
+                          onClick={add}
+                          icon={<IconPlusCircle />}
+                          theme="light"
+                          style={{ marginLeft: 120 }}
+                        >
+                          添加收件人
+                        </Button>
+                      )}
+                    </>
+                  )}
+                </ArrayField>
+                <Switch
+                  field="open"
+                  label={{ text: '定时邮箱', required: true }}
+                  checkedText="开"
+                  uncheckedText="关"
+                ></Switch>
+                {formState.values.open ? (
+                  <Form.Slot label={{ text: '时间选择', required: true }}>
+                    <CronInput onChange={(cron) => setDate(cron)} />
+                  </Form.Slot>
+                ) : null}
+                <Space>
+                  <Button
+                    type="primary"
+                    theme="solid"
+                    htmlType="submit"
+                    loading={addLoading}
+                    style={{ width: 120, marginTop: 12, marginLeft: 100 }}
+                  >
+                    发送邮箱
+                  </Button>
+                  <Button style={{ marginTop: 12 }}>预览</Button>
+                </Space>
+              </>
+            )}
+          </Form>
+        </>
       )}
     </div>
   );
