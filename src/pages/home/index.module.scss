@@ -145,7 +145,7 @@
       height: 44px;
       left: 126px;
       line-height: 44px;
-      top: 45px;
+      top: 60px;
       vertical-align: middle;
       width: 321px;
       position: absolute;
@@ -158,7 +158,7 @@
       left: 125px;
       line-height: 32px;
       min-width: 340px;
-      top: 106px;
+      top: 110px;
       vertical-align: middle;
       position: absolute;
     }
@@ -169,24 +169,24 @@
       font-size: 20px;
       left: 125px;
       line-height: 32px;
-      top: 138px;
+      top: 142px;
       vertical-align: middle;
       width: 438px;
       position: absolute;
     }
 
     .documentsAmico11 {
-      bottom: -12px;
-      height: 400px;
+      top: 160px;
+      height: 350px;
       left: 700px;
       overflow: hidden;
-      width: 400px;
+      width: 370px;
       position: absolute;
     }
 
     .workChatPana11 {
       height: 267px;
-      left: 126px;
+      left: 100px;
       overflow: hidden;
       top: 191px;
       width: 400px;
@@ -237,7 +237,13 @@
         justify-content: space-between;
         width: 961px;
         display: flex;
-
+        .semiIconsFolderOpen {
+          font-size: 24px;
+          left: 18px;
+          position: absolute;
+          top: 18px;
+          color: #ffffffff;
+        }
         & > .autoWrapper {
           align-items: center;
           flex-direction: column;
@@ -258,14 +264,6 @@
               top: 0;
               width: 60px;
               position: absolute;
-            }
-
-            .semiIconsFolderOpen {
-              font-size: 24px;
-              left: 18px;
-              position: absolute;
-              top: 18px;
-              color: #ffffffff;
             }
           }
 

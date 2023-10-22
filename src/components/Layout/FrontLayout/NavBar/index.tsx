@@ -32,7 +32,7 @@ export default function NavBar() {
     return (
       <div className={styles.navBar}>
         <div className={styles.navCon}>
-          <a href="">
+          <a href="\">
             <div className={styles.logoIcon}></div>
           </a>
           <div className={styles.themeArea}>
