@@ -204,6 +204,7 @@ const Teams: FC<IProps> = (props) => {
                   <Button
                     type="danger"
                     loading={deleteLoading}
+                    theme="solid"
                     style={{
                       width: '100%',
                       marginTop: '6px'

@@ -1,3 +1,4 @@
+import { queryEmailConfigPersonal } from '@/api/modules/email';
 import { getInfo } from '@/api/modules/user';
 import { Modal, Toast } from '@douyinfe/semi-ui';
 import type { FormApi } from '@douyinfe/semi-ui/lib/es/form';
@@ -122,9 +123,6 @@ export function getUserInfo(): Promise<User> {
   return new Promise((resolve) => {
     getInfo()
       .then((res) => {
-        console.log('getInfo');
-        console.log(res);
-
         const userinfo: User = res.data;
         resolve(userinfo);
       })
@@ -134,6 +132,22 @@ export function getUserInfo(): Promise<User> {
 
 export function clearUserToken() {
   localStorage.setItem('qyBearerToken', '');
+}
+
+export function getMails(id: string): Promise<Program> {
+  return new Promise((resolve) => {
+    const params = {
+      id,
+      page: 1,
+      limit: 10
+    };
+    queryEmailConfigPersonal(params)
+      .then((res) => {
+        const programinfo: Program = res.data;
+        resolve(programinfo);
+      })
+      .catch(() => {});
+  });
 }
 
 interface CompareResult {

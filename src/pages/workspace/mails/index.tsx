@@ -59,9 +59,6 @@ const Mails: FC<IProps> = (props) => {
       </div>
     );
   }
-  if (!data) {
-    return <div>数据错误</div>;
-  }
 
   const { records } = data;
   const isEmpty = records.length === 0;
@@ -128,13 +125,17 @@ const Mails: FC<IProps> = (props) => {
     };
     const requestApi = uploadId == '0' ? addEmailConfig : updateEmailConfig;
     requestApi(addForm)
-      .then(() => {
-        mutate();
-
-        ToastSuccess(`${!uploadId ? '增加' : '更新'}成功`);
+      .then((res) => {
+        console.log(res);
+        if (res.code == 444) {
+          ToastError(`该邮箱已被绑定！`);
+        } else {
+          mutate();
+          ToastSuccess(`操作成功`);
+        }
       })
       .catch(() => {
-        ToastError(`${!uploadId ? '增加' : '更新'}失败`);
+        ToastError(`操作失败`);
       })
       .finally(() => {
         setAddVisible(false);
@@ -301,6 +302,7 @@ const Mails: FC<IProps> = (props) => {
                 {uploadId !== '0' && (
                   <Button
                     type="danger"
+                    theme="solid"
                     loading={deleteLoading}
                     style={{
                       width: '100%',
