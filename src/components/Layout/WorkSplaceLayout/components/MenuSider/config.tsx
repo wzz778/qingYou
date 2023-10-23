@@ -1,4 +1,10 @@
-import { IconGallery, IconIdCard, IconMail, IconMailStroked1 } from '@douyinfe/semi-icons';
+import {
+  IconGallery,
+  IconIdCard,
+  IconMail,
+  IconMailStroked1,
+  IconUserGroup
+} from '@douyinfe/semi-icons';
 
 export interface MenuItem {
   itemKey: string;
@@ -8,7 +14,8 @@ export interface MenuItem {
   items?: MenuItem[];
   component?: React.ComponentType<any>;
 }
-const MENU_CONFIG: MenuItem[] = [
+
+const SAME_CONFIG: MenuItem[] = [
   {
     text: '邮箱',
     icon: <IconMail />,
@@ -47,7 +54,11 @@ const MENU_CONFIG: MenuItem[] = [
         path: '/workspace/program-log'
       }
     ]
-  },
+  }
+];
+
+const MENU_CONFIG: MenuItem[] = [
+  ...SAME_CONFIG,
   {
     text: '账号',
     icon: <IconIdCard />,
@@ -67,4 +78,25 @@ const MENU_CONFIG: MenuItem[] = [
   }
 ];
 
-export default MENU_CONFIG;
+const TEAM_CONFIG: MenuItem[] = [
+  ...SAME_CONFIG,
+  {
+    text: '团队',
+    icon: <IconUserGroup />,
+    itemKey: '3',
+    items: [
+      {
+        itemKey: '31',
+        text: '团队人员',
+        path: '/workspace/teams/users'
+      },
+      {
+        itemKey: '32',
+        text: '团队管理',
+        path: '/workspace/teams/information'
+      }
+    ]
+  }
+];
+
+export { TEAM_CONFIG, MENU_CONFIG };

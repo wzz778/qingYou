@@ -88,16 +88,21 @@ const AuthSwitchBox = () => {
           }}
         >
           {teamId == '0' ? (
-            <Tag size="large" color="light-green" prefixIcon={<IconUser />}>
-              个人版
-            </Tag>
+            <>
+              <Tag size="large" color="light-green" prefixIcon={<IconUser />}>
+                个人版
+              </Tag>
+              <span style={{ padding: '0 10px', color: '#009A4B' }}>{teamName}</span>
+            </>
           ) : (
-            <Tag size="large" color="light-blue" prefixIcon={<IconUserGroup />}>
-              团队版
-            </Tag>
+            <>
+              <Tag size="large" color="light-blue" prefixIcon={<IconUserGroup />}>
+                团队版
+              </Tag>
+              <span style={{ padding: '0 10px', color: '#004C8E' }}>{teamName}</span>
+              的空间
+            </>
           )}
-          <span style={{ padding: '0 10px', color: '#009A4B' }}>{teamName}</span>
-          的空间
         </Button>
       </Dropdown>
     </>

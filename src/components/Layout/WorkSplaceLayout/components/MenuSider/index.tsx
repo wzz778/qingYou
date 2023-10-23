@@ -1,9 +1,10 @@
 import { FC, useEffect, useMemo, useState } from 'react';
 import { Layout, Nav } from '@douyinfe/semi-ui';
-import menuList, { MenuItem } from './config';
+import { TEAM_CONFIG, MENU_CONFIG, MenuItem } from './config';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import styles from './index.module.scss';
+import useTeamStore from '@/store/team';
 const { Sider } = Layout;
 
 function findMenuByPath(menus: MenuItem[], path: string, keys: any[]): any {
@@ -26,7 +27,8 @@ const Index: FC = () => {
   const { pathname, push } = useRouter();
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
-
+  const { teamId } = useTeamStore();
+  const menuList = teamId == '0' ? MENU_CONFIG : TEAM_CONFIG;
   const navList = useMemo(() => {
     return menuList.map((e) => {
       return {
