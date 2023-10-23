@@ -211,6 +211,7 @@ const MailTemplate = () => {
                 initValue={templateDetail?.emailContent}
                 style={{ width: '100%' }}
                 placeholder="请输入内容"
+                maxCount={400}
                 rules={[{ required: true, message: '请输入内容' }]}
               ></Form.TextArea>
               <div
@@ -266,6 +267,7 @@ const MailTemplate = () => {
                 style={{ width: '100%' }}
                 placeholder="请输入内容"
                 rules={[{ required: true, message: '请输入内容' }]}
+                maxCount={400}
               ></Form.TextArea>
               <div
                 style={{

@@ -79,6 +79,14 @@ const Work_CONFIG: MenuCItem[] = [
   {
     text: '邮箱模板',
     path: '/workspace/mail-template'
+  },
+  {
+    text: '团队成员',
+    path: '/workspace/teams/users'
+  },
+  {
+    text: '团队管理',
+    path: '/workspace/teams/information'
   }
 ];
 export { PROJECT_CONFIG, DOC_CONFIG, Work_CONFIG };

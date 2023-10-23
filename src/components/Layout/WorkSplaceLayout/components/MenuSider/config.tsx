@@ -83,15 +83,15 @@ const TEAM_CONFIG: MenuItem[] = [
   {
     text: '团队',
     icon: <IconUserGroup />,
-    itemKey: '3',
+    itemKey: '4',
     items: [
       {
-        itemKey: '31',
+        itemKey: '41',
         text: '团队人员',
         path: '/workspace/teams/users'
       },
       {
-        itemKey: '32',
+        itemKey: '42',
         text: '团队管理',
         path: '/workspace/teams/information'
       }

@@ -23,7 +23,10 @@ import SetTemplate from '../mail-template/setTemplate';
 interface IProps {
   datas?: any[];
 }
-
+interface initValueRoot {
+  title?: string;
+  content?: string;
+}
 const Program: FC<IProps> = (props) => {
   const { datas = [] } = props;
   const { Select, Switch } = Form;
@@ -32,9 +35,8 @@ const Program: FC<IProps> = (props) => {
   let [date, setDate] = useState<string>();
   const [addVisible, setAddVisible] = useState(false);
   const [addLoading, setAddLoading] = useState<boolean>(false);
-  const [dataInitValue, setInitValue] = useState<string[]>(['', '']);
   const [receiveMailData, setReceiveMailData] = useState<string[]>(['@qq.com']);
-  const testFormRef = useRef<any>();
+  const formRef = useRef<any>();
   const { data, isLoading, error, mutate } = useSWR(
     `/email/config/queryEmailConfigPersonal?page=1&limit=10&id=${user?.id}`,
     fetcher
@@ -120,6 +122,10 @@ const Program: FC<IProps> = (props) => {
 
     console.log(data);
   };
+  const addTem = (res: Template) => {
+    formRef.current.setValues({ title: res.emailTitle, content: res.emailContent });
+    setAddVisible(false);
+  };
   return (
     <div className={styles.Project}>
       {isEmpty ? (
@@ -138,7 +144,7 @@ const Program: FC<IProps> = (props) => {
             labelWidth="120px"
             labelPosition="left"
             labelAlign="right"
-            getFormApi={(formApi) => (testFormRef.current = formApi)}
+            getFormApi={(formApi) => (formRef.current = formApi)}
             onSubmit={(values) => addTemplateHandle(values)}
           >
             {({ formState, values, formApi }) => (
@@ -160,7 +166,6 @@ const Program: FC<IProps> = (props) => {
                 <Form.Input
                   field="title"
                   label={{ text: '邮件主题', required: true }}
-                  initValue={dataInitValue[0]}
                   style={{ width: '100%' }}
                   rules={[{ required: true, message: '请输入内容' }]}
                   maxLength={20}
@@ -168,7 +173,6 @@ const Program: FC<IProps> = (props) => {
                 <Form.TextArea
                   field="content"
                   label={{ text: '邮件正文', required: true }}
-                  initValue={dataInitValue[1]}
                   rules={[{ required: true, message: '请输入内容' }]}
                   style={{ width: '100%' }}
                   maxCount={400}
@@ -256,11 +260,7 @@ const Program: FC<IProps> = (props) => {
             width={700}
             zIndex={99}
           >
-            {addVisible && (
-              <SetTemplate
-                setTemplate={(res) => setInitValue([res.emailTitle, res.emailContent])}
-              />
-            )}
+            {addVisible && <SetTemplate setTemplate={(res) => addTem(res)} />}
           </Modal>
         </>
       )}

@@ -15,7 +15,7 @@ export const updateTeam = (params: any) => {
   });
 };
 
-export const deleteTeam = (id: any) => {
+export const deleteTeam = (id: string) => {
   return Hyrequire.delete({
     url: `/user/team/deleteTeamById/${id}`
   });
@@ -25,5 +25,11 @@ export const queryTeamPersonal = (params: any) => {
   return Hyrequire.get({
     url: '/user/team/queryTeamPage',
     params
+  });
+};
+
+export const queryTeamById = (id: string) => {
+  return Hyrequire.get({
+    url: `/user/team/queryTeamById/${id}`
   });
 };
