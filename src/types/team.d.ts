@@ -8,3 +8,5 @@ declare interface Team {
   createUser: any;
   updateUser: any;
 }
+
+declare type Teams = Team[];

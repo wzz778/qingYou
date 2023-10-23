@@ -2,7 +2,7 @@ import styles from './index.module.scss';
 import { Form, Button } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { ToastError, ToastSuccess, getUserInfo } from '@/utils/common';
+import { ToastError, ToastSuccess, getTeamInfo, getUserInfo } from '@/utils/common';
 import useUserStore from '@/store/user';
 import { IconHelpCircle, IconMail } from '@douyinfe/semi-icons';
 import { loginApi } from '@/api/modules/login';
@@ -32,7 +32,7 @@ export default function Email() {
         console.log(res);
         if (res.code != 200) {
           ToastError('邮箱或密码错误！');
-          return;
+          return Promise.reject();
         }
         const { accessToken } = res.data;
         localStorage.setItem('qyBearerToken', accessToken);
@@ -42,10 +42,14 @@ export default function Email() {
         return getUserInfo();
       })
       .then((user) => {
-        console.log('user');
-        console.log(user);
         afterLoginSuccess(user);
+        return getTeamInfo(user.id);
       })
+      // .then((user) => {
+      //   console.log('user');
+      //   console.log(user);
+      //   afterLoginSuccess(user);
+      // })
       .catch((err) => {})
       .finally(() => {
         setLoading(false);

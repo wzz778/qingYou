@@ -120,7 +120,7 @@ const Teams: FC<IProps> = (props) => {
             setTeamDetail(undefined);
           }}
         >
-          绑定团队
+          创建团队
         </Button>
       </div>
 

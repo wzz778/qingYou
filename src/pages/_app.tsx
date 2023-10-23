@@ -9,8 +9,6 @@ import WorkSplaceLayout from '@/components/Layout/WorkSplaceLayout';
 import FrontLayout from '@/components/Layout/FrontLayout/Layout';
 import LoginLayout from '@/components/Layout/LoginLayout/Layout';
 import useFetchUserInfo from '@/hooks/useFetchUserInfo';
-import useMount from '@/hooks/useMount';
-import useUserStore from '@/store/user';
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();

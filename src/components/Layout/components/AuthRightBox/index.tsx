@@ -14,7 +14,6 @@ const AuthRightBox = () => {
 
   const logoutHandle = async () => {
     setLogoutIsLoading(true);
-
     ToastSuccess('退出成功');
     clearUserToken();
     clearUser();

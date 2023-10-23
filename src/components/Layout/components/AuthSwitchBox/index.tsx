@@ -1,22 +1,36 @@
+import None from '@/components/dataAcquisition/None';
+import useTeamStore from '@/store/team';
 import useUserStore from '@/store/user';
 import { ToastSuccess, clearUserToken } from '@/utils/common';
-import { IconBranch } from '@douyinfe/semi-icons';
+import {
+  IconBranch,
+  IconCopyAdd,
+  IconGallery,
+  IconUser,
+  IconUserCircle,
+  IconUserGroup
+} from '@douyinfe/semi-icons';
 import { Button, Dropdown, DropdownDivider, Spin, Tag } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-
+import styles from './index.module.scss';
 const AuthSwitchBox = () => {
   const { push, pathname } = useRouter();
-  const [logoutIsLoading, setLogoutIsLoading] = useState(false);
-  const { user, clearUser } = useUserStore();
-  // if (!user) return null;
+  const { user } = useUserStore();
+  const { team, teamId, teamName, setTeamId, setTeamName } = useTeamStore();
+  if (!team) return;
+  const isEmpty = team.length == 0;
+  const changeTeam = (id: string, name: string) => {
+    setTeamId(id);
+    setTeamName(name);
+    if (id == '0') {
+      localStorage.removeItem('qyTeamId');
+    } else {
+      localStorage.setItem('qyTeamId', id);
+    }
+    localStorage.setItem('qyTeamName', name);
 
-  const logoutHandle = async () => {
-    setLogoutIsLoading(true);
-    ToastSuccess('退出成功');
-    push('/login');
-    clearUserToken();
-    clearUser();
+    push('/workspace');
   };
   return (
     <>
@@ -26,12 +40,43 @@ const AuthSwitchBox = () => {
         render={
           <Dropdown.Menu>
             <Dropdown.Title>个人版</Dropdown.Title>
-            <Dropdown.Item onClick={() => push('/workspace/project')}>用户名</Dropdown.Item>
+            <Dropdown.Item
+              type="primary"
+              className={teamId == '0' ? styles.getSelected : ''}
+              icon={<IconUserCircle />}
+              onClick={() => changeTeam('0', user?.nickname || '')}
+            >
+              {user?.username}
+            </Dropdown.Item>
             <DropdownDivider />
             <Dropdown.Title>团队版</Dropdown.Title>
-            <Dropdown.Item onClick={() => push('/workspace/project')}>应用列表</Dropdown.Item>
-            <Dropdown.Item onClick={() => push('/workspace/doc')}>知识库列表</Dropdown.Item>
-            <Dropdown.Item onClick={() => push('/workspace/account')}>账号设置</Dropdown.Item>
+            {isEmpty ? (
+              <Dropdown.Item icon={<IconGallery />} type="tertiary">
+                无数据
+              </Dropdown.Item>
+            ) : (
+              <>
+                {team.map((item) => (
+                  <div key={item.id}>
+                    <Dropdown.Item
+                      icon={<IconBranch />}
+                      type="secondary"
+                      className={teamId == item.id ? styles.getSelected : ''}
+                      onClick={() => changeTeam(item.id, item.teamName)}
+                    >
+                      {item.teamName}
+                    </Dropdown.Item>
+                  </div>
+                ))}
+              </>
+            )}
+            <Dropdown.Item
+              icon={<IconCopyAdd />}
+              type="primary"
+              onClick={() => push('/workspace/teams')}
+            >
+              创建团队
+            </Dropdown.Item>
           </Dropdown.Menu>
         }
       >
@@ -42,10 +87,16 @@ const AuthSwitchBox = () => {
             marginRight: '40px'
           }}
         >
-          <Tag size="large" color="light-green" prefixIcon={<IconBranch />}>
-            个人版
-          </Tag>
-          <span style={{ padding: '0 10px', color: '#009A4B' }}>111</span>
+          {teamId == '0' ? (
+            <Tag size="large" color="light-green" prefixIcon={<IconUser />}>
+              个人版
+            </Tag>
+          ) : (
+            <Tag size="large" color="light-blue" prefixIcon={<IconUserGroup />}>
+              团队版
+            </Tag>
+          )}
+          <span style={{ padding: '0 10px', color: '#009A4B' }}>{teamName}</span>
           的空间
         </Button>
       </Dropdown>

@@ -1,4 +1,5 @@
 import { queryEmailConfigPersonal } from '@/api/modules/email';
+import { queryTeamPersonal } from '@/api/modules/team';
 import { getInfo } from '@/api/modules/user';
 import { Modal, Toast } from '@douyinfe/semi-ui';
 import type { FormApi } from '@douyinfe/semi-ui/lib/es/form';
@@ -125,6 +126,22 @@ export function getUserInfo(): Promise<User> {
       .then((res) => {
         const userinfo: User = res.data;
         resolve(userinfo);
+      })
+      .catch(() => {});
+  });
+}
+
+export function getTeamInfo(id: string): Promise<Teams> {
+  return new Promise((resolve) => {
+    const params = {
+      id,
+      page: 1,
+      limit: 10
+    };
+    queryTeamPersonal(params)
+      .then((res) => {
+        const teaminfo: Teams = res.data;
+        resolve(teaminfo);
       })
       .catch(() => {});
   });
