@@ -33,3 +33,19 @@ export const queryTeamById = (id: string) => {
     url: `/user/team/queryTeamById/${id}`
   });
 };
+
+//成员
+
+export const addMember = (data: any) => {
+  return Hyrequire.post({
+    url: '/user/team/addMember',
+    params: data
+  });
+};
+
+export const queryMemberPage = (params: any) => {
+  return Hyrequire.get({
+    url: '/user/team/queryMemberPage',
+    params
+  });
+};

@@ -32,6 +32,7 @@
     "next": "13.4.19",
     "next-redux-wrapper": "^8.1.0",
     "normalize.css": "^8.0.1",
+    "nprogress": "^0.2.0",
     "react": "18.2.0",
     "react-cropper": "^2.3.3",
     "react-dom": "18.2.0",
@@ -42,6 +43,7 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
+    "@types/nprogress": "^0.2.2",
     "husky": "^8.0.3",
     "prettier": "^3.0.3",
     "sass": "^1.66.1"

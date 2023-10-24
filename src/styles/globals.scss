@@ -67,3 +67,15 @@ a {
   height: 100vh;
   overflow: auto;
 }
+#nprogress .bar {
+  background: #1ad879 !important; //自定义颜色
+}
+#nprogress .peg {
+  box-shadow:
+    0 0 10px #1ad879,
+    0 0 5px #1ad879 !important;
+}
+#nprogress .spinner-icon {
+  border-top-color: #1ad879 !important;
+  border-left-color: #1ad879 !important;
+}
