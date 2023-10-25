@@ -6,6 +6,7 @@ import { ToastError, ToastSuccess, getTeamInfo, getUserInfo } from '@/utils/comm
 import useUserStore from '@/store/user';
 import { IconHelpCircle, IconMail } from '@douyinfe/semi-icons';
 import { loginApi } from '@/api/modules/login';
+import useTeamStore from '@/store/team';
 interface loginRoot {
   username: string;
   password: string;
@@ -13,7 +14,7 @@ interface loginRoot {
 export default function Email() {
   const [loading, setLoading] = useState(false);
   const { getUser, setUser } = useUserStore();
-
+  const { setTeam, setTeamName } = useTeamStore();
   const { push } = useRouter();
   const handleSubmit = (values: any) => {
     setLoading(true);
@@ -45,11 +46,9 @@ export default function Email() {
         afterLoginSuccess(user);
         return getTeamInfo(user.id);
       })
-      // .then((user) => {
-      //   console.log('user');
-      //   console.log(user);
-      //   afterLoginSuccess(user);
-      // })
+      .then((teams) => {
+        setTeam(teams);
+      })
       .catch((err) => {})
       .finally(() => {
         setLoading(false);
@@ -58,6 +57,7 @@ export default function Email() {
 
   const afterLoginSuccess = (user: User) => {
     const { status } = user;
+    setTeamName(user.nickname);
     setUser(user);
     if (status == '0') {
       push('/workspace');

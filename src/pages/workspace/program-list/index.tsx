@@ -35,7 +35,7 @@ const ProjectList = () => {
   const [programDetail, setProgramDetail] = useState<Program>();
   const { user } = useUserStore();
   const { data, isLoading, error, mutate } = useSWR(
-    `/email/quartz/listJobsByGroupName?id=${user?.id}`,
+    `/email/mail/queryTimedMail?userId=${user?.id}&page=1&limit=10`,
     fetcher
   );
 
@@ -67,7 +67,7 @@ const ProjectList = () => {
     {
       title: '标题',
       width: 200,
-      dataIndex: 'emailTitle',
+      dataIndex: 'title',
       render: (text: string) => {
         return <Text ellipsis={{ showTooltip: true }}>{text}</Text>;
       }

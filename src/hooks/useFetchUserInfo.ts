@@ -16,9 +16,9 @@ const useFetchUserInfo = () => {
       getUser()
         .then((data) => {
           if (!data.user) {
-            // clearUserToken();
-            // clearUser();
-            // push('/login');
+            clearUserToken();
+            clearUser();
+            push('/login');
             return Promise.reject();
           } else {
             if (data.isRefresh) {

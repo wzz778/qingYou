@@ -1,3 +1,12 @@
 .Workspace {
-  color: #000;
+  margin-top: 30px;
+  .tag {
+    padding: 3px 6px;
+    border-radius: 4px;
+    color: #ffffff;
+  }
+  .nickname {
+    font-size: 22px;
+    color: #3f4743;
+  }
 }

@@ -46,7 +46,7 @@ const AuthSwitchBox = () => {
               icon={<IconUserCircle />}
               onClick={() => changeTeam('0', user?.nickname || '')}
             >
-              {user?.username}
+              {teamName}
             </Dropdown.Item>
             <DropdownDivider />
             <Dropdown.Title>团队版</Dropdown.Title>

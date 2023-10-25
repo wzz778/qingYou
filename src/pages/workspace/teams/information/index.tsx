@@ -4,7 +4,7 @@ import { ToastSuccess } from '@/utils/common';
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
-import { Button, Empty } from '@douyinfe/semi-ui';
+import { Button, Empty, Typography } from '@douyinfe/semi-ui';
 import { IllustrationNoContent, IllustrationNoContentDark } from '@douyinfe/semi-illustrations';
 import { useRouter } from 'next/router';
 import Loading from '@/components/dataAcquisition/Loading';
@@ -22,7 +22,6 @@ interface IProps {
 const Information: FC<IProps> = (props) => {
   const { datas = [] } = props;
   const { query, push } = useRouter();
-  const [teamFrom, setTeamFrom] = useState<Team>();
   const { user } = useUserStore();
   if (!query.teamId) {
     // ToastError('错误！');
@@ -52,10 +51,9 @@ const Information: FC<IProps> = (props) => {
     return <div>数据错误</div>;
   } else {
     console.log(data);
-    setTeamFrom(data);
   }
   const addTeam = async () => {
-    const res = await addMember({ teamId: teamFrom?.id, memberId: user?.id });
+    const res = await addMember({ teamId: data?.id, memberId: user?.id });
     if (res.code == 200) {
       ToastSuccess('加入成功！');
     } else {
@@ -64,26 +62,34 @@ const Information: FC<IProps> = (props) => {
       // ToastError('加入失败！');
     }
   };
-
-  return (
-    <div className={styles.demo}>
+  const { Text } = Typography;
+  const inviteBox = () => {
+    return (
       <div>
-        <Empty
-          image={<IllustrationNoContent style={{ width: 200, height: 200 }} />}
-          darkModeImage={<IllustrationNoContentDark style={{ width: 250, height: 250 }} />}
-          title={`加入团队`}
-          description={`邀请你加入   ${teamFrom?.teamName}   的团队`}
+        <span className={styles.nickname}>{user?.nickname} </span>邀请你进入
+        <Text className={styles.tag}>{data?.teamName}</Text>
+        团队
+        <div
+          style={{ width: '100%', display: 'flex', justifyContent: 'space-around', marginTop: 12 }}
         >
-          <div style={{ width: '100%', display: 'flex', justifyContent: 'space-around' }}>
-            <Button type="primary" theme="solid" onClick={addTeam}>
-              立刻加入
-            </Button>
-            <Button type="danger" onClick={() => push('/workspace')}>
-              拒绝加入
-            </Button>
-          </div>
-        </Empty>
+          <Button type="primary" theme="solid" onClick={addTeam}>
+            立刻加入
+          </Button>
+          <Button type="danger" onClick={() => push('/workspace')}>
+            拒绝加入
+          </Button>
+        </div>
       </div>
+    );
+  };
+  return (
+    <div className={styles.Information}>
+      <Empty
+        image={<IllustrationNoContent style={{ width: 200, height: 200 }} />}
+        darkModeImage={<IllustrationNoContentDark style={{ width: 250, height: 250 }} />}
+        title={`加入团队`}
+        description={inviteBox()}
+      />
     </div>
   );
 };

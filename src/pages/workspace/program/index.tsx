@@ -34,6 +34,7 @@ const Program: FC<IProps> = (props) => {
   const { push } = useRouter();
   let [date, setDate] = useState<string>();
   const [addVisible, setAddVisible] = useState(false);
+  const [testLoading, setTestVisible] = useState(false);
   const [addLoading, setAddLoading] = useState<boolean>(false);
   const [receiveMailData, setReceiveMailData] = useState<string[]>(['@qq.com']);
   const formRef = useRef<any>();
@@ -65,7 +66,8 @@ const Program: FC<IProps> = (props) => {
   const { records } = data;
   const isEmpty = records.length === 0;
   const addTemplateHandle = (data: any) => {
-    setAddLoading(true);
+    console.log(testLoading);
+
     const mailForm = new FormData();
     mailForm.append('accountEmail', data.accountEmail);
     mailForm.append('title', data.title);
@@ -78,6 +80,7 @@ const Program: FC<IProps> = (props) => {
     mailForm.append('receiveMailName', '青邮receiveMailName');
     mailForm.append('receiveMail', data.receiveMail[0]);
     if (data.open) {
+      setAddLoading(true);
       if (!date) {
         ToastWaring('请选择您要设置定时发送邮件的时间');
         setAddLoading(false);
@@ -104,6 +107,7 @@ const Program: FC<IProps> = (props) => {
           });
       }
     } else {
+      setAddLoading(true);
       sendMail(mailForm)
         .then((res: any) => {
           if (res.code == '200') {
@@ -119,9 +123,40 @@ const Program: FC<IProps> = (props) => {
           setAddLoading(false);
         });
     }
-
-    console.log(data);
   };
+  const testHandle = (formApi: any) => {
+    formApi.validate().then(() => {
+      setTestVisible(true);
+      let data = formApi.getValue();
+      const mailForm = new FormData();
+      mailForm.append('accountEmail', data.accountEmail);
+      mailForm.append('title', data.title);
+      mailForm.append('content', data.content);
+      if (data.sendMailName) {
+        mailForm.append('sendMailName', data.sendMailName);
+      } else {
+        mailForm.append('sendMailName', '青邮');
+      }
+      mailForm.append('receiveMailName', '青邮receiveMailName');
+      mailForm.append('receiveMail', data.receiveMail[0]);
+
+      sendMail(mailForm)
+        .then((res: any) => {
+          if (res.code == '200') {
+            ToastSuccess('发送成功');
+          } else {
+            ToastError('发送失败');
+          }
+        })
+        .catch((error: any) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setTestVisible(false);
+        });
+    });
+  };
+
   const addTem = (res: Template) => {
     formRef.current.setValues({ title: res.emailTitle, content: res.emailContent });
     setAddVisible(false);
@@ -242,11 +277,19 @@ const Program: FC<IProps> = (props) => {
                     theme="solid"
                     htmlType="submit"
                     loading={addLoading}
-                    style={{ width: 120, marginTop: 12, marginLeft: 100 }}
+                    style={{ width: 120, marginTop: 12, marginLeft: 120 }}
                   >
-                    发送邮箱
+                    发送{formState.values.open ? '流程' : '邮箱'}
                   </Button>
-                  <Button style={{ marginTop: 12 }}>预览</Button>
+                  {formState.values.open ? (
+                    <Button
+                      style={{ marginTop: 12 }}
+                      onClick={() => testHandle(formApi)}
+                      loading={testLoading}
+                    >
+                      测试发送
+                    </Button>
+                  ) : null}
                 </Space>
               </>
             )}
