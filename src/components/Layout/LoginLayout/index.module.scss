@@ -2,14 +2,16 @@
   // background-color: var(--primary-background-color);
   background-size: 23px 23px;
   background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0IiBzdHlsZT0iZmlsbDogcmdiKDIzMCwgMjMwLCAyMzApOyIvPjwvc3ZnPgo=);
+  background-color: var(--primary-background-color);
+  height: 100vh;
   .main {
     margin: 0 auto;
     max-width: 1100px;
     .loginBox {
       margin: 30px auto;
       padding: 20px 8px 20px;
-      background-color: white;
       width: 450px;
+      background-color: var(--login-background-color);
       box-shadow:
         0 4px 8px -4px rgb(0 0 0 / 13%),
         0 6px 16px 0 rgb(0 0 0 / 8%),

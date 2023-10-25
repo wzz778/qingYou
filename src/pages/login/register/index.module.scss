@@ -3,27 +3,20 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
   .loginCard {
     width: 400px;
     // margin-top: 200px;
-
     .loginHeader {
       max-width: 400px;
       text-align: center;
-
+      color: var(--grey-primary-color);
       .title {
         font-weight: 700;
         font-size: 2rem;
         letter-spacing: -0.049375rem;
         line-height: 2.5rem;
-        // color: #029449;
+        color: #029449;
       }
-    }
-
-    .loginCard {
-      display: flex;
-      flex-direction: column;
     }
   }
 }

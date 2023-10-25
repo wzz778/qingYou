@@ -12,6 +12,7 @@ html[data-theme='dark'] {
   --semi-page-active-background-color: rgba(84, 169, 255, 0.2);
   --semi-page-hover-background-color: rgb(15, 15, 15);
   --theme-icon: url('../../public/images/theme_dark.svg');
+  --login-background-color: rgba(208, 208, 208, 0.95);
 }
 
 html[data-theme='light'] {
@@ -27,6 +28,7 @@ html[data-theme='light'] {
   --semi-page-active-background-color: rgb(234, 245, 255);
   --semi-page-hover-background-color: rgb(244, 245, 245);
   --theme-icon: url('../../public/images/theme_light.png');
+  --login-background-color: rgba(255, 255, 255, 0.3);
 }
 html,
 body {
