@@ -82,6 +82,7 @@ const MailTemplate = () => {
     {
       title: '操作',
       dataIndex: 'id',
+      // fixed: 'right',
       render: (id: string, record: any) => {
         return (
           <Space>

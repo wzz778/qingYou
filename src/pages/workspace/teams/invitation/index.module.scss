@@ -1,3 +1,14 @@
 .Invitation {
-  color: #000;
+  margin-top: 20px;
+  .tag {
+    color: #009548;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 0 8px;
+  }
+  .nickname {
+    font-size: 20px;
+    color: #3f4743;
+    font-weight: 600;
+  }
 }

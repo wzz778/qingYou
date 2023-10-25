@@ -39,18 +39,18 @@ const SAME_CONFIG: MenuItem[] = [
     ]
   },
   {
-    text: '流程',
+    text: '定时邮箱',
     icon: <IconGallery />,
     itemKey: '2',
     items: [
       {
         itemKey: '21',
-        text: '我的流程',
+        text: '定时邮箱',
         path: '/workspace/program-list'
       },
       {
         itemKey: '22',
-        text: '流程日志',
+        text: '发送日志',
         path: '/workspace/program-log'
       }
     ]

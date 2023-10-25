@@ -279,7 +279,7 @@ const Program: FC<IProps> = (props) => {
                     loading={addLoading}
                     style={{ width: 120, marginTop: 12, marginLeft: 120 }}
                   >
-                    发送{formState.values.open ? '流程' : '邮箱'}
+                    发送{formState.values.open ? '定时邮箱' : '邮箱'}
                   </Button>
                   {formState.values.open ? (
                     <Button

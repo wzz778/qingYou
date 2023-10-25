@@ -61,11 +61,11 @@ const Work_CONFIG: MenuCItem[] = [
     path: '/workspace/mails'
   },
   {
-    text: '我的流程',
+    text: '定时邮箱',
     path: '/workspace/program-list'
   },
   {
-    text: '流程日志',
+    text: '发送日志',
     path: '/workspace/program-log'
   },
   {

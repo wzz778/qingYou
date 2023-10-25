@@ -13,6 +13,10 @@ interface UseTeamStore {
     team: Teams;
     teamId: string;
   }>;
+  updateTeams: (id: string) => Promise<{
+    team: Teams;
+    teamId: string;
+  }>;
   clearTeam: () => void;
 }
 
@@ -47,6 +51,18 @@ const useTeamStore = create<UseTeamStore>((set, get) => ({
           });
         });
       }
+    });
+  },
+  updateTeams: (id: string) => {
+    return new Promise((resolve, reject) => {
+      const teamId = get().teamId;
+      getTeamInfo(id).then((data) => {
+        get().setTeam(data);
+        resolve({
+          team: data,
+          teamId
+        });
+      });
     });
   },
   clearTeam: () => {

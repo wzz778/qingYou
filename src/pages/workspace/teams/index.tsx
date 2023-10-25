@@ -14,6 +14,7 @@ import useSWR from 'swr';
 import { fetcher } from '@/utils/http';
 import { IconBeaker, IconLink } from '@douyinfe/semi-icons';
 import { addTeam, deleteTeam, updateTeam } from '@/api/modules/team';
+import useTeamStore from '@/store/team';
 interface IProps {
   datas?: any[];
 }
@@ -27,46 +28,20 @@ const Teams: FC<IProps> = (props) => {
   const [addVisible, setAddVisible] = useState(false);
   const [programDetail, setTeamDetail] = useState<Team>();
   const testFormRef = useRef<any>();
+  const { team, updateTeams } = useTeamStore();
   const { Text } = Typography;
-  const { data, isLoading, error, mutate } = useSWR(
-    `user/team/queryTeamPage?page=1&limit=10&id=${user?.id}`,
-    fetcher
-  );
-
-  if (isLoading)
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
-  if (error)
-    return (
-      <div>
-        <Failure title={'请求失败！'} />
-      </div>
-    );
-  if (!data) {
-    return (
-      <div>
-        <Error title={'请求出错！'} />
-      </div>
-    );
-  }
-  if (!data) {
+  if (!team) {
     return <div>数据错误</div>;
   }
-
-  const isEmpty = data.length === 0;
+  if (!user) {
+    return <div>数据错误</div>;
+  }
+  const isEmpty = team.length === 0;
 
   const toUploadFrom = (data: Team) => {
     setuploadId(data.id);
     setAddVisible(true);
     setTeamDetail(data);
-    // testFormRef.current.setValues(
-    //   { accountEmail: data.accountEmail, emailKey: data.emailKey },
-    //   { isOverride: true }
-    // );
-    // console.log(testFormRef.current.getFormState().values);
   };
 
   const addTemplateHandle = (values: any) => {
@@ -81,8 +56,7 @@ const Teams: FC<IProps> = (props) => {
     const requestApi = uploadId == '0' ? addTeam : updateTeam;
     requestApi(addForm)
       .then(() => {
-        mutate();
-
+        updateTeams(user?.id);
         ToastSuccess(`${!uploadId ? '增加' : '更新'}成功`);
       })
       .catch(() => {
@@ -98,7 +72,7 @@ const Teams: FC<IProps> = (props) => {
     setDeleteLoading(false);
     deleteTeam(uploadId)
       .then(() => {
-        mutate();
+        updateTeams(user?.id);
         ToastSuccess(`删除成功`);
       })
       .catch(() => {
@@ -128,7 +102,7 @@ const Teams: FC<IProps> = (props) => {
         <None title={'无数据'} description={'请先创建数据'} />
       ) : (
         <CardGroup spacing={10}>
-          {data.map((item: Team) => (
+          {team.map((item: Team) => (
             <div key={item.id} onClick={() => toUploadFrom(item)}>
               <Card
                 shadows="hover"
