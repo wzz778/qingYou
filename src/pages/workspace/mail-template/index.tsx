@@ -175,6 +175,7 @@ const MailTemplate = () => {
       ) : (
         <Table
           columns={columns}
+          // scroll={scroll}
           dataSource={records}
           rowSelection={rowSelection}
           pagination={records.length > 10 ? { pageSize: 10 } : false}

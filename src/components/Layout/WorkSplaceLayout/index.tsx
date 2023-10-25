@@ -9,7 +9,8 @@ import ContentSider, { ContentSiderType } from './components/ContentSider';
 import { useRouter } from 'next/router';
 import Wfooter from './components/Footer';
 import usePageIntercept from '@/hooks/usePageIntercept';
-
+import useUserStore from '@/store/user';
+import FailPage from '@/pages/404';
 const { Content } = Layout;
 
 interface WorkSplaceLayoutProps {
@@ -17,6 +18,7 @@ interface WorkSplaceLayoutProps {
 }
 const WorkSplaceLayout: React.FC<WorkSplaceLayoutProps> = ({ children }) => {
   const { pathname, push } = useRouter();
+  const { user, clearUser } = useUserStore();
   // usePageIntercept('w');
   const isSubRoute = (path: string, baseRoute: string) => {
     return pathname.startsWith(baseRoute) && pathname !== baseRoute;
@@ -29,6 +31,9 @@ const WorkSplaceLayout: React.FC<WorkSplaceLayoutProps> = ({ children }) => {
       return 'doc';
     }
   }, [pathname]);
+  if (!user) {
+    return <FailPage />;
+  }
 
   return (
     <div className={styles.Layout}>

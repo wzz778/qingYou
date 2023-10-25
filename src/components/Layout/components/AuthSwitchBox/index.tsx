@@ -46,7 +46,7 @@ const AuthSwitchBox = () => {
               icon={<IconUserCircle />}
               onClick={() => changeTeam('0', user?.nickname || '')}
             >
-              {teamName}
+              {user?.nickname}
             </Dropdown.Item>
             <DropdownDivider />
             <Dropdown.Title>团队版</Dropdown.Title>
@@ -92,7 +92,7 @@ const AuthSwitchBox = () => {
               <Tag size="large" color="light-green" prefixIcon={<IconUser />}>
                 个人版
               </Tag>
-              <span style={{ padding: '0 10px', color: '#009A4B' }}>{teamName}</span>
+              <span style={{ padding: '0 10px', color: '#009A4B' }}>{user?.nickname}</span>
             </>
           ) : (
             <>

@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 // import classNames from "classnames";
-import { ToastError, ToastSuccess } from '@/utils/common';
+import { ToastError, ToastSuccess, execConfirm } from '@/utils/common';
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
@@ -15,6 +15,7 @@ import { fetcher } from '@/utils/http';
 import useSWR from 'swr';
 import { addMember } from '@/api/modules/team';
 import useUserStore from '@/store/user';
+import useTeamStore from '@/store/team';
 interface IProps {
   datas?: any[];
 }
@@ -23,9 +24,7 @@ const Invitation: FC<IProps> = (props) => {
   const { datas = [] } = props;
   const { query, push } = useRouter();
   const { user } = useUserStore();
-  if (!query.teamId) {
-    // ToastError('错误！');
-  }
+  const { team, setTeamId, setTeamName, setTeam } = useTeamStore();
   const { data, isLoading, error } = useSWR(`user/team/queryTeamById/${query.teamId}`, fetcher);
 
   if (isLoading)
@@ -52,27 +51,44 @@ const Invitation: FC<IProps> = (props) => {
   } else {
     console.log(data);
   }
-  const addTeam = async () => {
-    const res = await addMember({ teamId: data?.id, memberEmail: user?.username });
-    if (res.code == 200) {
-      ToastSuccess('加入成功！');
-    } else {
-      console.log(res);
 
-      ToastError('加入失败！');
+  const addTeam = async () => {
+    console.log(user?.id);
+
+    const res = await addMember({ teamId: data?.id, memberEmail: user?.username });
+    console.log(data);
+
+    console.log(res);
+    if (res.code == 200) {
+      console.log();
+
+      // const { id, teamName } = data;
+      // localStorage.setItem('qyTeamId', id);
+      // localStorage.setItem('qyTeamName', teamName);
+      // ToastSuccess('加入成功！');
+      // window.location.href = '/workspace';
+    } else {
+      ToastError(res.msg);
     }
   };
   const { Text } = Typography;
   const inviteBox = () => {
     return (
       <div>
-        <span className={styles.nickname}>{user?.nickname} </span>邀请你进入
+        <span className={styles.nickname}>{data.nickname}</span>
+        {'    '}邀请你进入
         <Text className={styles.tag}>{data?.teamName}</Text>
         团队
         <div
           style={{ width: '100%', display: 'flex', justifyContent: 'space-around', marginTop: 12 }}
         >
-          <Button type="primary" theme="solid" onClick={addTeam}>
+          <Button
+            type="primary"
+            theme="solid"
+            onClick={() =>
+              execConfirm(() => addTeam(), undefined, `确定要加入   ${data?.teamName}  团队吗？`)
+            }
+          >
             立刻加入
           </Button>
           <Button type="danger" onClick={() => push('/workspace')}>

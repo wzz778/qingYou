@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react';
 import { sendCode } from '@/api/modules/login';
 import { Toast } from '@douyinfe/semi-ui';
 import { IconInfoCircle } from '@douyinfe/semi-icons';
+import install from '@/utils/validator';
+import { ToastWaring } from '@/utils/common';
 function VerificationCodeInput({ email }: any) {
   const [countdown, setCountdown] = useState(0);
   const countdownRef = useRef<NodeJS.Timeout | null>(null);
@@ -49,14 +51,19 @@ function VerificationCodeInput({ email }: any) {
   }, [countdown]);
 
   const sendCodeHandle = (email: string) => {
-    sendCode(email)
-      .then((res) => {
-        console.log(res);
-        Toast.success('发送成功');
-        setCountdown(60);
-        startCountdown();
-      })
-      .catch((err) => {});
+    const emailError = install.emailValidate(email);
+    if (emailError) {
+      ToastWaring(emailError);
+    } else {
+      sendCode(email)
+        .then((res) => {
+          console.log(res);
+          Toast.success('发送成功');
+          setCountdown(60);
+          startCountdown();
+        })
+        .catch((err) => {});
+    }
   };
 
   return (

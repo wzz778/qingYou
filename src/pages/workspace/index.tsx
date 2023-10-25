@@ -43,6 +43,9 @@ const Workspace: FC<IProps> = (props) => {
             >
               团队版
             </Text>
+            <span style={{ padding: '0px 8px', color: '#004C8E', fontSize: '20px' }}>
+              {teamName}
+            </span>
           </>
         )}
       </div>
