@@ -33,7 +33,6 @@ export async function uploadFile(blob: Blob, fileName: string) {
   return new Promise(async (resolve, reject) => {
     // 创建一个新的FormData对象
     const formData = new FormData();
-
     // 将blob对象添加到FormData对象中
     formData.append('file', blob, fileName);
     const data = await upload(formData);

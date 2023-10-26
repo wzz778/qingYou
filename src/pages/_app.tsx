@@ -3,6 +3,7 @@ import 'reset-css';
 import type { AppProps } from 'next/app';
 import Router, { useRouter } from 'next/router';
 import nprogress from 'nprogress';
+import Seo from '@/components/Seo';
 import AdminLayout from '@/components/Layout/AdminLayout/Layout';
 import WorkSplaceLayout from '@/components/Layout/WorkSplaceLayout';
 import FrontLayout from '@/components/Layout/FrontLayout/Layout';
@@ -32,6 +33,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }
   return (
     <LayoutComponent>
+      <Seo />
       <Component {...pageProps} />
     </LayoutComponent>
   );
