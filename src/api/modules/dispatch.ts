@@ -38,7 +38,7 @@ export const pauseEmailProgram = (params: any) => {
 
 export const beginEmailProgram = (params: any) => {
   return Hyrequire.post({
-    url: '/email/quartz/listJobsByGroupName',
+    url: '/email/quartz/resumeJob',
     params
   });
 };

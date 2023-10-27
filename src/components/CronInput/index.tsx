@@ -1,10 +1,13 @@
-import { ConfigProvider, TimePicker } from '@douyinfe/semi-ui';
-import { Fragment, useState } from 'react';
+import { Button, ConfigProvider, TimePicker } from '@douyinfe/semi-ui';
+import { Fragment, useEffect, useState } from 'react';
 import { Select } from '@douyinfe/semi-ui';
 import moment from 'moment';
 //引入数据
 import { dayOfTheMonthOption, dayOfTheWeekData } from '@/utils/cron';
 import CronViewer from './CronViewer';
+import useMount from '@/hooks/useMount';
+import cronParser, { CronDate } from 'cron-parser';
+import styles from './index.module.scss';
 moment.locale('zh-cn');
 const { Option } = Select;
 const format = 'HH:mm';
@@ -18,14 +21,54 @@ const timeTypes = [
 ];
 
 interface Props {
-  onChange?: (cron?: string) => void;
+  initialCron?: string;
+  onChange: (cron?: string) => void;
+  orChange?: boolean;
 }
-const CronInput: React.FC<Props> = ({ onChange }) => {
+const CronInput: React.FC<Props> = ({ initialCron, onChange, orChange }) => {
   const [defaultTimeType, setDefaultTimeType] = useState(timeTypes[0].key); //选择类型
-  const [selectedValue, setSelectedValue] = useState<[]>([]); //日期，多选数组
+  const [selectedValue, setSelectedValue] = useState<string[]>([]); //日期，多选数组
   const [selectTime, setSelectTime] = useState<any>(null); //时间
-  const [expression, setExpression] = useState<string | null>(defaultCron); //bzd
+  if (!initialCron) {
+    initialCron = defaultCron;
+  }
+  const [expression, setExpression] = useState<string | null>(initialCron); //bzd
+  const extractValuesFromCronExpression = async (cronExpression: string) => {
+    const daysOfWeekRegex = /([A-Z]{3})(,[A-Z]{3})*/g;
+    const monthsRegex = /(\d+)(,\d+)*/g;
 
+    if (daysOfWeekRegex.test(cronExpression)) {
+      console.log('everyWeek');
+      setDefaultTimeType('everyWeek');
+      console.log(defaultTimeType);
+
+      const match = cronExpression.match(daysOfWeekRegex);
+      if (match) {
+        const daysOfWeek = match[0].split(',');
+        setSelectedValue(daysOfWeek);
+      }
+    } else if (monthsRegex.test(cronExpression)) {
+      console.log('everyMonth');
+      setDefaultTimeType('everyMonth');
+
+      const match = cronExpression.match(monthsRegex);
+      if (match) {
+        const months = match[3].split(',');
+        setSelectedValue(months);
+      }
+    }
+  };
+  useMount(async () => {
+    if (initialCron && initialCron != defaultCron) {
+      setExpression(initialCron);
+      const interval = cronParser.parseExpression(initialCron);
+      const nextDate = interval.next().toDate();
+      const nextMoment = moment(nextDate);
+      extractValuesFromCronExpression(initialCron);
+      setSelectTime(nextMoment);
+      onChange(initialCron);
+    }
+  });
   //类型选择函数
   const handleTimeTypeChange = (selectValue: string) => {
     setDefaultTimeType(selectValue);
@@ -40,6 +83,7 @@ const CronInput: React.FC<Props> = ({ onChange }) => {
     if (!time) return;
     const currentCron = expression ? expression.split(' ') : [];
     const [seconds, , , dayOfMonth, month1, dayOfWeek] = currentCron;
+    console.log(expression);
     const minutes = moment(time).minutes().toString(); //获取分钟
     const hours = moment(time).hours().toString(); //获取小时
     let result = null;
@@ -59,16 +103,21 @@ const CronInput: React.FC<Props> = ({ onChange }) => {
           .concat(space)
           .concat(dayOfWeek);
     }
-    if (result) onChange?.(result);
+    if (result) onChange(result);
     setExpression(result);
   };
 
-  const handleSelectChange = (data: []) => {
+  const handleSelectChange = (data: string[]) => {
+    console.log(data);
+
     setSelectedValue(data);
     const selectValues = data.join(',');
     const currentCron = expression ? expression.split(' ') : [];
     const [seconds, minutes, hours, dayOfMonth, month1, dayOfWeek] = currentCron;
+
     let result = '';
+    console.log(currentCron);
+
     if (defaultTimeType === 'everyWeek') {
       result = seconds
         .concat(space)
@@ -95,7 +144,10 @@ const CronInput: React.FC<Props> = ({ onChange }) => {
         .concat(space)
         .concat(dayOfWeek);
     }
-    if (selectTime) onChange?.(result);
+    console.log(defaultTimeType);
+
+    console.log(result);
+    if (selectTime) onChange(result);
     setExpression(result);
   };
 
@@ -134,7 +186,8 @@ const CronInput: React.FC<Props> = ({ onChange }) => {
   };
   return (
     <>
-      <div className={'cron'}>
+      <div className={styles.cronInput}>
+        {orChange && <div className={styles.cronMask}></div>}
         <Select
           // role="cron-type"
           style={{ marginRight: '16px', width: 'auto' }}

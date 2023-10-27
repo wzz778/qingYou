@@ -60,13 +60,11 @@ const Invitation: FC<IProps> = (props) => {
 
     console.log(res);
     if (res.code == 200) {
-      console.log();
-
-      // const { id, teamName } = data;
-      // localStorage.setItem('qyTeamId', id);
-      // localStorage.setItem('qyTeamName', teamName);
-      // ToastSuccess('加入成功！');
-      // window.location.href = '/workspace';
+      const { id, teamName } = data;
+      localStorage.setItem('qyTeamId', id);
+      localStorage.setItem('qyTeamName', teamName);
+      ToastSuccess('加入成功！');
+      window.location.href = '/workspace';
     } else {
       ToastError(res.msg);
     }

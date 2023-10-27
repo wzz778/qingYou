@@ -1,25 +1,19 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useState } from 'react';
 // import classNames from "classnames";
 
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
-import { getById } from '@/api/modules/users';
+import CronInput from '@/components/CronInput';
 interface IProps {
   datas?: any[];
 }
 const ProjectLog: FC<IProps> = (props) => {
   const { datas = [] } = props;
-  useEffect(() => {
-    getById().then((res) => {
-      console.log('res');
-      console.log(res);
-      console.log('res');
-    });
-  }, []);
+  let [date, setDate] = useState<string>();
   return (
     <div className={styles.ProjectLog}>
-      <div>ProjectLog</div>
+      <CronInput initialCron="0 0 2 2,14 * ?" orChange onChange={(cron) => setDate(cron)} />
     </div>
   );
 };

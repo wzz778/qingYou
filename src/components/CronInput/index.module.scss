@@ -1,0 +1,13 @@
+.cronInput {
+  position: relative;
+  .cronMask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(170, 170, 170, 0.11);
+    z-index: 9;
+    cursor: unset;
+  }
+}

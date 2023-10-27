@@ -78,7 +78,9 @@ const Program: FC<IProps> = (props) => {
       mailForm.append('sendMailName', '青邮');
     }
     mailForm.append('receiveMailName', '青邮receiveMailName');
-    mailForm.append('receiveMail', data.receiveMail[0]);
+    for (const i in data.receiveMail) {
+      mailForm.append('receiveMail', data.receiveMail[i]);
+    }
     if (data.open) {
       setAddLoading(true);
       if (!date) {

@@ -5,17 +5,25 @@ import styles from './index.module.scss';
 import { ToastError, ToastSuccess, execConfirm } from '@/utils/common';
 import {
   Button,
+  Descriptions,
   Empty,
   Form,
   Modal,
   Popconfirm,
   Space,
+  Switch,
   Table,
   Typography
 } from '@douyinfe/semi-ui';
 import { IconDelete } from '@douyinfe/semi-icons';
 import useSWR from 'swr';
-import { addEmailProgram, deleteEmailProgram, updateEmailProgram } from '@/api/modules/dispatch';
+import {
+  addEmailProgram,
+  deleteEmailProgram,
+  updateEmailProgram,
+  pauseEmailProgram,
+  beginEmailProgram
+} from '@/api/modules/dispatch';
 import { fetcher } from '@/utils/http';
 import useUserStore from '@/store/user';
 import None from '@/components/dataAcquisition/None';
@@ -30,6 +38,7 @@ const ProjectList = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<User>();
   const [updateLoading, setUpdateLoading] = useState<boolean>(false);
   const [addLoading, setAddLoading] = useState<boolean>(false);
+  const [statusLoading, setStatusLoading] = useState<boolean>(false);
   const [updateVisible, setUpdateVisible] = useState(false);
   const [addVisible, setAddVisible] = useState(false);
   const [programDetail, setProgramDetail] = useState<Program>();
@@ -66,23 +75,50 @@ const ProjectList = () => {
   const columns = [
     {
       title: '标题',
-      width: 200,
       dataIndex: 'title',
+      width: 120,
       render: (text: string) => {
         return <Text ellipsis={{ showTooltip: true }}>{text}</Text>;
       }
     },
     {
       title: '内容',
-      width: 400,
+      width: 180,
       dataIndex: 'emailContent',
       render: (text: string) => {
         return <Text ellipsis={{ showTooltip: true }}>{text}</Text>;
       }
     },
     {
+      title: '发送邮箱',
+      width: 170,
+      dataIndex: 'accountEmail',
+      render: (text: string) => {
+        return <Text ellipsis={{ showTooltip: true }}>{text}</Text>;
+      }
+    },
+    {
+      title: '上线状态',
+      width: 120,
+      dataIndex: 'status',
+      render: (text: string, record: any) => {
+        return (
+          <Switch
+            defaultChecked={text == '0' ? true : false}
+            checkedText="开"
+            loading={statusLoading}
+            onChange={(checked) => handleChangeStatus(checked, record.id)}
+            uncheckedText="关"
+          />
+        );
+      }
+    },
+    {
       title: '操作',
       dataIndex: 'id',
+      fixed: 'right',
+      width: 150,
+      align: 'center',
       render: (id: string, record: any) => {
         return (
           <Space>
@@ -95,6 +131,25 @@ const ProjectList = () => {
       }
     }
   ];
+
+  const handleChangeStatus = (checked: boolean, id: string) => {
+    setStatusLoading(true);
+    const request = checked ? beginEmailProgram : pauseEmailProgram;
+    request({ mailId: id })
+      .then((res) => {
+        if (res.code == 200) {
+          ToastSuccess('修改成功');
+        } else {
+          ToastError('修改失败');
+        }
+      })
+      .catch((err) => {
+        ToastError('修改失败');
+      })
+      .finally(() => {
+        setStatusLoading(false);
+      });
+  };
 
   const handleDeleteProgram = (id: string) => {
     return new Promise((resolve, reject) => {
@@ -164,7 +219,19 @@ const ProjectList = () => {
         setAddLoading(false);
       });
   };
-
+  const expandRowRender = (record: any, index: any) => {
+    const { toMail, regularTime, sendMailName } = record;
+    const newObj = {
+      接收邮箱: toMail,
+      定时发送时间: regularTime,
+      发送人昵称: sendMailName
+    };
+    const result: KeyValuePair[] = Object.entries(newObj).map(([key, value]) => ({
+      key,
+      value
+    }));
+    return <Descriptions style={{ width: '100%' }} align="left" data={result} />;
+  };
   return (
     <div className={styles.mailProgram}>
       <div className={styles.header}>
@@ -174,11 +241,12 @@ const ProjectList = () => {
         <None title={'无数据'} noneHandle={() => push('/workspace/program')} />
       ) : (
         <Table
-          columns={columns}
+          columns={columns as any}
           dataSource={data}
           rowSelection={rowSelection}
+          expandedRowRender={expandRowRender}
           pagination={data.length > 10 ? { pageSize: 10 } : false}
-          rowKey={(record) => record.id}
+          rowKey={(record) => record?.id}
         />
       )}
       <Modal
