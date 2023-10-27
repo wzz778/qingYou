@@ -5,19 +5,53 @@
   background-color: var(--primary-background-color);
   height: 100vh;
   .main {
-    margin: 0 auto;
-    max-width: 1100px;
-    .loginBox {
-      margin: 30px auto;
-      padding: 20px 8px 20px;
-      width: 450px;
-      background-color: var(--login-background-color);
-      box-shadow:
-        0 4px 8px -4px rgb(0 0 0 / 13%),
-        0 6px 16px 0 rgb(0 0 0 / 8%),
-        0 12px 24px 16px rgb(0 0 0 / 4%);
-      border-radius: 10px;
-      min-height: 400px;
+    margin: 20px auto;
+    width: 93vw;
+    border-radius: 10px;
+    min-width: 450px;
+    height: 80vh;
+    background-color: var(--login-background-color);
+    box-shadow: 0px 4px 14px 6px #0000001a;
+    display: flex;
+    min-height: 450px;
+    overflow: hidden;
+    .mainLoginSvg {
+      width: 50%;
+      height: 80vh;
+      background-color: rgba(208, 255, 195, 0.168);
+      position: relative;
+      .mainSvg {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+      .mainSvg {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+    }
+    .mainLoginContent {
+      height: 100%;
+      width: 50%;
+      min-width: 450px;
+      display: flex;
+      justify-self: center;
+      align-self: center;
+      .loginBox {
+        margin: auto;
+        padding: 20px 8px 20px;
+        width: 450px;
+        // background-color: var(--login-background-color);
+        // box-shadow:
+        //   0 4px 8px -4px rgb(0 0 0 / 13%),
+        //   0 6px 16px 0 rgb(0 0 0 / 8%),
+        //   0 12px 24px 16px rgb(0 0 0 / 4%);
+        border-radius: 10px;
+        min-height: 400px;
+      }
     }
   }
 }
