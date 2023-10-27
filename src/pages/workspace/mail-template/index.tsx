@@ -2,17 +2,8 @@ import { memo, useState } from 'react';
 //type
 import type { FC, SetStateAction } from 'react';
 import styles from './index.module.scss';
-import { ToastError, ToastSuccess, execConfirm } from '@/utils/common';
-import {
-  Button,
-  Empty,
-  Form,
-  Modal,
-  Popconfirm,
-  Space,
-  Table,
-  Typography
-} from '@douyinfe/semi-ui';
+import { ToastError, ToastSuccess } from '@/utils/common';
+import { Button, Form, Modal, Popconfirm, Space, Table, Typography } from '@douyinfe/semi-ui';
 import { IconDelete } from '@douyinfe/semi-icons';
 import useSWR from 'swr';
 import { addEmailTemplates, deleteEmailTemplates, updateEmailTemplates } from '@/api/modules/email';

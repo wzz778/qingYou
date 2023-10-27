@@ -49,3 +49,9 @@ export const queryMemberPage = (params: any) => {
     params
   });
 };
+
+export const deleteMemberById = (id: string) => {
+  return Hyrequire.delete({
+    url: `/user/team/deleteMemberById/${id}`
+  });
+};

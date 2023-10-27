@@ -10,3 +10,15 @@ declare interface Team {
 }
 
 declare type Teams = Team[];
+
+declare interface Member {
+  id: string;
+  username: string;
+  password: string;
+  nickname: string;
+  enabled: string;
+  img: string;
+  status: string;
+}
+
+declare type Members = Member[];
