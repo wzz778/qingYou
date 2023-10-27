@@ -31,6 +31,7 @@ import Loading from '@/components/dataAcquisition/Loading';
 import Failure from '@/components/dataAcquisition/Failure';
 import Error from '@/components/dataAcquisition/Error';
 import { useRouter } from 'next/router';
+import CronInput from '@/components/CronInput';
 
 const { Text } = Typography;
 const ProjectList = () => {
@@ -90,11 +91,15 @@ const ProjectList = () => {
       }
     },
     {
-      title: '发送邮箱',
-      width: 170,
-      dataIndex: 'accountEmail',
+      title: '发送时间',
+      width: 70,
+      dataIndex: 'regularTime',
       render: (text: string) => {
-        return <Text ellipsis={{ showTooltip: true }}>{text}</Text>;
+        return (
+          <Text ellipsis={{ showTooltip: true }}>
+            <CronInput initialCron={text} orChange />
+          </Text>
+        );
       }
     },
     {
@@ -220,8 +225,9 @@ const ProjectList = () => {
       });
   };
   const expandRowRender = (record: any, index: any) => {
-    const { toMail, regularTime, sendMailName } = record;
+    const { toMail, regularTime, sendMailName, accountEmail } = record;
     const newObj = {
+      发送邮箱: accountEmail,
       接收邮箱: toMail,
       定时发送时间: regularTime,
       发送人昵称: sendMailName
@@ -243,7 +249,7 @@ const ProjectList = () => {
         <Table
           columns={columns as any}
           dataSource={data}
-          rowSelection={rowSelection}
+          // rowSelection={rowSelection}
           expandedRowRender={expandRowRender}
           pagination={data.length > 10 ? { pageSize: 10 } : false}
           rowKey={(record) => record?.id}

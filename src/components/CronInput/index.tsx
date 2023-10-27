@@ -22,7 +22,7 @@ const timeTypes = [
 
 interface Props {
   initialCron?: string;
-  onChange: (cron?: string) => void;
+  onChange?: (cron?: string) => void;
   orChange?: boolean;
 }
 const CronInput: React.FC<Props> = ({ initialCron, onChange, orChange }) => {
@@ -38,22 +38,20 @@ const CronInput: React.FC<Props> = ({ initialCron, onChange, orChange }) => {
     const monthsRegex = /(\d+)(,\d+)*/g;
 
     if (daysOfWeekRegex.test(cronExpression)) {
-      console.log('everyWeek');
       setDefaultTimeType('everyWeek');
-      console.log(defaultTimeType);
-
       const match = cronExpression.match(daysOfWeekRegex);
       if (match) {
         const daysOfWeek = match[0].split(',');
         setSelectedValue(daysOfWeek);
       }
-    } else if (monthsRegex.test(cronExpression)) {
-      console.log('everyMonth');
+    } else {
+      if (cronExpression.split('*').length == 3) {
+        return;
+      }
       setDefaultTimeType('everyMonth');
-
       const match = cronExpression.match(monthsRegex);
       if (match) {
-        const months = match[3].split(',');
+        const months = match[3]?.split(',');
         setSelectedValue(months);
       }
     }
@@ -66,7 +64,7 @@ const CronInput: React.FC<Props> = ({ initialCron, onChange, orChange }) => {
       const nextMoment = moment(nextDate);
       extractValuesFromCronExpression(initialCron);
       setSelectTime(nextMoment);
-      onChange(initialCron);
+      onChange?.(initialCron);
     }
   });
   //类型选择函数
@@ -103,20 +101,17 @@ const CronInput: React.FC<Props> = ({ initialCron, onChange, orChange }) => {
           .concat(space)
           .concat(dayOfWeek);
     }
-    if (result) onChange(result);
+    if (result) onChange?.(result);
     setExpression(result);
   };
 
   const handleSelectChange = (data: string[]) => {
-    console.log(data);
-
     setSelectedValue(data);
     const selectValues = data.join(',');
     const currentCron = expression ? expression.split(' ') : [];
     const [seconds, minutes, hours, dayOfMonth, month1, dayOfWeek] = currentCron;
 
     let result = '';
-    console.log(currentCron);
 
     if (defaultTimeType === 'everyWeek') {
       result = seconds
@@ -144,10 +139,7 @@ const CronInput: React.FC<Props> = ({ initialCron, onChange, orChange }) => {
         .concat(space)
         .concat(dayOfWeek);
     }
-    console.log(defaultTimeType);
-
-    console.log(result);
-    if (selectTime) onChange(result);
+    if (selectTime) onChange?.(result);
     setExpression(result);
   };
 
@@ -185,42 +177,40 @@ const CronInput: React.FC<Props> = ({ initialCron, onChange, orChange }) => {
     );
   };
   return (
-    <>
-      <div className={styles.cronInput}>
-        {orChange && <div className={styles.cronMask}></div>}
-        <Select
-          // role="cron-type"
-          style={{ marginRight: '16px', width: 'auto' }}
-          placeholder="请选择类型"
-          onChange={(val: any) => handleTimeTypeChange(val)}
-          value={defaultTimeType}
-        >
-          {timeTypes.map((item) => (
-            <Option key={item.key} value={item.key}>
-              {' '}
-              {item.label}
-            </Option>
-          ))}
-        </Select>
-        {defaultTimeType === 'everyDay' && (
-          <ConfigProvider>
-            <TimePicker
-              value={selectTime && moment(selectTime, format).toDate()}
-              format={format}
-              placeholder="请选择时间"
-              onChange={(val: any) => handleTimeChange(val)}
-            />
-          </ConfigProvider>
-        )}
-        {defaultTimeType === 'everyWeek' && (
-          <RenderSelect data={dayOfTheWeekData} placeholder="请选择星期" />
-        )}
-        {defaultTimeType === 'everyMonth' && (
-          <RenderSelect data={dayOfTheMonthOption} placeholder="请选择日期" />
-        )}
-        {expression && <CronViewer cronExpression={expression} />}
-      </div>
-    </>
+    <div className={styles.cronInput}>
+      {orChange && <div className={styles.cronMask}></div>}
+      <Select
+        // role="cron-type"
+        style={{ marginRight: '16px', width: 'auto' }}
+        placeholder="请选择类型"
+        onChange={(val: any) => handleTimeTypeChange(val)}
+        value={defaultTimeType}
+      >
+        {timeTypes.map((item) => (
+          <Option key={item.key} value={item.key}>
+            {' '}
+            {item.label}
+          </Option>
+        ))}
+      </Select>
+      {defaultTimeType === 'everyDay' && (
+        <ConfigProvider>
+          <TimePicker
+            value={selectTime && moment(selectTime, format).toDate()}
+            format={format}
+            placeholder="请选择时间"
+            onChange={(val: any) => handleTimeChange(val)}
+          />
+        </ConfigProvider>
+      )}
+      {defaultTimeType === 'everyWeek' && (
+        <RenderSelect data={dayOfTheWeekData} placeholder="请选择星期" />
+      )}
+      {defaultTimeType === 'everyMonth' && (
+        <RenderSelect data={dayOfTheMonthOption} placeholder="请选择日期" />
+      )}
+      {expression && !orChange && <CronViewer cronExpression={expression} />}
+    </div>
   );
 };
 

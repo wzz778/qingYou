@@ -10,10 +10,12 @@ interface IProps {
 }
 const ProjectLog: FC<IProps> = (props) => {
   const { datas = [] } = props;
-  let [date, setDate] = useState<string>();
+  let [date, setDate] = useState<string | null>();
   return (
     <div className={styles.ProjectLog}>
-      <CronInput initialCron="0 0 2 2,14 * ?" orChange onChange={(cron) => setDate(cron)} />
+      <CronInput initialCron="0 0 2 6,7 * ?" orChange />
+      <CronInput onChange={(cron) => setDate(cron)} />
+      {date}
     </div>
   );
 };
