@@ -6,7 +6,7 @@ import { ToastError, ToastSuccess, handleCopy } from '@/utils/common';
 import { Button, Form, Modal, Popconfirm, Space, Table, Typography } from '@douyinfe/semi-ui';
 import { IconDelete } from '@douyinfe/semi-icons';
 import useSWR from 'swr';
-import { addMember, deleteMemberById } from '@/api/modules/team';
+import { deleteMemberById } from '@/api/modules/team';
 import { fetcher } from '@/utils/http';
 import useUserStore from '@/store/user';
 import None from '@/components/dataAcquisition/None';
@@ -14,16 +14,11 @@ import Loading from '@/components/dataAcquisition/Loading';
 import Failure from '@/components/dataAcquisition/Failure';
 import Error from '@/components/dataAcquisition/Error';
 import useTeamStore from '@/store/team';
-import Numeral from '@douyinfe/semi-ui/lib/es/typography/numeral';
+import CustomAvatar from '@/components/CustomAvatar';
 
 const { Text } = Typography;
 const TeamUsers = () => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState<User>();
-  const [updateLoading, setUpdateLoading] = useState<boolean>(false);
-  const [addLoading, setAddLoading] = useState<boolean>(false);
-  const [updateVisible, setUpdateVisible] = useState(false);
   const [addVisible, setAddVisible] = useState(false);
-  const [templateDetail, setTemplateDetail] = useState<Template>();
   const { user } = useUserStore();
   const { teamId } = useTeamStore();
   const url = 'http://localhost:3000';
@@ -52,18 +47,29 @@ const TeamUsers = () => {
       </div>
     );
   }
-  if (!data) {
-    return <div>数据错误</div>;
-  }
   const isEmpty = data.length === 0;
 
   const columns = [
     {
-      title: '昵称',
+      title: '头像及昵称',
       width: 200,
       dataIndex: 'nickname',
       render: (text: string) => {
         return <Text ellipsis={{ showTooltip: true }}>{text}</Text>;
+      }
+    },
+    {
+      title: '头像',
+      width: 200,
+      dataIndex: 'img',
+      render: (text: string, member: Member) => {
+        return (
+          <CustomAvatar
+            id={member?.id}
+            src={member?.img ?? ''}
+            username={member?.nickname as string}
+          />
+        );
       }
     },
     {
@@ -78,11 +84,11 @@ const TeamUsers = () => {
       title: '操作',
       dataIndex: 'id',
       // fixed: 'right',
-      render: (id: string, record: any) => {
+      render: (id: string, record: any = {}) => {
         return (
           <Space>
-            {/* <Button onClick={() => updateTemplateOpenModal(record)}>更新</Button> */}
-            <Popconfirm title="确定要删除该数据吗" onConfirm={() => handleDeleteTemplate(id)}>
+            {/* <Button onClick={() => updateMemberOpenModal(record)}>更新</Button> */}
+            <Popconfirm title="确定要删除该数据吗" onConfirm={() => handleDeleteMember(id)}>
               <Button style={{ color: '#f82c70' }} icon={<IconDelete />}></Button>
             </Popconfirm>
           </Space>
@@ -91,7 +97,7 @@ const TeamUsers = () => {
     }
   ];
 
-  const handleDeleteTemplate = (id: string) => {
+  const handleDeleteMember = (id: string) => {
     return new Promise((resolve, reject) => {
       deleteMemberById(id)
         .then(() => {
@@ -106,62 +112,29 @@ const TeamUsers = () => {
     });
   };
 
-  const rowSelection = {
-    onChange: (_: any, selectedRows: any) => {
-      setSelectedRowKeys(selectedRows);
-    }
-  };
+  // const addMemberHandle = (values: any) => {
+  //   const addForm = {
+  //     userId: user?.id,
+  //     personOrTeam: 0,
+  //     ...values
+  //   };
 
-  const updateTemplateOpenModal = (record: SetStateAction<Template | undefined>) => {
-    setTemplateDetail(record);
-    setUpdateVisible(true);
-  };
-
-  const updateTemplateHandle = (values: any) => {
-    const records = {
-      id: templateDetail?.id,
-      userId: templateDetail?.userId,
-      personOrTeam: 0,
-      ...values
-    };
-
-    // updateEmailTemplates(records)
-    //   .then(() => {
-    //     mutate();
-    //     ToastSuccess('更新成功');
-    //   })
-    //   .catch(() => {
-    //     ToastError('更新失败');
-    //   })
-    //   .finally(() => {
-    //     setUpdateVisible(false);
-    //     setUpdateLoading(false);
-    //   });
-  };
-
-  const addTemplateHandle = (values: any) => {
-    const addForm = {
-      userId: user?.id,
-      personOrTeam: 0,
-      ...values
-    };
-
-    addMember(addForm)
-      .then(() => {
-        mutate();
-        ToastSuccess('添加成功');
-      })
-      .catch(() => {
-        ToastError('添加失败');
-      })
-      .finally(() => {
-        setAddVisible(false);
-        setAddLoading(false);
-      });
-  };
+  //   addMember(addForm)
+  //     .then(() => {
+  //       mutate();
+  //       ToastSuccess('添加成功');
+  //     })
+  //     .catch(() => {
+  //       ToastError('添加失败');
+  //     })
+  //     .finally(() => {
+  //       setAddVisible(false);
+  //       setAddLoading(false);
+  //     });
+  // };
 
   return (
-    <div className={styles.mailTemplate}>
+    <div className={styles.mailMember}>
       <div className={styles.header}>
         <Button onClick={() => setAddVisible(true)}>创建应用</Button>
       </div>
@@ -174,7 +147,7 @@ const TeamUsers = () => {
           dataSource={data}
           //rowSelection={rowSelection}
           pagination={data.length > 10 ? { pageSize: 10 } : false}
-          rowKey={(record) => record.id}
+          rowKey={(record) => record?.id ?? ''}
         />
       )}
       <Modal

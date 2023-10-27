@@ -1,7 +1,7 @@
 import None from '@/components/dataAcquisition/None';
 import useTeamStore from '@/store/team';
 import useUserStore from '@/store/user';
-import { ToastSuccess, clearUserToken } from '@/utils/common';
+import { ToastSuccess, clearUserToken, execConfirm } from '@/utils/common';
 import {
   IconBranch,
   IconCopyAdd,
@@ -15,12 +15,12 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import styles from './index.module.scss';
 const AuthSwitchBox = () => {
-  const { push, pathname } = useRouter();
+  const { push } = useRouter();
   const { user } = useUserStore();
   const { team, teamId, teamName, setTeamId, setTeamName } = useTeamStore();
   if (!team) return;
   const isEmpty = team.length == 0;
-  const changeTeam = (id: string, name: string) => {
+  const changeTeam = async (id: string, name: string) => {
     setTeamId(id);
     setTeamName(name);
     if (id == '0') {
@@ -62,7 +62,13 @@ const AuthSwitchBox = () => {
                       icon={<IconBranch />}
                       type="secondary"
                       className={teamId == item.id ? styles.getSelected : ''}
-                      onClick={() => changeTeam(item.id, item.teamName)}
+                      onClick={() =>
+                        execConfirm(
+                          () => changeTeam(item.id, item.teamName),
+                          undefined,
+                          `你确定切换到   ${item.teamName}   账号？`
+                        )
+                      }
                     >
                       {item.teamName}
                     </Dropdown.Item>

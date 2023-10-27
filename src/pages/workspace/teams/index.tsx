@@ -4,17 +4,12 @@ import { createRef, memo, useRef, useState } from 'react';
 import type { FC } from 'react';
 import styles from './index.module.scss';
 import { ToastError, ToastSuccess, execConfirm } from '@/utils/common';
-import Loading from '@/components/dataAcquisition/Loading';
-import Failure from '@/components/dataAcquisition/Failure';
-import Error from '@/components/dataAcquisition/Error';
 import None from '@/components/dataAcquisition/None';
 import { Button, Card, CardGroup, Form, Modal, Typography } from '@douyinfe/semi-ui';
 import useUserStore from '@/store/user';
-import useSWR from 'swr';
-import { fetcher } from '@/utils/http';
-import { IconBeaker, IconLink } from '@douyinfe/semi-icons';
 import { addTeam, deleteTeam, updateTeam } from '@/api/modules/team';
 import useTeamStore from '@/store/team';
+import { useRouter } from 'next/router';
 interface IProps {
   datas?: any[];
 }
@@ -22,13 +17,14 @@ interface IProps {
 const Teams: FC<IProps> = (props) => {
   const { datas = [] } = props;
   const { user } = useUserStore();
+  const { push } = useRouter();
   const [addLoading, setAddLoading] = useState<boolean>(false);
   const [deleteLoading, setDeleteLoading] = useState<boolean>(false);
   const [uploadId, setuploadId] = useState<string>('0');
   const [addVisible, setAddVisible] = useState(false);
   const [programDetail, setTeamDetail] = useState<Team>();
   const testFormRef = useRef<any>();
-  const { team, updateTeams } = useTeamStore();
+  const { team, updateTeams, setTeamId, setTeamName } = useTeamStore();
   const { Text } = Typography;
   if (!team) {
     return <div>数据错误</div>;
@@ -57,10 +53,10 @@ const Teams: FC<IProps> = (props) => {
     requestApi(addForm)
       .then(() => {
         updateTeams(user?.id);
-        ToastSuccess(`${!uploadId ? '增加' : '更新'}成功`);
+        ToastSuccess(`${!uploadId ? '创建' : '更新'}成功`);
       })
       .catch(() => {
-        ToastError(`${!uploadId ? '增加' : '更新'}失败`);
+        ToastError(`${!uploadId ? '创建' : '更新'}失败`);
       })
       .finally(() => {
         setAddVisible(false);
@@ -73,15 +69,28 @@ const Teams: FC<IProps> = (props) => {
     deleteTeam(uploadId)
       .then(() => {
         updateTeams(user?.id);
-        ToastSuccess(`删除成功`);
+        ToastSuccess(`退出成功`);
       })
       .catch(() => {
-        ToastError(`删除失败`);
+        ToastError(`退出失败`);
       })
       .finally(() => {
         setAddVisible(false);
         setDeleteLoading(false);
       });
+  };
+
+  const changeTeam = async () => {
+    if (programDetail) {
+      setTeamId(programDetail.id);
+      setTeamName(programDetail.teamName);
+
+      localStorage.setItem('qyTeamId', programDetail.id);
+
+      localStorage.setItem('qyTeamName', programDetail.teamName);
+
+      push('/workspace');
+    }
   };
 
   return (
@@ -137,6 +146,7 @@ const Teams: FC<IProps> = (props) => {
           style={{
             padding: '20px 10px'
           }}
+          disabled={uploadId !== '0'}
           render={({ formState, formApi, values }) => (
             <>
               <Form.Input
@@ -163,32 +173,65 @@ const Teams: FC<IProps> = (props) => {
                   marginTop: 20
                 }}
               >
+                {/* 
                 <Button
                   htmlType="submit"
                   type="primary"
-                  theme="solid"
                   loading={addLoading}
                   style={{
                     width: '100%'
                   }}
                 >
                   {uploadId == '0' ? '增加' : '更新'}
-                </Button>
-                {uploadId !== '0' && (
+                </Button> */}
+                {uploadId == '0' && (
                   <Button
-                    type="danger"
-                    loading={deleteLoading}
+                    htmlType="submit"
+                    type="primary"
                     theme="solid"
+                    loading={addLoading}
                     style={{
-                      width: '100%',
-                      marginTop: '6px'
+                      width: '100%'
                     }}
-                    onClick={() =>
-                      execConfirm(deleteTemplateHandle, undefined, '你确确定要删除这项团队配置？')
-                    }
                   >
-                    删除
+                    创建
                   </Button>
+                )}
+
+                {uploadId !== '0' && (
+                  <>
+                    <Button
+                      type="primary"
+                      theme="solid"
+                      style={{
+                        width: '100%',
+                        marginTop: '6px'
+                      }}
+                      onClick={() =>
+                        execConfirm(
+                          changeTeam,
+                          undefined,
+                          `你确定切换到   ${values.teamName}   账号？`
+                        )
+                      }
+                    >
+                      进入
+                    </Button>
+                    <Button
+                      type="danger"
+                      loading={deleteLoading}
+                      theme="solid"
+                      style={{
+                        width: '100%',
+                        marginTop: '6px'
+                      }}
+                      onClick={() =>
+                        execConfirm(deleteTemplateHandle, undefined, '你确定要退出这项团队配置？')
+                      }
+                    >
+                      退出
+                    </Button>
+                  </>
                 )}
               </div>
             </>
