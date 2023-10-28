@@ -19,14 +19,15 @@ import CustomAvatar from '@/components/CustomAvatar';
 const { Text } = Typography;
 const TeamUsers = () => {
   const [addVisible, setAddVisible] = useState(false);
+  const { teamId, thisTeam } = useTeamStore();
   const { user } = useUserStore();
-  const { teamId } = useTeamStore();
   const url = 'http://localhost:3000';
   const inviteLink = `${url}/workspace/teams/invitation?teamId=${teamId}`;
   const { data, isLoading, error, mutate } = useSWR(
     `/user/team/queryMemberPage?page=1&limit=10&id=${teamId}`,
     fetcher
   );
+  if (!user || !thisTeam) return;
 
   if (isLoading)
     return (
@@ -88,9 +89,13 @@ const TeamUsers = () => {
         return (
           <Space>
             {/* <Button onClick={() => updateMemberOpenModal(record)}>更新</Button> */}
-            <Popconfirm title="确定要删除该数据吗" onConfirm={() => handleDeleteMember(id)}>
-              <Button style={{ color: '#f82c70' }} icon={<IconDelete />}></Button>
-            </Popconfirm>
+            {thisTeam.teamManager + '' != user.id ? (
+              '无权限'
+            ) : (
+              <Popconfirm title="确定要删除该数据吗" onConfirm={() => handleDeleteMember(id)}>
+                <Button style={{ color: '#f82c70' }} icon={<IconDelete />}></Button>
+              </Popconfirm>
+            )}
           </Space>
         );
       }
@@ -136,7 +141,7 @@ const TeamUsers = () => {
   return (
     <div className={styles.mailMember}>
       <div className={styles.header}>
-        <Button onClick={() => setAddVisible(true)}>创建应用</Button>
+        <Button onClick={() => setAddVisible(true)}>邀请成员</Button>
       </div>
       {isEmpty ? (
         <None title={'无数据'} description={'请先创建数据'} />

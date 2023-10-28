@@ -24,7 +24,7 @@ const Teams: FC<IProps> = (props) => {
   const [addVisible, setAddVisible] = useState(false);
   const [programDetail, setTeamDetail] = useState<Team>();
   const testFormRef = useRef<any>();
-  const { team, updateTeams, setTeamId, setTeamName } = useTeamStore();
+  const { team, updateTeams, setTeamId, setTeamName, setThisTeam } = useTeamStore();
   const { Text } = Typography;
   if (!team) {
     return <div>数据错误</div>;
@@ -84,7 +84,7 @@ const Teams: FC<IProps> = (props) => {
     if (programDetail) {
       setTeamId(programDetail.id);
       setTeamName(programDetail.teamName);
-
+      setThisTeam(programDetail);
       localStorage.setItem('qyTeamId', programDetail.id);
 
       localStorage.setItem('qyTeamName', programDetail.teamName);

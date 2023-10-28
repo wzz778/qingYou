@@ -17,12 +17,15 @@ import styles from './index.module.scss';
 const AuthSwitchBox = () => {
   const { push } = useRouter();
   const { user } = useUserStore();
-  const { team, teamId, teamName, setTeamId, setTeamName } = useTeamStore();
+  const { team, teamId, teamName, setTeamId, setTeamName, setThisTeam } = useTeamStore();
   if (!team) return;
   const isEmpty = team.length == 0;
-  const changeTeam = async (id: string, name: string) => {
+  const changeTeam = async (id: string, name: string, team?: Team) => {
     setTeamId(id);
     setTeamName(name);
+    if (team) {
+      setThisTeam(team);
+    }
     if (id == '0') {
       localStorage.removeItem('qyTeamId');
     } else {
@@ -64,7 +67,7 @@ const AuthSwitchBox = () => {
                       className={teamId == item.id ? styles.getSelected : ''}
                       onClick={() =>
                         execConfirm(
-                          () => changeTeam(item.id, item.teamName),
+                          () => changeTeam(item.id, item.teamName, item),
                           undefined,
                           `你确定切换到   ${item.teamName}   账号？`
                         )

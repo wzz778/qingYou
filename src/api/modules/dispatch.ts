@@ -14,9 +14,12 @@ export const updateEmailProgram = (params: any) => {
   });
 };
 
-export const deleteEmailProgram = (id: any) => {
+export const deleteEmailProgram = (mailId: any) => {
   return Hyrequire.delete({
-    url: `/email/quartz/deleteEmailConfig/${id}`
+    url: `/email/quartz/deleteEmailConfig`,
+    params: {
+      mailId
+    }
   });
 };
 

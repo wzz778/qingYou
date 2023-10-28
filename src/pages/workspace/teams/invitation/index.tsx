@@ -10,12 +10,10 @@ import { useRouter } from 'next/router';
 import Loading from '@/components/dataAcquisition/Loading';
 import Failure from '@/components/dataAcquisition/Failure';
 import Error from '@/components/dataAcquisition/Error';
-import None from '@/components/dataAcquisition/None';
 import { fetcher } from '@/utils/http';
 import useSWR from 'swr';
 import { addMember } from '@/api/modules/team';
 import useUserStore from '@/store/user';
-import useTeamStore from '@/store/team';
 interface IProps {
   datas?: any[];
 }
@@ -24,7 +22,6 @@ const Invitation: FC<IProps> = (props) => {
   const { datas = [] } = props;
   const { query, push } = useRouter();
   const { user } = useUserStore();
-  const { team, setTeamId, setTeamName, setTeam } = useTeamStore();
   const { data, isLoading, error } = useSWR(`user/team/queryTeamById/${query.teamId}`, fetcher);
 
   if (isLoading)

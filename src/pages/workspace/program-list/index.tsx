@@ -32,6 +32,7 @@ import Failure from '@/components/dataAcquisition/Failure';
 import Error from '@/components/dataAcquisition/Error';
 import { useRouter } from 'next/router';
 import CronInput from '@/components/CronInput';
+import useTeamStore from '@/store/team';
 
 const { Text } = Typography;
 const ProjectList = () => {
@@ -44,8 +45,11 @@ const ProjectList = () => {
   const [addVisible, setAddVisible] = useState(false);
   const [programDetail, setProgramDetail] = useState<Program>();
   const { user } = useUserStore();
+  const { teamId } = useTeamStore();
   const { data, isLoading, error, mutate } = useSWR(
-    `/email/mail/queryTimedMail?userId=${user?.id}&page=1&limit=10`,
+    `/email/mail/queryTimedMail?userId=${user?.id}&page=1&limit=10${
+      teamId == '0' ? '' : `&teamId=${teamId}`
+    }`,
     fetcher
   );
 

@@ -6,6 +6,7 @@ interface UseTeamStore {
   team: Teams | null;
   teamId: string;
   teamName: string;
+  thisTeam: Team | null;
   setTeam: (teamData: Teams | null) => void;
   setTeamId: (teamId: string) => void;
   setTeamName: (teamName: string) => void;
@@ -18,12 +19,14 @@ interface UseTeamStore {
     teamId: string;
   }>;
   clearTeam: () => void;
+  setThisTeam: (teamData: Team | null) => void;
 }
 
 const useTeamStore = create<UseTeamStore>((set, get) => ({
   team: null,
   teamId: '0',
   teamName: '',
+  thisTeam: null,
   setTeam: (teamData) => {
     set({ team: teamData });
   },
@@ -67,6 +70,9 @@ const useTeamStore = create<UseTeamStore>((set, get) => ({
   },
   clearTeam: () => {
     set({ team: null, teamId: '0', teamName: '' });
+  },
+  setThisTeam: (team: any) => {
+    set({ thisTeam: team });
   }
 }));
 

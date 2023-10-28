@@ -2,7 +2,10 @@ export enum ConfigType {
   img = 'img',
   USERNAME = 'username',
   // EMAIL = 'email',
-  NICKNAME = 'nickname'
+  NICKNAME = 'nickname',
+  TEAMNAEM = 'teamname',
+  TEAMNDES = 'teamdes'
+
   // DESCRIPTION = 'description'
 }
 
@@ -30,6 +33,14 @@ export const settingConfig: settingConfigType = {
   },
   username: {
     title: '邮箱'
+    // tips: '我们将通过电子邮件向您确认更改',
+  },
+  teamname: {
+    title: '团队称呼'
+    // tips: '我们将通过电子邮件向您确认更改',
+  },
+  teamdes: {
+    title: '团队描述'
     // tips: '我们将通过电子邮件向您确认更改',
   }
   // description: {

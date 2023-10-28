@@ -11,26 +11,21 @@
     min-width: 450px;
     height: 80vh;
     background-color: var(--login-background-color);
-    box-shadow: 0px 4px 14px 6px #0000001a;
+    box-shadow: 0px 4px 14px 6px #0000002b;
     display: flex;
     min-height: 450px;
     overflow: hidden;
     .mainLoginSvg {
       width: 50%;
       height: 80vh;
-      background-color: rgba(200, 255, 200, 0.1);
+      background-color: rgba(30, 128, 30, 0.1);
       position: relative;
+      text-align: center;
       .mainSvg {
-        width: 100%;
+        width: 80%;
         position: absolute;
+        left: 10%;
         bottom: 0;
-        width: 100%;
-      }
-      .mainSvg {
-        width: 100%;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
       }
     }
     .mainLoginContent {

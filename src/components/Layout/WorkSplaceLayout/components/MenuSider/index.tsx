@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import styles from './index.module.scss';
 import useTeamStore from '@/store/team';
+import { queryTeamById } from '@/api/modules/team';
+import { ToastError } from '@/utils/common';
 const { Sider } = Layout;
 
 function findMenuByPath(menus: MenuItem[], path: string, keys: any[]): any {
@@ -27,8 +29,19 @@ const Index: FC = () => {
   const { pathname, push } = useRouter();
   const [openKeys, setOpenKeys] = useState<string[]>([]);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
-  const { teamId } = useTeamStore();
+  const { teamId, setThisTeam, thisTeam } = useTeamStore();
   const menuList = teamId == '0' ? MENU_CONFIG : TEAM_CONFIG;
+  if (teamId !== '0' && !thisTeam) {
+    queryTeamById(teamId).then((res) => {
+      console.log(res);
+      if (res.code == 200) {
+        setThisTeam(res.data);
+      } else {
+        // ToastError('请求失败');
+        // throw new Error('请求失败');
+      }
+    });
+  }
   const navList = useMemo(() => {
     return menuList.map((e) => {
       return {

@@ -20,6 +20,7 @@ import Error from '@/components/dataAcquisition/Error';
 import None from '@/components/dataAcquisition/None';
 import { useRouter } from 'next/router';
 import SetTemplate from '../mail-template/setTemplate';
+import useTeamStore from '@/store/team';
 interface IProps {
   datas?: any[];
 }
@@ -31,6 +32,7 @@ const Program: FC<IProps> = (props) => {
   const { datas = [] } = props;
   const { Select, Switch } = Form;
   const { user } = useUserStore();
+  const { teamId } = useTeamStore();
   const { push } = useRouter();
   let [date, setDate] = useState<string>();
   const [addVisible, setAddVisible] = useState(false);
@@ -66,8 +68,6 @@ const Program: FC<IProps> = (props) => {
   const { records } = data;
   const isEmpty = records.length === 0;
   const addTemplateHandle = (data: any) => {
-    console.log(testLoading);
-
     const mailForm = new FormData();
     mailForm.append('accountEmail', data.accountEmail);
     mailForm.append('title', data.title);
@@ -92,7 +92,12 @@ const Program: FC<IProps> = (props) => {
         if (user) {
           mailForm.append('userId', user?.id);
         }
-        mailForm.append('personOrTeam', '0');
+        if (teamId) {
+          mailForm.append('personOrTeam', '1');
+          mailForm.append('teamId', teamId);
+        } else {
+          mailForm.append('personOrTeam', '0');
+        }
         addEmailProgram(mailForm)
           .then((res: any) => {
             if (res.code == '200') {
@@ -106,6 +111,7 @@ const Program: FC<IProps> = (props) => {
           })
           .finally(() => {
             setAddLoading(false);
+            formRef.current.reset();
           });
       }
     } else {
@@ -123,6 +129,7 @@ const Program: FC<IProps> = (props) => {
         })
         .finally(() => {
           setAddLoading(false);
+          formRef.current.reset();
         });
     }
   };
