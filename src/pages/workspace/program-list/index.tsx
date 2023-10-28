@@ -37,6 +37,8 @@ import useTeamStore from '@/store/team';
 const { Text } = Typography;
 const ProjectList = () => {
   const { push } = useRouter();
+  const [currentPage, setPage] = useState(1);
+  const [limitPage, setLimitPage] = useState(5);
   const [selectedRowKeys, setSelectedRowKeys] = useState<User>();
   const [updateLoading, setUpdateLoading] = useState<boolean>(false);
   const [addLoading, setAddLoading] = useState<boolean>(false);
@@ -47,7 +49,7 @@ const ProjectList = () => {
   const { user } = useUserStore();
   const { teamId } = useTeamStore();
   const { data, isLoading, error, mutate } = useSWR(
-    `/email/mail/queryTimedMail?userId=${user?.id}&page=1&limit=10${
+    `/email/mail/queryTimedMail?userId=${user?.id}&page=${currentPage}&limit=${limitPage}${
       teamId == '0' ? '' : `&teamId=${teamId}`
     }`,
     fetcher
@@ -75,7 +77,8 @@ const ProjectList = () => {
   if (!data) {
     return <div>数据错误</div>;
   }
-  const isEmpty = data.length === 0;
+  const { records } = data;
+  const isEmpty = records.length === 0;
 
   const columns = [
     {
@@ -228,6 +231,10 @@ const ProjectList = () => {
         setAddLoading(false);
       });
   };
+  const handlePageChange = (page: number) => {
+    setPage(page);
+    mutate();
+  };
   const expandRowRender = (record: any, index: any) => {
     const { toMail, regularTime, sendMailName, accountEmail } = record;
     const newObj = {
@@ -252,10 +259,14 @@ const ProjectList = () => {
       ) : (
         <Table
           columns={columns as any}
-          dataSource={data}
+          dataSource={records}
           // rowSelection={rowSelection}
           expandedRowRender={expandRowRender}
-          pagination={data.length > 10 ? { pageSize: 10 } : false}
+          pagination={
+            data.total > 5
+              ? { currentPage, pageSize: 5, total: data.total, onPageChange: handlePageChange }
+              : false
+          }
           rowKey={(record) => record?.id}
         />
       )}

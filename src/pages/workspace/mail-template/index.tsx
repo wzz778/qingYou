@@ -17,6 +17,8 @@ import Error from '@/components/dataAcquisition/Error';
 const { Text } = Typography;
 const MailTemplate = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState<User>();
+  const [currentPage, setPage] = useState(1);
+  const [limitPage, setLimitPage] = useState(5);
   const [updateLoading, setUpdateLoading] = useState<boolean>(false);
   const [addLoading, setAddLoading] = useState<boolean>(false);
   const [updateVisible, setUpdateVisible] = useState(false);
@@ -24,7 +26,7 @@ const MailTemplate = () => {
   const [templateDetail, setTemplateDetail] = useState<Template>();
   const { user } = useUserStore();
   const { data, isLoading, error, mutate } = useSWR(
-    `/email/templates/queryEmailTemplatesPersonal?page=1&limit=10&id=${user?.id}&personOrTeam=0`,
+    `/email/templates/queryEmailTemplatesPersonal?page=${currentPage}&limit=${limitPage}&id=${user?.id}&personOrTeam=0`,
     fetcher
   );
 
@@ -104,6 +106,8 @@ const MailTemplate = () => {
 
   const rowSelection = {
     onChange: (_: any, selectedRows: any) => {
+      console.log(selectedRows);
+
       setSelectedRowKeys(selectedRows);
     }
   };
@@ -155,7 +159,10 @@ const MailTemplate = () => {
         setAddLoading(false);
       });
   };
-
+  const handlePageChange = (page: number) => {
+    setPage(page);
+    mutate();
+  };
   return (
     <div className={styles.mailTemplate}>
       <div className={styles.header}>
@@ -168,8 +175,12 @@ const MailTemplate = () => {
           columns={columns}
           // scroll={scroll}
           dataSource={records}
-          //rowSelection={rowSelection}
-          pagination={records.length > 10 ? { pageSize: 10 } : false}
+          rowSelection={rowSelection}
+          pagination={
+            data.total > 5
+              ? { currentPage, pageSize: 5, total: data.total, onPageChange: handlePageChange }
+              : false
+          }
           rowKey={(record) => record.id}
         />
       )}

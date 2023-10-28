@@ -18,13 +18,15 @@ import CustomAvatar from '@/components/CustomAvatar';
 
 const { Text } = Typography;
 const TeamUsers = () => {
+  const [currentPage, setPage] = useState(1);
+  const [limitPage, setLimitPage] = useState(5);
   const [addVisible, setAddVisible] = useState(false);
   const { teamId, thisTeam } = useTeamStore();
   const { user } = useUserStore();
   const url = 'http://localhost:3000';
   const inviteLink = `${url}/workspace/teams/invitation?teamId=${teamId}`;
   const { data, isLoading, error, mutate } = useSWR(
-    `/user/team/queryMemberPage?page=1&limit=10&id=${teamId}`,
+    `/user/team/queryMemberPage?page=${currentPage}&limit=${limitPage}&id=${teamId}`,
     fetcher
   );
   if (!user || !thisTeam) return;
@@ -48,7 +50,8 @@ const TeamUsers = () => {
       </div>
     );
   }
-  const isEmpty = data.length === 0;
+  const { records } = data;
+  const isEmpty = records.length === 0;
 
   const columns = [
     {
@@ -137,7 +140,10 @@ const TeamUsers = () => {
   //       setAddLoading(false);
   //     });
   // };
-
+  const handlePageChange = (page: number) => {
+    setPage(page);
+    mutate();
+  };
   return (
     <div className={styles.mailMember}>
       <div className={styles.header}>
@@ -149,9 +155,13 @@ const TeamUsers = () => {
         <Table
           columns={columns}
           // scroll={scroll}
-          dataSource={data}
+          dataSource={records}
           //rowSelection={rowSelection}
-          pagination={data.length > 10 ? { pageSize: 10 } : false}
+          pagination={
+            data.total > 5
+              ? { currentPage, pageSize: 5, total: data.total, onPageChange: handlePageChange }
+              : false
+          }
           rowKey={(record) => record?.id ?? ''}
         />
       )}
