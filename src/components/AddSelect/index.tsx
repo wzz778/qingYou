@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import cName from 'classnames';
 
 //type
@@ -12,7 +12,8 @@ import { ToastWaring } from '@/utils/common';
 import CustomAvatar from '../CustomAvatar';
 
 interface Props {
-  onChange?: (v: any) => void;
+  onChange: (v: any) => void;
+  initialList?: MemberListProps[];
 }
 interface MemberListProps {
   nickname: string;
@@ -20,17 +21,6 @@ interface MemberListProps {
   img?: string;
 }
 
-const list: MemberListProps[] = [
-  {
-    nickname: '夏可漫',
-    username: 'xiakeman@example.com'
-  },
-  {
-    nickname: '曲晨一',
-    username: 'quchenyi@example.com',
-    img: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png'
-  }
-];
 const renderMultipleWithCustomTag: RenderSelectedItemFn = (optionNode: any, { onClose }) => {
   const content = (
     <Tag
@@ -74,8 +64,17 @@ const renderCustomOption = (item: MemberListProps, index: number) => {
     </Select.Option>
   );
 };
-const AddSelect: FC<Props> = ({ onChange }) => {
-  const [allList, setAllList] = useState(list);
+const AddSelect: FC<Props> = ({ onChange, initialList }) => {
+  const [allList, setAllList] = useState<MemberListProps[]>([]);
+  console.log(allList);
+  useEffect(() => {
+    if (initialList) {
+      setAllList(initialList);
+    } else {
+      setAllList([]);
+    }
+  }, [initialList]);
+
   const [inputValue, setInputValue] = useState('');
   const addEmail = (email: string) => {
     const emailError = install.emailValidate(email);

@@ -7,6 +7,7 @@ import styles from './index.module.scss';
 import useTeamStore from '@/store/team';
 import { queryTeamById } from '@/api/modules/team';
 import { ToastError } from '@/utils/common';
+import useMount from '@/hooks/useMount';
 const { Sider } = Layout;
 
 function findMenuByPath(menus: MenuItem[], path: string, keys: any[]): any {
@@ -31,17 +32,19 @@ const Index: FC = () => {
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const { teamId, setThisTeam, thisTeam } = useTeamStore();
   const menuList = teamId == '0' ? MENU_CONFIG : TEAM_CONFIG;
-  if (teamId !== '0' && !thisTeam) {
-    queryTeamById(teamId).then((res) => {
-      console.log(res);
-      if (res.code == 200) {
-        setThisTeam(res.data);
-      } else {
-        // ToastError('请求失败');
-        // throw new Error('请求失败');
-      }
-    });
-  }
+  useEffect(() => {
+    if (teamId != '0' && thisTeam == null) {
+      queryTeamById(teamId).then((res) => {
+        console.log(res);
+        if (res.code == 200) {
+          setThisTeam(res.data);
+        } else {
+          // ToastError('请求失败');
+          // throw new Error('请求失败');
+        }
+      });
+    }
+  }, [teamId]);
   const navList = useMemo(() => {
     return menuList.map((e) => {
       return {

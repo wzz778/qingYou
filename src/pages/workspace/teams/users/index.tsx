@@ -3,7 +3,7 @@ import { memo, useState } from 'react';
 import type { FC, SetStateAction } from 'react';
 import styles from './index.module.scss';
 import { ToastError, ToastSuccess, handleCopy } from '@/utils/common';
-import { Button, Form, Modal, Popconfirm, Space, Table, Typography } from '@douyinfe/semi-ui';
+import { Button, Modal, Popconfirm, Space, Table, Typography } from '@douyinfe/semi-ui';
 import { IconDelete } from '@douyinfe/semi-icons';
 import useSWR from 'swr';
 import { deleteMemberById } from '@/api/modules/team';
