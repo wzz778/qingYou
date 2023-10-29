@@ -1,0 +1,11 @@
+.outSlotNode {
+  background-color: var(--semi-color-fill-0);
+  height: 36px;
+  display: flex;
+  padding-left: 32;
+  color: var(--semi-color-link);
+  align-items: center;
+  cursor: pointer;
+  border-top: 1px solid var(--semi-color-border);
+  border-radius: 0 0 6px 6px;
+}

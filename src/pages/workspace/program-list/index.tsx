@@ -236,12 +236,13 @@ const ProjectList = () => {
     mutate();
   };
   const expandRowRender = (record: any, index: any) => {
-    const { toMail, regularTime, sendMailName, accountEmail } = record;
+    const { toMail, regularTime, sendMailName, accountEmail, createTime } = record;
     const newObj = {
       发送邮箱: accountEmail,
       接收邮箱: toMail,
       定时发送时间: regularTime,
-      发送人昵称: sendMailName
+      发送人昵称: sendMailName,
+      创建时间: createTime
     };
     const result: KeyValuePair[] = Object.entries(newObj).map(([key, value]) => ({
       key,

@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const isWorkSplaceRoute = router.pathname.startsWith('/workspace');
   const isLoginRoute = router.pathname.startsWith('/login');
   let LayoutComponent;
-  useFetchUserInfo();
+  //useFetchUserInfo();
   if (isAdminRoute) {
     LayoutComponent = AdminLayout;
   } else if (isWorkSplaceRoute) {
