@@ -30,10 +30,11 @@ interface SetSetTemplateProps {
 const { Text } = Typography;
 
 const SetTemplate: React.FC<SetSetTemplateProps> = ({ setTemplate }) => {
-  const [templateDetail, setTemplateDetail] = useState<Template>();
   const { user } = useUserStore();
+  const [currentPage, setPage] = useState(1);
+  const [limitPage, setLimitPage] = useState(5);
   const { data, isLoading, error, mutate } = useSWR(
-    `/email/templates/queryEmailTemplatesPersonal?page=1&limit=10&id=${user?.id}&personOrTeam=0`,
+    `/email/templates/queryEmailTemplatesPersonal?page=${currentPage}&limit=${limitPage}&id=${user?.id}&personOrTeam=0`,
     fetcher
   );
 
@@ -91,6 +92,10 @@ const SetTemplate: React.FC<SetSetTemplateProps> = ({ setTemplate }) => {
       }
     }
   ];
+  const handlePageChange = (page: number) => {
+    setPage(page);
+    mutate();
+  };
   return (
     <div className={styles.mailTemplate}>
       {isEmpty ? (
@@ -100,7 +105,11 @@ const SetTemplate: React.FC<SetSetTemplateProps> = ({ setTemplate }) => {
           columns={columns}
           dataSource={records}
           // rowSelection={rowSelection}
-          pagination={records.length > 10 ? { pageSize: 10 } : false}
+          pagination={
+            data.total > 5
+              ? { currentPage, pageSize: 5, total: data.total, onPageChange: handlePageChange }
+              : false
+          }
           rowKey={(record) => record.id}
         />
       )}
