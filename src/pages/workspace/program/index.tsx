@@ -216,7 +216,8 @@ const Program: FC<IProps> = (props) => {
   };
 
   const addTem = (res: Template) => {
-    formRef.current.setValues({ title: res.emailTitle, content: res.emailContent });
+    formRef.current.setValue('title', res.emailTitle);
+    formRef.current.setValue('content', res.emailContent);
     setAddVisible(false);
   };
   return (
