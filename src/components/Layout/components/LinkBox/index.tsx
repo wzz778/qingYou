@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import styles from './index.module.scss';
 import { Button } from '@douyinfe/semi-ui';
-import { IconBell, IconHelpCircle } from '@douyinfe/semi-icons';
+import { IconGithubLogo, IconHelpCircle } from '@douyinfe/semi-icons';
 const LinkBox = () => {
   const { push } = useRouter();
 
@@ -11,9 +11,9 @@ const LinkBox = () => {
     <>
       <Button
         theme="borderless"
-        icon={<IconBell size="large" />}
+        icon={<IconGithubLogo size="large" />}
         style={{
-          color: 'var(--semi-color-text-2)',
+          color: 'black',
           marginRight: '12px'
         }}
       />
