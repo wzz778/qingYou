@@ -4,40 +4,37 @@ import { memo, useEffect, useState } from 'react';
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
-import CronInput from '@/components/CronInput';
-import AddSelect from '@/components/AddSelect';
+import { Descriptions } from '@douyinfe/semi-ui';
+import { IconArrowUp } from '@douyinfe/semi-icons';
+import None from '@/components/dataAcquisition/None';
 interface IProps {
   datas?: any[];
 }
 const ProjectLog: FC<IProps> = (props) => {
   const { datas = [] } = props;
-  let [date, setDate] = useState<string | null>();
-  let [emails, setEmails] = useState<any>();
-
-  interface MemberListProps {
-    nickname: string;
-    username: string;
-    img?: string;
-  }
-
-  const list: MemberListProps[] = [
+  const data = [
+    { key: '总执行总数', value: <span style={{ color: '#3381DA' }}>0</span> },
     {
-      nickname: '夏可漫',
-      username: 'xiakeman@example.com'
+      key: '成功条数',
+      value: <span style={{ color: '#06C05F' }}>0</span>
     },
-    {
-      nickname: '曲晨一',
-      username: 'quchenyi@example.com',
-      img: 'https://lf3-static.bytednsdoc.com/obj/eden-cn/ptlz_zlp/ljhwZthlaukjlkulzlp/root-web-sites/Viamaker.png'
-    }
+    { key: '失败条数', value: <span style={{ color: '#DB4A37' }}>0</span> }
   ];
+  const style = {
+    boxShadow: 'var(--semi-shadow-elevated)',
+    backgroundColor: 'var(--semi-color-bg-2)',
+    borderRadius: '4px',
+    padding: '10px',
+    marginRight: '20px',
+    display: 'flex',
+    justifyContent: 'space-around',
+    width: '100%'
+  };
 
   return (
     <div className={styles.ProjectLog}>
-      <CronInput initialCron="0 0 2 6,7 * ?" orChange />
-      <CronInput onChange={(cron) => setDate(cron)} />
-      {date}
-      <AddSelect initialList={list} onChange={setEmails} />
+      <Descriptions data={data} row align="center" size="large" style={style} />
+      <None title="什么也没有呢~" />
     </div>
   );
 };

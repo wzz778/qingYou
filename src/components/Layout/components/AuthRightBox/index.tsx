@@ -27,7 +27,7 @@ const AuthRightBox = () => {
         render={
           <Dropdown.Menu>
             <Dropdown.Item onClick={() => push('/workspace/account')}>账号设置</Dropdown.Item>
-            <Dropdown.Item onClick={() => push('/workspace/mails')}>邮箱设置</Dropdown.Item>
+            <Dropdown.Item onClick={() => push('/workspace/mails')}>邮箱绑定</Dropdown.Item>
             <Dropdown.Item onClick={() => push('/workspace/program-list')}>
               我的定时邮箱
             </Dropdown.Item>
