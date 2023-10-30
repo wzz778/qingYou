@@ -28,12 +28,12 @@ export default function Forget() {
       queryPasswordByName(registerForm)
         .then((res) => {
           if (res.code == 200) {
-            ToastSuccess('修改失败！');
+            ToastSuccess('修改成功！');
             push('/login/email');
           } else if (res.code == 444) {
-            ToastWaring('此邮箱已注册用户！');
+            ToastWaring(res.msg);
           } else {
-            ToastError('注册失败');
+            ToastError('修改失败');
           }
           setLoading(false);
         })

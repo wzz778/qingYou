@@ -16,7 +16,7 @@ export const updateEmailProgram = (params: any) => {
 
 export const deleteEmailProgram = (mailId: any) => {
   return Hyrequire.delete({
-    url: `/email/quartz/deleteEmailConfig`,
+    url: `/email/quartz/deleteJob`,
     params: {
       mailId
     }

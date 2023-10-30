@@ -141,7 +141,7 @@ const Program: FC<IProps> = (props) => {
         if (user) {
           mailForm.append('userId', user?.id);
         }
-        if (teamId) {
+        if (teamId != '0') {
           mailForm.append('personOrTeam', '1');
           mailForm.append('teamId', teamId);
         } else {
@@ -149,10 +149,12 @@ const Program: FC<IProps> = (props) => {
         }
         addEmailProgram(mailForm)
           .then((res: any) => {
+            console.log(res);
+
             if (res.code == '200') {
-              ToastSuccess('发送成功');
+              ToastSuccess('设置成功');
             } else {
-              ToastError('发送失败');
+              ToastError('设置失败');
             }
           })
           .catch((error: any) => {

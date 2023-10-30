@@ -8,7 +8,7 @@ import { ToastWaring } from '@/utils/common';
 function VerificationCodeInput({ email }: any) {
   const [countdown, setCountdown] = useState(0);
   const countdownRef = useRef<NodeJS.Timeout | null>(null);
-
+  const [sendLoading, setSendLoading] = useState<boolean>(false);
   const startCountdown = () => {
     if (countdownRef.current) {
       clearInterval(countdownRef.current);
@@ -55,6 +55,7 @@ function VerificationCodeInput({ email }: any) {
     if (emailError) {
       ToastWaring(emailError);
     } else {
+      setSendLoading(true);
       sendCode(email)
         .then((res) => {
           console.log(res);
@@ -62,7 +63,10 @@ function VerificationCodeInput({ email }: any) {
           setCountdown(60);
           startCountdown();
         })
-        .catch((err) => {});
+        .catch((err) => {})
+        .finally(() => {
+          setSendLoading(false);
+        });
     }
   };
 
@@ -79,6 +83,7 @@ function VerificationCodeInput({ email }: any) {
           block
           theme="borderless"
           type="tertiary"
+          loading={sendLoading}
           onClick={() => countdown === 0 && sendCodeHandle(email)}
           disabled={countdown > 0}
         >

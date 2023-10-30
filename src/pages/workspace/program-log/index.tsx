@@ -28,7 +28,8 @@ const ProjectLog: FC<IProps> = (props) => {
     marginRight: '20px',
     display: 'flex',
     justifyContent: 'space-around',
-    width: '100%'
+    width: '100%',
+    marginBottom: 20
   };
 
   return (

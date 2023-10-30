@@ -251,6 +251,8 @@ const Mails: FC<IProps> = (props) => {
                 field="emailKey"
                 label="key"
                 style={{ width: '100%' }}
+                type="password"
+                mode="password"
                 placeholder="请输入内容"
                 initValue={programDetail?.emailKey}
                 rules={[{ required: true, message: '请输入内容' }]}
@@ -263,7 +265,7 @@ const Mails: FC<IProps> = (props) => {
                   >
                     授权码不是邮箱密码,
                     <Text
-                      link={{ href: 'https://service.mail.qq.com/' }}
+                      link={{ href: 'https://service.mail.qq.com/detail/0/75' }}
                       icon={<IconLink />}
                       style={{ fontSize: 12 }}
                       underline
@@ -302,7 +304,6 @@ const Mails: FC<IProps> = (props) => {
                 {uploadId !== '0' && (
                   <Button
                     type="danger"
-                    theme="solid"
                     loading={deleteLoading}
                     style={{
                       width: '100%',
