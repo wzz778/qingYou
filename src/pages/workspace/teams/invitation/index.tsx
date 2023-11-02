@@ -45,17 +45,10 @@ const Invitation: FC<IProps> = (props) => {
   }
   if (!data) {
     return <div>数据错误</div>;
-  } else {
-    console.log(data);
   }
 
   const addTeam = async () => {
-    console.log(user?.id);
-
     const res = await addMember({ teamId: data?.id, memberEmail: user?.username });
-    console.log(data);
-
-    console.log(res);
     if (res.code == 200) {
       const { id, teamName } = data;
       localStorage.setItem('qyTeamId', id);

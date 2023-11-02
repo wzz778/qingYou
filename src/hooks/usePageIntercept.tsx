@@ -10,7 +10,6 @@ const usePageIntercept = (page: string) => {
     push('/login');
   };
   useMount(() => {
-    console.log(user);
     if (!user) {
       pushLoginFn();
     } else {

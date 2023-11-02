@@ -58,7 +58,6 @@ function VerificationCodeInput({ email }: any) {
       setSendLoading(true);
       sendCode(email)
         .then((res) => {
-          console.log(res);
           Toast.success('发送成功');
           setCountdown(60);
           startCountdown();

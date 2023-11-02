@@ -105,7 +105,7 @@ const Program: FC<IProps> = (props) => {
   const addTemplateHandle = (data: any) => {
     if (teamId != '0') {
       if (receiveMails.length == 0) {
-        ToastInfo('请选择接收邮箱');
+        ToastInfo('请选择接收的邮箱');
         return;
       } else {
         data.receiveMail = receiveMails;
@@ -148,8 +148,6 @@ const Program: FC<IProps> = (props) => {
         }
         addEmailProgram(mailForm)
           .then((res: any) => {
-            console.log(res);
-
             if (res.code == '200') {
               ToastSuccess('设置成功');
             } else {

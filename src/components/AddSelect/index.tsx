@@ -66,7 +66,6 @@ const renderCustomOption = (item: MemberListProps, index: number) => {
 };
 const AddSelect: FC<Props> = ({ onChange, initialList }) => {
   const [allList, setAllList] = useState<MemberListProps[]>([]);
-  console.log(allList);
   useEffect(() => {
     if (initialList) {
       setAllList(initialList);

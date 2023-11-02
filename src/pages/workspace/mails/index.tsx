@@ -96,7 +96,6 @@ const Mails: FC<IProps> = (props) => {
         return textMailKey(testForm);
       })
       .then((res: any) => {
-        console.log(res);
         if (res.code == '200') {
           ToastSuccess('发送成功');
         } else {
@@ -126,7 +125,6 @@ const Mails: FC<IProps> = (props) => {
     const requestApi = uploadId == '0' ? addEmailConfig : updateEmailConfig;
     requestApi(addForm)
       .then((res) => {
-        console.log(res);
         if (res.code == 444) {
           ToastError(`该邮箱已被绑定！`);
         } else {

@@ -35,7 +35,6 @@ const Index: FC = () => {
   useEffect(() => {
     if (teamId != '0' && thisTeam == null) {
       queryTeamById(teamId).then((res) => {
-        console.log(res);
         if (res.code == 200) {
           setThisTeam(res.data);
         } else {

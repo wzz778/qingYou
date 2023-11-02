@@ -23,8 +23,6 @@ export default function Code() {
     };
     queryPasswordByName(registerForm)
       .then((res) => {
-        console.log(res);
-
         // if (res.code == 200) {
         //   ToastSuccess('修改失败！');
         //   push('/login/email');
@@ -39,10 +37,8 @@ export default function Code() {
   };
   const resultClick = (e: number) => {
     if (e) {
-      console.log('成功');
       setShowSlider(true);
     } else if (e == 1) {
-      console.log('失败');
     }
   };
   return (

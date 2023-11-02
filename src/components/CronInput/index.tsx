@@ -81,7 +81,6 @@ const CronInput: React.FC<Props> = ({ initialCron, onChange, orChange }) => {
     if (!time) return;
     const currentCron = expression ? expression.split(' ') : [];
     const [seconds, , , dayOfMonth, month1, dayOfWeek] = currentCron;
-    console.log(expression);
     const minutes = moment(time).minutes().toString(); //获取分钟
     const hours = moment(time).hours().toString(); //获取小时
     let result = null;
