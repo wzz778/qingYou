@@ -7,7 +7,6 @@ interface CropperCardProps {
   imageUrl: string;
 }
 
-// The ref is used to expose methods to the parent component, so we define a type for it
 interface CropperRef {
   upload: () => Promise<unknown> | undefined;
 }
@@ -16,7 +15,6 @@ const CropperCard = forwardRef<CropperRef, CropperCardProps>(function CropperCar
   const { imageUrl } = props;
   const [cropper, setCropper] = useState<any>();
 
-  // Expose the method to get cropped data to the parent component
   useImperativeHandle(ref, () => ({
     upload: getCropData
   }));

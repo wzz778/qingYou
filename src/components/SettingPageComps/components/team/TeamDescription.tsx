@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { updateTeam } from '@/api/modules/team';
 import useTeamStore from '@/store/team';
 import useUserStore from '@/store/user';
-import { ToastError, getTeamInfo } from '@/utils/common';
+import { ToastError, ToastWaring, getTeamInfo } from '@/utils/common';
 
 const TeamDescriptionCard = () => {
   const [inputValue, setInputValue] = useState('');
@@ -13,7 +13,7 @@ const TeamDescriptionCard = () => {
   const { team, setTeam, teamId, thisTeam, setThisTeam } = useTeamStore();
   const { user } = useUserStore();
 
-  const config = settingConfig.username;
+  const config = settingConfig.teamdes;
   if (!team || !user || !thisTeam) {
     return;
   }
@@ -29,6 +29,11 @@ const TeamDescriptionCard = () => {
   };
 
   const handleSave = () => {
+    const filteredStr = inputValue.replace(/\s/g, '');
+    if (filteredStr.length > 50 || filteredStr.length < 2) {
+      ToastWaring('请输入符合2~50位字符的用户昵称！');
+      return;
+    }
     setLoading(true);
     updateTeam({ id: teamId, teamNotes: inputValue })
       .then((res) => {

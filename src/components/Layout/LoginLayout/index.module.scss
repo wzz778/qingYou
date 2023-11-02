@@ -17,7 +17,7 @@
     overflow: hidden;
     .mainLoginSvg {
       width: 50%;
-      height: 80vh;
+      height: 100%;
       background-color: rgba(30, 128, 30, 0.1);
       position: relative;
       text-align: center;
@@ -25,7 +25,7 @@
         width: 80%;
         position: absolute;
         left: 10%;
-        bottom: 0;
+        bottom: 6%;
       }
     }
     .mainLoginContent {

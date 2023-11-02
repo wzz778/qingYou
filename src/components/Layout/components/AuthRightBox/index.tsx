@@ -29,21 +29,21 @@ const AuthRightBox = () => {
           <Dropdown.Menu>
             <Dropdown.Item
               onClick={() => push('/workspace/account')}
-              type="secondary"
+              style={{ color: '#06C05F' }}
               icon={<IconIdCard />}
             >
               账号设置
             </Dropdown.Item>
             <Dropdown.Item
+              style={{ color: '#06C05F' }}
               onClick={() => push('/workspace/mails')}
-              type="secondary"
               icon={<IconMailStroked1 />}
             >
               邮箱绑定
             </Dropdown.Item>
             <Dropdown.Item
+              style={{ color: '#06C05F' }}
               onClick={() => push('/workspace/program-list')}
-              type="secondary"
               icon={<IconMail />}
             >
               我的定时邮箱

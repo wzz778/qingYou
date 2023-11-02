@@ -66,7 +66,6 @@ const UploadImg: FC<UploadImgProps> = ({ imageUrl, successHandle, username }) =>
     //   setModalText('上传图片');
     // } else {
     const url = (await uploadFile(blob, fileName)) as string;
-
     setImage(null);
     setUploadUrl(url);
     successHandle(url)

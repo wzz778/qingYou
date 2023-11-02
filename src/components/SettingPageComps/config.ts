@@ -29,19 +29,20 @@ export const settingConfig: settingConfigType = {
   },
   nickname: {
     title: '用户名',
-    tips: '请输入 6 至 20 位字符'
+    tips: '请输入 2 至 10 位字符'
   },
   username: {
     title: '邮箱'
     // tips: '我们将通过电子邮件向您确认更改',
   },
   teamname: {
-    title: '团队称呼'
+    title: '团队称呼',
+    tips: '请输入 2 至 10 位字符'
     // tips: '我们将通过电子邮件向您确认更改',
   },
   teamdes: {
-    title: '团队描述'
-    // tips: '我们将通过电子邮件向您确认更改',
+    title: '团队描述',
+    tips: '请输入 2 至 50 位字符'
   }
   // description: {
   //   title: '个人简介',

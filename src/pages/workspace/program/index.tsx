@@ -4,7 +4,7 @@ import classNames from 'classnames';
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
-import { Form, Button, Space, ArrayField, Modal } from '@douyinfe/semi-ui';
+import { Form, Button, Space, ArrayField, Modal, Upload } from '@douyinfe/semi-ui';
 import CronInput from '@/components/CronInput';
 import React from 'react';
 import { IconMinusCircle, IconPlusCircle } from '@douyinfe/semi-icons';
@@ -52,10 +52,6 @@ const Program: FC<IProps> = (props) => {
   const getInitialList = () => {
     queryMemberPage({ id: teamId, limit: 20, page: 1 })
       .then((res) => {
-        console.log('queryMemberPage');
-
-        console.log(res);
-
         if (res.code == 200) {
           const memberList: MemberListProps[] = res.data.records.map(
             (item: { nickname: any; username: any; img: any }) => ({
@@ -65,7 +61,6 @@ const Program: FC<IProps> = (props) => {
             })
           );
           setAllReceiveMails(memberList);
-          console.log(allReceiveMails);
         } else {
           throw '成员获取失败';
         }
@@ -125,8 +120,12 @@ const Program: FC<IProps> = (props) => {
     } else {
       mailForm.append('sendMailName', '青邮');
     }
-    mailForm.append('receiveMailName', '青邮receiveMailName');
-    console.log(data);
+    if (data.files) {
+      mailForm.append('files', data.files[0].fileInstance);
+    }
+
+    mailForm.append('receiveMailName', '青邮');
+
     for (const i in data.receiveMail) {
       mailForm.append('receiveMail', data.receiveMail[i]);
     }
@@ -197,7 +196,7 @@ const Program: FC<IProps> = (props) => {
       } else {
         mailForm.append('sendMailName', '青邮');
       }
-      mailForm.append('receiveMailName', '青邮receiveMailName');
+      mailForm.append('receiveMailName', '青邮');
       mailForm.append('receiveMail', data.receiveMail[0]);
 
       sendMail(mailForm)
@@ -273,12 +272,6 @@ const Program: FC<IProps> = (props) => {
                   style={{ width: '100%' }}
                   maxCount={400}
                 />
-                <Form.Input
-                  field="sendMailName"
-                  label={{ text: '发件人称呼' }}
-                  style={{ width: '100%' }}
-                  maxLength={15}
-                />
                 {teamId != '0' ? (
                   <Form.Slot label={{ text: '接收邮箱', required: true }}>
                     <AddSelect initialList={allReceiveMails} onChange={setReceiveMails} />
@@ -327,7 +320,6 @@ const Program: FC<IProps> = (props) => {
                     )}
                   </ArrayField>
                 )}
-
                 <Switch
                   field="open"
                   label={{ text: '定时邮箱', required: true }}
@@ -338,7 +330,25 @@ const Program: FC<IProps> = (props) => {
                   <Form.Slot label={{ text: '时间选择', required: true }}>
                     <CronInput onChange={(cron) => setDate(cron)} />
                   </Form.Slot>
-                ) : null}
+                ) : (
+                  <Form.Upload
+                    action="https://api.semi.design/upload"
+                    field="files"
+                    style={{ width: 250 }}
+                    label={{ text: '邮件附件' }}
+                    limit={1}
+                    maxSize={1024 * 10}
+                    draggable={true}
+                    dragMainText={'点击上传文件或拖拽文件到这里'}
+                    dragSubText="支持任意类型文件"
+                  ></Form.Upload>
+                )}
+                <Form.Input
+                  field="sendMailName"
+                  label={{ text: '发件人称呼' }}
+                  style={{ width: '100%' }}
+                  maxLength={15}
+                />
                 <Space>
                   <Button
                     type="primary"
