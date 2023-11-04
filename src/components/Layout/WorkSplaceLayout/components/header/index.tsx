@@ -6,7 +6,7 @@ const { Header } = Layout;
 
 const Index: FC = () => {
   return (
-    <Header className="layout-header">
+    <Header style={{ backgroundColor: '#F2FCE6' }} className="layout-header">
       <Nav
         mode="horizontal"
         header={

@@ -40,14 +40,6 @@ export default function Login() {
             邮箱登录
           </Button>
           {/* <Button
-            block
-            
-            className={styles.loginPathButton}
-            onClick={() => push('/login/code')}
-          >
-            验证码登录
-          </Button> */}
-          {/* <Button
             type='primary'
             theme='solid'
             block

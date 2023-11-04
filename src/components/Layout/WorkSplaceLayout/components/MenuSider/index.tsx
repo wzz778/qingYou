@@ -70,16 +70,17 @@ const Index: FC = () => {
   }, [pathname]);
 
   return (
-    <Sider style={{ backgroundColor: 'var(--semi-color-bg-1)' }}>
+    <Sider style={{ backgroundColor: '#c9e5a9' }}>
       <Nav
         items={navList}
         className={styles.reSemi}
         // openKeys={openKeys}
+
         defaultOpenKeys={['1', '2']}
         selectedKeys={selectedKeys}
         onSelect={onSelect}
         onOpenChange={onOpenChange}
-        style={{ maxWidth: 220, height: '100%' }}
+        style={{ maxWidth: 220, height: '100%', backgroundColor: '#fdfffa' }}
         header={{
           logo: (
             <Image

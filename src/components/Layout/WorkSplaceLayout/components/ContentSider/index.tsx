@@ -86,7 +86,7 @@ const ContentSider: FC<ContentSiderProps> = ({ contentSiderType, children }) => 
         <Layout>
           <Sider
             style={{
-              backgroundColor: 'var(--semi-color-bg-1)',
+              backgroundColor: '#c9e5a9',
               width: '100%',
               borderRadius: 10,
               overflow: 'hidden'
@@ -109,7 +109,8 @@ const ContentSider: FC<ContentSiderProps> = ({ contentSiderType, children }) => 
             compact={false}
             style={{
               marginBottom: '10px',
-              borderBottom: '1.5px #6363631E solid'
+              borderBottom: '1.5px #6363631E solid',
+              paddingLeft: 15
             }}
           >
             <Breadcrumb.Item icon={<IconHome />}>首页</Breadcrumb.Item>
