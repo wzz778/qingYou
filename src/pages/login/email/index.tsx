@@ -1,5 +1,5 @@
 import styles from './index.module.scss';
-import { Form, Button } from '@douyinfe/semi-ui';
+import { Form, Button, Typography } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ToastError, ToastSuccess, getTeamInfo, getUserInfo } from '@/utils/common';
@@ -16,6 +16,7 @@ export default function Email() {
   const { getUser, setUser } = useUserStore();
   const { setTeam, setTeamName } = useTeamStore();
   const { push } = useRouter();
+  const { Text } = Typography;
   const handleSubmit = (values: any) => {
     setLoading(true);
     loginFn({ username: values.username, password: values.password });
@@ -102,7 +103,10 @@ export default function Email() {
                   placeholder="输入密码"
                 ></Form.Input>
                 <Form.Checkbox field="agree" noLabel>
-                  我已阅读并同意服务条款
+                  我已阅读并同意{'   '}
+                  <Text link={{ href: '/home/statement', target: '_blank' }} underline>
+                    服务条款
+                  </Text>
                 </Form.Checkbox>
                 <div
                   style={{

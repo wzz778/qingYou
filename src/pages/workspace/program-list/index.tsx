@@ -103,7 +103,11 @@ const ProjectList = () => {
       dataIndex: 'regularTime',
       render: (text: string) => {
         return (
-          <Text ellipsis={{ showTooltip: true }}>
+          <Text
+            ellipsis={{
+              showTooltip: { type: 'popover', opts: { style: { textAlign: 'center' } } }
+            }}
+          >
             <CronInput initialCron={text} orChange />
           </Text>
         );
@@ -134,7 +138,7 @@ const ProjectList = () => {
       render: (id: string, record: any) => {
         return (
           <Space>
-            <Button onClick={() => updateProgramOpenModal(record)}>更新</Button>
+            {/* <Button onClick={() => updateProgramOpenModal(record)}>更新</Button> */}
             <Popconfirm title="确定要删除该数据吗" onConfirm={() => handleDeleteProgram(id)}>
               <Button style={{ color: '#f82c70' }} icon={<IconDelete />}></Button>
             </Popconfirm>

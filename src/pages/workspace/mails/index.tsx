@@ -236,7 +236,7 @@ const Mails: FC<IProps> = (props) => {
                     <Text
                       icon={<IconLink />}
                       style={{ fontSize: 12 }}
-                      link={{ href: 'https://service.mail.qq.com/' }}
+                      link={{ href: 'https://service.mail.qq.com/', target: '_blank' }}
                       underline
                       type="success"
                     >
@@ -263,7 +263,7 @@ const Mails: FC<IProps> = (props) => {
                   >
                     授权码不是邮箱密码,
                     <Text
-                      link={{ href: 'https://service.mail.qq.com/detail/0/75' }}
+                      link={{ href: 'https://service.mail.qq.com/detail/0/75', target: '_blank' }}
                       icon={<IconLink />}
                       style={{ fontSize: 12 }}
                       underline

@@ -3,7 +3,7 @@ import { settingConfig } from '../config';
 import { useEffect, useState } from 'react';
 import useUserStore from '@/store/user';
 import { updateUserInfo } from '@/api/modules/user';
-import { ToastWaring } from '@/utils/common';
+import { ToastWaring, handleLength } from '@/utils/common';
 
 const UserNameSettingCard = () => {
   const [inputValue, setInputValue] = useState('');
@@ -26,10 +26,8 @@ const UserNameSettingCard = () => {
 
   const handleSave = () => {
     if (!user) return;
-    const filteredStr = inputValue.replace(/\s/g, '');
-    if (filteredStr.length > 10 || filteredStr.length < 2) {
+    if (!handleLength(inputValue, 2, 10)) {
       ToastWaring('请输入符合2~10位字符的用户昵称！');
-      return;
     }
     setLoading(true);
     updateUserInfo({ id: user?.id, nickname: inputValue, password: '' })

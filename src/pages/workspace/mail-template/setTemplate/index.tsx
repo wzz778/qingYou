@@ -22,6 +22,7 @@ import None from '@/components/dataAcquisition/None';
 import Loading from '@/components/dataAcquisition/Loading';
 import Failure from '@/components/dataAcquisition/Failure';
 import Error from '@/components/dataAcquisition/Error';
+import { useRouter } from 'next/router';
 
 interface SetSetTemplateProps {
   setTemplate: (data: any) => void;
@@ -33,6 +34,7 @@ const SetTemplate: React.FC<SetSetTemplateProps> = ({ setTemplate }) => {
   const { user } = useUserStore();
   const [currentPage, setPage] = useState(1);
   const [limitPage, setLimitPage] = useState(5);
+  const { push } = useRouter();
   const { data, isLoading, error, mutate } = useSWR(
     `/email/templates/queryEmailTemplatesPersonal?page=${currentPage}&limit=${limitPage}&id=${user?.id}&personOrTeam=0`,
     fetcher
@@ -99,7 +101,11 @@ const SetTemplate: React.FC<SetSetTemplateProps> = ({ setTemplate }) => {
   return (
     <div className={styles.mailTemplate}>
       {isEmpty ? (
-        <None title={'无数据'} description={'请先创建数据'} />
+        <None
+          title={'无数据'}
+          description={'请先创建数据'}
+          noneHandle={() => push('/workspace/mail-template')}
+        />
       ) : (
         <Table
           columns={columns}

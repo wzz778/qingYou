@@ -47,7 +47,13 @@ const AuthSwitchBox = () => {
               type="primary"
               className={teamId == '0' ? styles.getSelected : ''}
               icon={<IconUserCircle />}
-              onClick={() => changeTeam('0', user?.nickname || '')}
+              onClick={() =>
+                execConfirm(
+                  () => changeTeam('0', user?.nickname || ''),
+                  undefined,
+                  `你确定切换到个人账号？`
+                )
+              }
             >
               {user?.nickname}
             </Dropdown.Item>

@@ -212,3 +212,11 @@ export const handleCopy = (text: string) => {
     }
   );
 };
+
+export const handleLength = (text: string, min: number, max: number): boolean => {
+  const filteredStr = text.replace(/\s/g, '');
+  if (filteredStr.length > max || filteredStr.length < min) {
+    return false;
+  }
+  return true;
+};

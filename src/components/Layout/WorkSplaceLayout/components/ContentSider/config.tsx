@@ -85,7 +85,7 @@ const Work_CONFIG: MenuCItem[] = [
     path: '/workspace/teams/users'
   },
   {
-    text: '团队管理',
+    text: '团队信息',
     path: '/workspace/teams/information'
   }
 ];

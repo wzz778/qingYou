@@ -155,7 +155,7 @@ const CronInput: React.FC<Props> = ({ initialCron, onChange, orChange }) => {
           multiple
           placeholder={placeholder}
           onChange={(val: any) => handleSelectChange(val)}
-          style={{ marginRight: '16px', width: 'auto' }}
+          style={{ marginRight: '8px', width: 'auto' }}
           value={selectedValue}
         >
           {data.map((item: { key: string; label: string }) => (
@@ -180,7 +180,7 @@ const CronInput: React.FC<Props> = ({ initialCron, onChange, orChange }) => {
       {orChange && <div className={styles.cronMask}></div>}
       <Select
         // role="cron-type"
-        style={{ marginRight: '16px', width: 'auto' }}
+        style={{ marginRight: '8px', width: 'auto' }}
         placeholder="请选择类型"
         onChange={(val: any) => handleTimeTypeChange(val)}
         value={defaultTimeType}

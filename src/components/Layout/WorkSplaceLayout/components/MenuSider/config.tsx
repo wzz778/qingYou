@@ -92,7 +92,7 @@ const TEAM_CONFIG: MenuItem[] = [
       },
       {
         itemKey: '42',
-        text: '团队管理',
+        text: '团队信息',
         path: '/workspace/teams/information'
       }
     ]

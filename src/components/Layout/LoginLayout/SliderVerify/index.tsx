@@ -1,7 +1,7 @@
 import React, { useRef, useState, MutableRefObject } from 'react';
 import styles from './index.module.scss';
 import { Spin } from '@douyinfe/semi-ui';
-import { IconSpin } from '@douyinfe/semi-icons';
+import { IconSpin, IconDoubleChevronRight, IconTickCircle } from '@douyinfe/semi-icons';
 export default function Slider(props: any) {
   const leftRef: MutableRefObject<any> = useRef();
   const rootRef: MutableRefObject<any> = useRef();
@@ -12,12 +12,18 @@ export default function Slider(props: any) {
   const [loading, setLoading] = useState(false);
   const antIcon = <IconSpin style={{ fontSize: 24 }} spin />;
   const lashen = (events: any) => {
+    if (successText == '验证成功') {
+      return;
+    }
     var mouseDownX = events.clientX; // 左边位置
     var Wl = leftRef.current.clientWidth;
     leftRef.current.style.backgroundColor = '#76CD4B';
     rootRef.current.style.borderColor = '#76CD4B';
     setSuccessText('');
     rootRef.current.onmousemove = function (event: { clientX: number }) {
+      // if (successText == '验证成功') {
+      //   return;
+      // }
       setTextTitle('');
       if (
         rootRef.current.offsetWidth -
@@ -32,6 +38,7 @@ export default function Slider(props: any) {
         leftRef.current.style.backgroundColor = '#76CD4B';
         rootRef.current.style.borderColor = '#76CD4B';
         setSuccessText('验证成功');
+        rootRef.current.onmousemove = null;
         props.resultClick(true);
         setTimeout(() => {
           setLoading(false);
@@ -78,7 +85,7 @@ export default function Slider(props: any) {
             {successText}
           </div>
           <div onMouseDown={lashen} ref={centerRef} className={styles['simple-slider']}>
-            {'>>>'}
+            {successText == '验证成功' ? <IconTickCircle /> : <IconDoubleChevronRight />}
           </div>
           <div ref={rightRef} className={styles['simple-right']}>
             {textTitle}

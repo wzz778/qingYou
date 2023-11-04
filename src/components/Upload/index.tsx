@@ -51,8 +51,8 @@ const UploadImg: FC<UploadImgProps> = ({ imageUrl, successHandle, username }) =>
   };
 
   const handleOk = async () => {
-    // setModalText('上传中...');
-    // setConfirmLoading(true);
+    setModalText('上传中...');
+    setConfirmLoading(true);
     //@ts-ignore
     const blob = await uploadRef.current.upload();
     const hash = await blobToHash(blob);

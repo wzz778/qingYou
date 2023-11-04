@@ -168,8 +168,9 @@ const Program: FC<IProps> = (props) => {
         .then((res: any) => {
           if (res.code == '200') {
             ToastSuccess('发送成功');
+            formRef.current.reset();
           } else {
-            ToastError('发送失败');
+            ToastError('发送失败，请检查您配置的邮箱是否正确');
           }
         })
         .catch((error: any) => {
@@ -177,7 +178,6 @@ const Program: FC<IProps> = (props) => {
         })
         .finally(() => {
           setAddLoading(false);
-          formRef.current.reset();
         });
     }
   };
@@ -283,7 +283,8 @@ const Program: FC<IProps> = (props) => {
                             <Form.Input
                               field={`${field}`}
                               label={`收件人 ${i + 1} 邮箱`}
-                              style={{ width: 200 }}
+                              placeholder={'请输入接收人的邮箱，如：42342@qq.com'}
+                              style={{ width: 400 }}
                               rules={[
                                 { required: true, message: '请输入内容' },
                                 {

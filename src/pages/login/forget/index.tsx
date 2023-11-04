@@ -52,7 +52,7 @@ export default function Forget() {
     <main className={styles.loginScreen}>
       <div className={styles.loginCard}>
         <div className={styles.loginHeader}>
-          <h1 className={styles.title}>注册</h1>
+          <h1 className={styles.title}>忘记密码</h1>
         </div>
         <div className={styles.loginPath}>
           <Form style={{ width: 400 }} onSubmit={(values) => handleSubmit(values)}>
