@@ -1,5 +1,5 @@
 import styles from './index.module.scss';
-import { Form, Button, AutoComplete } from '@douyinfe/semi-ui';
+import { Form, Button, AutoComplete, Typography } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
 import { SetStateAction, useState } from 'react';
 import { ToastError, ToastSuccess, ToastWaring } from '@/utils/common';
@@ -10,6 +10,7 @@ export default function Email() {
   const [loading, setLoading] = useState(false);
   // const { setUser } = useUserStore();
   const { push } = useRouter();
+  const { Text } = Typography;
   const handleSubmit = async (values: any) => {
     console.log(values);
 
@@ -93,7 +94,10 @@ export default function Email() {
                   }}
                 >
                   <Form.Checkbox field="agree" noLabel>
-                    我已阅读并同意服务条款
+                    我已阅读并同意{'   '}
+                    <Text link={{ href: '/home/statement', target: '_blank' }} underline>
+                      服务条款
+                    </Text>
                   </Form.Checkbox>
                   <Button
                     disabled={!values.agree}
