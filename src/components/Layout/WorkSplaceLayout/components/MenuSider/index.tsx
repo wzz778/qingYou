@@ -6,8 +6,6 @@ import Image from 'next/image';
 import styles from './index.module.scss';
 import useTeamStore from '@/store/team';
 import { queryTeamById } from '@/api/modules/team';
-import { ToastError } from '@/utils/common';
-import useMount from '@/hooks/useMount';
 const { Sider } = Layout;
 
 function findMenuByPath(menus: MenuItem[], path: string, keys: any[]): any {

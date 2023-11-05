@@ -16,8 +16,8 @@ interface WorkSplaceLayoutProps {
   children: React.ReactNode;
 }
 const WorkSplaceLayout: React.FC<WorkSplaceLayoutProps> = ({ children }) => {
-  const { pathname, push } = useRouter();
-  const { user, clearUser } = useUserStore();
+  const { pathname } = useRouter();
+  const { user } = useUserStore();
   const isSubRoute = (path: string, baseRoute: string) => {
     return pathname.startsWith(baseRoute) && pathname !== baseRoute;
   };
@@ -29,9 +29,9 @@ const WorkSplaceLayout: React.FC<WorkSplaceLayoutProps> = ({ children }) => {
       return 'doc';
     }
   }, [pathname]);
-  // if (!user) {
-  //   return <FailPage />;
-  // }
+  if (!user) {
+    return <FailPage />;
+  }
 
   return (
     <div className={styles.Layout}>

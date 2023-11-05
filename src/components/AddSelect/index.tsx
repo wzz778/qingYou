@@ -1,12 +1,10 @@
 import { memo, useEffect, useState } from 'react';
-import cName from 'classnames';
 
 //type
-import type { FC, JSX } from 'react';
+import type { FC } from 'react';
 import styles from './index.module.scss';
-import { Avatar, Button, Input, Select, Tag } from '@douyinfe/semi-ui';
-import { OptionProps, RenderSelectedItemFn } from '@douyinfe/semi-ui/lib/es/select';
-import Option from '@douyinfe/semi-ui/lib/es/select/option';
+import { Button, Input, Select, Tag } from '@douyinfe/semi-ui';
+import { RenderSelectedItemFn } from '@douyinfe/semi-ui/lib/es/select';
 import install from '@/utils/validator';
 import { ToastWaring } from '@/utils/common';
 import CustomAvatar from '../CustomAvatar';

@@ -10,7 +10,6 @@ interface IProps {
 }
 
 const FailPage: FC<IProps> = (props) => {
-  const { datas = [] } = props;
   return (
     <>
       <Header />

@@ -12,7 +12,6 @@ import { Button, Card, CardGroup, Form, Modal, Typography } from '@douyinfe/semi
 import useUserStore from '@/store/user';
 import useSWR from 'swr';
 import { fetcher } from '@/utils/http';
-import { addEmailProgram } from '@/api/modules/dispatch';
 import {
   addEmailConfig,
   deleteEmailConfig,

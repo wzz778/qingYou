@@ -1,5 +1,4 @@
 import { memo, useState, useRef, useEffect } from 'react';
-import classNames from 'classnames';
 
 //type
 import type { FC } from 'react';

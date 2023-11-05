@@ -1,6 +1,6 @@
 import { memo, useState } from 'react';
 //type
-import type { FC, SetStateAction } from 'react';
+import type { SetStateAction } from 'react';
 import styles from './index.module.scss';
 import { ToastError, ToastSuccess, execConfirm } from '@/utils/common';
 import {
