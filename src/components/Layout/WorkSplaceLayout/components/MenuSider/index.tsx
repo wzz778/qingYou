@@ -76,11 +76,11 @@ const Index: FC = () => {
         className={styles.reSemi}
         // openKeys={openKeys}
 
-        defaultOpenKeys={['1', '2']}
+        defaultOpenKeys={['1', '2', '4']}
         selectedKeys={selectedKeys}
         onSelect={onSelect}
         onOpenChange={onOpenChange}
-        style={{ maxWidth: 220, height: '100%', backgroundColor: '#fdfffa' }}
+        style={{ maxWidth: 220, height: '100%', backgroundColor: '#fcfff9' }}
         header={{
           logo: (
             <Image

@@ -6,9 +6,10 @@ const { Header } = Layout;
 
 const Index: FC = () => {
   return (
-    <Header style={{ backgroundColor: '#F2FCE6' }} className="layout-header">
+    <Header className="layout-header">
       <Nav
         mode="horizontal"
+        style={{ backgroundColor: '#F1F1F1' }}
         header={
           <>
             <LinkBox />

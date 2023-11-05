@@ -11,7 +11,6 @@ const Wfooter: FC = () => {
         justifyContent: 'space-between',
         padding: '10px 20px',
         color: 'var(--semi-color-text-2)'
-        // backgroundColor: '#eaf9ee'
       }}
     >
       <span

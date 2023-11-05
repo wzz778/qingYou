@@ -96,6 +96,23 @@ const TEAM_CONFIG: MenuItem[] = [
         path: '/workspace/teams/information'
       }
     ]
+  },
+  {
+    text: '账号',
+    icon: <IconIdCard />,
+    itemKey: '3',
+    items: [
+      {
+        itemKey: '31',
+        text: '团队管理',
+        path: '/workspace/teams'
+      },
+      {
+        itemKey: '32',
+        text: '账号管理',
+        path: '/workspace/account'
+      }
+    ]
   }
 ];
 
