@@ -16,7 +16,7 @@ interface UploadImgProps {
   id?: number;
   successHandle: (url: string) => Promise<unknown>;
 }
-// export const preUrl = 'https://qiniuyun.devlink.wiki/';
+// export const preUrl = ';
 // TODO: 带优化，抽离出物料，第二次无法上传
 const UPLOAD_SIZE = 5000000;
 const UploadImg: FC<UploadImgProps> = ({ imageUrl, successHandle, username }) => {
