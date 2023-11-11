@@ -2,9 +2,8 @@ import { memo, useRef, useState } from 'react';
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
-import { Button, Input, Spin } from '@douyinfe/semi-ui';
+import { Button, Spin } from '@douyinfe/semi-ui';
 import AiTool from '@/ai/server/AiTool';
-import useLatest from '@/hooks/useLatest';
 interface IProps {
   datas?: any[];
 }
@@ -13,8 +12,7 @@ interface messageInfo {
   user: boolean;
 }
 
-const Chat: FC<IProps> = (props) => {
-  const { datas = [] } = props;
+const Chat: FC<IProps> = () => {
   const [question, setQuestion] = useState<string>('');
   // const [result, setResult] = useState<string>('');
   let result = '';
@@ -23,10 +21,8 @@ const Chat: FC<IProps> = (props) => {
   const ref = useRef<any>(null);
   const messageContainerRef = useRef<any>(null);
   const loadingRef = useRef<any>(null);
-  const messageListRef = useLatest(messageList);
   const submit = () => {
     setQuestion('');
-    console.log(messageList);
     if (!messageList.length) {
       setMessageList([
         {
@@ -34,7 +30,6 @@ const Chat: FC<IProps> = (props) => {
           text: question
         }
       ]);
-      console.log(messageList);
     } else {
       setMessageList([
         ...messageList,
@@ -43,7 +38,6 @@ const Chat: FC<IProps> = (props) => {
           text: question
         }
       ]);
-      console.log(messageList);
     }
     moveY();
     if (ref.current) {
@@ -59,7 +53,6 @@ const Chat: FC<IProps> = (props) => {
   const overRespond = (v: boolean) => {
     if (!v) {
       setMessageList((prevList) => [...prevList, { user: false, text: result }]);
-      console.log(messageList);
       moveY();
     }
     setIsLoading(v);
@@ -72,6 +65,7 @@ const Chat: FC<IProps> = (props) => {
       submit();
     }
   };
+  //返回底部
   const moveY = () => {
     const h = messageContainerRef.current.scrollHeight;
     messageContainerRef.current.scrollTop = h + 20;
@@ -80,7 +74,7 @@ const Chat: FC<IProps> = (props) => {
     <div className={styles.chat}>
       <div className={styles.chat__main}>
         <header className={styles.chat__mainHeader}>
-          <p>欢迎尝试！</p>
+          <p>欢迎使用青邮AI助手！</p>
           <div>
             <Button onClick={moveY} style={{ marginRight: 4 }}>
               返回底部

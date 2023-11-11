@@ -3,13 +3,13 @@ import { requestObj } from '../config';
 import { getWebsocketUrl } from '../utils';
 interface AiToolProps {
   isText?: boolean;
-  respondHoodle: (result: string) => void;
-  loadHoodle?: (isLoading: boolean) => void;
-  errorHoodle?: (isLoading: boolean) => void;
+  respondHoodle: (result: string) => void; //关联数据
+  loadHoodle?: (isLoading: boolean) => void; //加载状态
+  errorHoodle?: (isLoading: boolean) => void; //失败调用
 }
 
 interface CropperRef {
-  submitHoodle: (v: any) => void;
+  submitHoodle: (v: any) => void; //父类调用
 }
 
 const AiTool = forwardRef<CropperRef, AiToolProps>(function AiTool(
@@ -17,9 +17,10 @@ const AiTool = forwardRef<CropperRef, AiToolProps>(function AiTool(
   ref
 ) {
   let result: string = '';
-  // const addMsgToTextarea = (text: string) => {
-  //   respondHoodle(text);
-  // };
+  const [historyMessage, setHistoryMessage] = useState<any[]>([
+    { role: 'user', content: '你是谁' }, //# 用户的历史问题
+    { role: 'assistant', content: '我是AI助手' }
+  ]); //上下文内容
 
   useImperativeHandle(ref, () => ({
     submitHoodle: sendMsg
@@ -52,8 +53,7 @@ const AiTool = forwardRef<CropperRef, AiToolProps>(function AiTool(
             // 如果想获取结合上下文的回答，需要开发者每次将历史问答信息一起传给服务端，如下示例
             // 注意：text里面的所有content内容加一起的tokens需要控制在8192以内，开发者如有较长对话需求，需要适当裁剪历史信息
             text: [
-              { role: 'user', content: '你是谁' }, //# 用户的历史问题
-              { role: 'assistant', content: '我是AI助手' }, //# AI的历史回答结果
+              ...historyMessage,
               // ....... 省略的历史对话
               { role: 'user', content: questionText } //# 最新的一条问题，如无需上下文，可只传最新一条问题
             ]
@@ -86,6 +86,11 @@ const AiTool = forwardRef<CropperRef, AiToolProps>(function AiTool(
       }
     });
     socket.addEventListener('close', (event) => {
+      setHistoryMessage([
+        ...historyMessage,
+        { role: 'user', content: questionText },
+        { role: 'assistant', content: result }
+      ]);
       if (loadHoodle) loadHoodle(false);
       // 对话完成后socket会关闭，将聊天记录换行处理
     });
