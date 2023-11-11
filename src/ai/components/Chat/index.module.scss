@@ -1,11 +1,9 @@
 .chat {
   width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
+  height: calc(100vh - 122px);
   .chat__main {
     height: 100%;
-    flex: 1;
+    width: 100%;
   }
   .chat__mainHeader {
     width: 100%;
@@ -14,23 +12,21 @@
     align-items: center;
     padding: 10px;
     justify-content: space-between;
-    background-color: #f9f5eb;
+    background-color: rgb(235, 249, 235);
   }
   .message__container {
     width: 100%;
-    height: 60vh;
+    height: calc(100% - 120px);
     background-color: #fff;
     padding: 20px;
     overflow-y: scroll;
+    scroll-behavior: smooth;
   }
 
-  .message__container > * {
-    margin-bottom: 10px;
-  }
   .chat__footer {
-    padding: 5px;
-    background-color: #f9f5eb;
-    height: 60px;
+    padding: 8px;
+    background-color: #eef9eb;
+    height: 55px;
     width: 100%;
     position: absolute;
     bottom: 0;
@@ -55,21 +51,23 @@
     height: 40px;
     position: absolute;
     right: 2%;
-    top: 5px;
+    top: 7px;
   }
   .message__recipient {
     background-color: #f5ccc2;
-    width: 300px;
     padding: 10px;
     border-radius: 4px;
+    line-height: 20px;
+    width: 400px;
     font-size: 15px;
   }
   .message__sender {
     background-color: rgb(194, 243, 194);
-    max-width: 300px;
+    max-width: 400px;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 4px;
     margin-left: auto;
+    line-height: 20px;
     font-size: 15px;
   }
   .message__chats > p {

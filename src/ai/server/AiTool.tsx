@@ -4,15 +4,16 @@ import { getWebsocketUrl } from '../utils';
 interface AiToolProps {
   isText?: boolean;
   respondHoodle: (result: string) => void;
-  loadHoodle: (isLoading: boolean) => void;
+  loadHoodle?: (isLoading: boolean) => void;
+  errorHoodle?: (isLoading: boolean) => void;
 }
 
 interface CropperRef {
-  submit: (v: any) => void;
+  submitHoodle: (v: any) => void;
 }
 
 const AiTool = forwardRef<CropperRef, AiToolProps>(function AiTool(
-  { isText, respondHoodle, loadHoodle },
+  { isText, respondHoodle, loadHoodle, errorHoodle },
   ref
 ) {
   let result: string = '';
@@ -20,15 +21,10 @@ const AiTool = forwardRef<CropperRef, AiToolProps>(function AiTool(
   //   respondHoodle(text);
   // };
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      submit: sendMsg
-    }),
-    []
-  );
+  useImperativeHandle(ref, () => ({
+    submitHoodle: sendMsg
+  }));
   const sendMsg = async (questionText: string) => {
-    console.log(questionText);
     result = ' ';
     // 获取请求地址
     let myUrl = await getWebsocketUrl();
@@ -37,7 +33,7 @@ const AiTool = forwardRef<CropperRef, AiToolProps>(function AiTool(
     let socket = new WebSocket(myUrl);
     // 监听websocket的各阶段事件 并做相应处理
     socket.addEventListener('open', (event) => {
-      loadHoodle(true);
+      if (loadHoodle) loadHoodle(true);
       // 发送消息
       let params = {
         header: {
@@ -64,13 +60,15 @@ const AiTool = forwardRef<CropperRef, AiToolProps>(function AiTool(
           }
         }
       };
-      console.log('发送消息');
       socket.send(JSON.stringify(params));
     });
     socket.addEventListener('message', (event) => {
       let data = JSON.parse(event.data);
+      if (!data.payload) {
+        socket.close();
+        return;
+      }
       result += data.payload.choices.text[0].content;
-      console.log(result);
       respondHoodle(result);
       if (data.header.code !== 0) {
         console.log('出错了', data.header.code, ':', data.header.message);
@@ -88,12 +86,11 @@ const AiTool = forwardRef<CropperRef, AiToolProps>(function AiTool(
       }
     });
     socket.addEventListener('close', (event) => {
-      console.log('连接关闭！！', event);
-      loadHoodle(false);
-      // 对话完成后socket会关闭，将聊天记录换行处理\
-      respondHoodle(result);
+      if (loadHoodle) loadHoodle(false);
+      // 对话完成后socket会关闭，将聊天记录换行处理
     });
     socket.addEventListener('error', (event) => {
+      if (errorHoodle) errorHoodle(true);
       console.log('连接发送错误！！', event);
     });
   };

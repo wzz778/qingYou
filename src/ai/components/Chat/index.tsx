@@ -1,58 +1,125 @@
 import { memo, useRef, useState } from 'react';
-// import classNames from "classnames";
-
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
-import { Button, Input } from '@douyinfe/semi-ui';
+import { Button, Input, Spin } from '@douyinfe/semi-ui';
 import AiTool from '@/ai/server/AiTool';
-import Textarea from '@douyinfe/semi-ui/lib/es/input/textarea';
+import useLatest from '@/hooks/useLatest';
 interface IProps {
   datas?: any[];
 }
+interface messageInfo {
+  text: string;
+  user: boolean;
+}
 
-const Demo: FC<IProps> = (props) => {
+const Chat: FC<IProps> = (props) => {
   const { datas = [] } = props;
-  const [questionInput, setQuestionInput] = useState('');
-  const [result, setResult] = useState('');
+  const [question, setQuestion] = useState<string>('');
+  // const [result, setResult] = useState<string>('');
+  let result = '';
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [messageList, setMessageList] = useState<messageInfo[]>([]);
   const ref = useRef<any>(null);
-  const submit = (questionText: string) => {
+  const messageContainerRef = useRef<any>(null);
+  const loadingRef = useRef<any>(null);
+  const messageListRef = useLatest(messageList);
+  const submit = () => {
+    setQuestion('');
+    console.log(messageList);
+    if (!messageList.length) {
+      setMessageList([
+        {
+          user: true,
+          text: question
+        }
+      ]);
+      console.log(messageList);
+    } else {
+      setMessageList([
+        ...messageList,
+        {
+          user: true,
+          text: question
+        }
+      ]);
+      console.log(messageList);
+    }
+    moveY();
     if (ref.current) {
-      ref.current.submit(questionText);
+      ref.current.submitHoodle(question);
     }
   };
-  const respondHoodle = (result: string) => {
-    setResult(result);
+  const respondHoodle = (respond: string) => {
+    result = respond;
+    loadingRef.current.innerText = result;
+    moveY();
+    // loadingRef.current
+  };
+  const overRespond = (v: boolean) => {
+    if (!v) {
+      setMessageList((prevList) => [...prevList, { user: false, text: result }]);
+      console.log(messageList);
+      moveY();
+    }
+    setIsLoading(v);
   };
   const handleSendMessage = (e: any) => {
     e.preventDefault();
+  };
+  const handleKeyPress = (e: any) => {
+    if (e.keyCode === 13) {
+      submit();
+    }
+  };
+  const moveY = () => {
+    const h = messageContainerRef.current.scrollHeight;
+    messageContainerRef.current.scrollTop = h + 20;
   };
   return (
     <div className={styles.chat}>
       <div className={styles.chat__main}>
         <header className={styles.chat__mainHeader}>
           <p>欢迎尝试！</p>
-          <Button type="danger" theme="solid" className={styles.leaveChat__btn}>
-            LEAVE CHAT
-          </Button>
+          <div>
+            <Button onClick={moveY} style={{ marginRight: 4 }}>
+              返回底部
+            </Button>
+            <Button type="danger" theme="solid" onClick={() => setMessageList([])}>
+              清除聊天记录
+            </Button>
+          </div>
         </header>
         {/* 显示你发送消息的内容 */}
-        <div className={styles.message__container}>
-          <div className={styles.message__chats}>
-            <p className={styles.sender__name}>You</p>
-            <div className={styles.message__sender}>
-              <p>Hello there</p>
+        <div className={styles.message__container} ref={messageContainerRef}>
+          {messageList.map((item, index) => {
+            return item.user ? (
+              <div key={item.user.toString() + index} className={styles.message__chats}>
+                <p className={styles.sender__name}>You</p>
+                <div className={styles.message__sender}>
+                  <p>{item.text}</p>
+                </div>
+              </div>
+            ) : (
+              <div className={styles.message__chats}>
+                <p>Ai</p>
+                <div className={styles.message__recipient}>
+                  <p>{item.text}</p>
+                </div>
+              </div>
+            );
+          })}
+          {isLoading ? (
+            <div className={styles.message__chats}>
+              <p>Ai</p>
+              <div className={styles.message__recipient}>
+                <p ref={loadingRef}>{result}</p>
+                <Spin />
+              </div>
             </div>
-          </div>
-
-          {/*显示你接收消息的内容*/}
-          <div className={styles.message__chats}>
-            <p>Other</p>
-            <div className={styles.message__recipient}>
-              <p>Hey,m good, you?</p>
-            </div>
-          </div>
+          ) : (
+            ''
+          )}
         </div>
         <div className={styles.chat__footer}>
           <form className="form" onSubmit={handleSendMessage}>
@@ -60,30 +127,19 @@ const Demo: FC<IProps> = (props) => {
               type="text"
               placeholder="编写消息"
               className={styles.message}
-              value={questionInput}
-              onChange={(e) => setQuestionInput(e.target.value)}
+              value={question}
+              onChange={(e) => setQuestion(e.target.value)}
+              onKeyUp={handleKeyPress}
             />
-            <Button type="primary" theme="solid" className={styles.sendBtn}>
+            <Button onClick={submit} type="primary" theme="solid" className={styles.sendBtn}>
               发送
             </Button>
           </form>
         </div>
+        <AiTool loadHoodle={overRespond} respondHoodle={respondHoodle} ref={ref} />
       </div>
     </div>
-    // <div>
-    //   <h1>讯飞星火认知大模型接入网页成功 {isLoading ? '加载中.....' : '加载完成'}</h1>
-    //   <div>
-    //     <>{result}</>
-    //     {/* <textarea value={result} style={{ width: 700, fontSize: 12 }}></textarea> */}
-    //   </div>
-    //   <div id="sendVal">
-    //     <Textarea value={questionInput} onChange={setQuestionInput} />
-    //     <Button onClick={() => submit(questionInput)}>发送信息</Button>
-    //     <AiTool loadHoodle={setIsLoading} respondHoodle={respondHoodle} ref={ref} />
-    //   </div>
-    // </div>
   );
 };
 
-export default memo(Demo);
-Demo.displayName = 'Demo';
+export default memo(Chat);
