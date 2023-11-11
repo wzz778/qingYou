@@ -1,49 +1,20 @@
 .chat {
   width: 100%;
-  height: 80vh;
+  height: 100%;
   display: flex;
   align-items: center;
-  .chat__sidebar {
-    height: 100%;
-    background-color: #f9f5eb;
-    flex: 0.2;
-    padding: 20px;
-    border-right: 1px solid #fdfdfd;
-  }
   .chat__main {
     height: 100%;
-    flex: 0.8;
-  }
-  .chat__header {
-    margin: 30px 0 20px 0;
-  }
-  .chat__users > * {
-    margin-bottom: 10px;
-    color: #607eaa;
-    font-size: 14px;
-  }
-  .online__users > * {
-    margin-bottom: 10px;
-    color: rgb(238, 102, 102);
-    font-style: italic;
+    flex: 1;
   }
   .chat__mainHeader {
     width: 100%;
-    height: 10vh;
+    height: 40px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #f9f5eb;
-  }
-  .leaveChat__btn {
     padding: 10px;
-    width: 150px;
-    border: none;
-    outline: none;
-    background-color: #d1512d;
-    cursor: pointer;
-    color: #eae3d2;
+    justify-content: space-between;
+    background-color: #f9f5eb;
   }
   .message__container {
     width: 100%;
@@ -57,9 +28,12 @@
     margin-bottom: 10px;
   }
   .chat__footer {
-    padding: 10px;
+    padding: 5px;
     background-color: #f9f5eb;
-    height: 10vh;
+    height: 60px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
   }
   .form {
     width: 100%;
@@ -69,30 +43,25 @@
     justify-content: space-between;
   }
   .message {
-    width: 80%;
-    height: 100%;
+    width: 83%;
+    height: 40px;
     border-radius: 10px;
     border: 1px solid #ddd;
     outline: none;
-    padding: 15px;
+    padding: 10px;
   }
   .sendBtn {
-    width: 150px;
-    background-color: green;
-    padding: 10px;
-    border: none;
-    outline: none;
-    color: #eae3d2;
-    cursor: pointer;
-  }
-  .sendBtn:hover {
-    background-color: rgb(129, 201, 129);
+    width: 15%;
+    height: 40px;
+    position: absolute;
+    right: 2%;
+    top: 5px;
   }
   .message__recipient {
     background-color: #f5ccc2;
     width: 300px;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 4px;
     font-size: 15px;
   }
   .message__sender {

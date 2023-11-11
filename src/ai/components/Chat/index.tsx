@@ -32,10 +32,11 @@ const Demo: FC<IProps> = (props) => {
     <div className={styles.chat}>
       <div className={styles.chat__main}>
         <header className={styles.chat__mainHeader}>
-          <p>Hangout with Colleagues</p>
-          <button className={styles.leaveChat__btn}>LEAVE CHAT</button>
+          <p>欢迎尝试！</p>
+          <Button type="danger" theme="solid" className={styles.leaveChat__btn}>
+            LEAVE CHAT
+          </Button>
         </header>
-
         {/* 显示你发送消息的内容 */}
         <div className={styles.message__container}>
           <div className={styles.message__chats}>
@@ -62,7 +63,9 @@ const Demo: FC<IProps> = (props) => {
               value={questionInput}
               onChange={(e) => setQuestionInput(e.target.value)}
             />
-            <button className={styles.sendBtn}>发送</button>
+            <Button type="primary" theme="solid" className={styles.sendBtn}>
+              发送
+            </Button>
           </form>
         </div>
       </div>

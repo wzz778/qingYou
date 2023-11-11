@@ -108,7 +108,6 @@ const ContentSider: FC<ContentSiderProps> = ({ contentSiderType, children }) => 
           <Breadcrumb
             compact={false}
             style={{
-              marginBottom: '10px',
               borderBottom: '1.5px #6363631E solid',
               paddingLeft: 15
             }}
