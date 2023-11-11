@@ -1,4 +1,5 @@
 import {
+  IconCustomerSupport,
   IconGallery,
   IconIdCard,
   IconMail,
@@ -75,6 +76,12 @@ const MENU_CONFIG: MenuItem[] = [
         path: '/workspace/account'
       }
     ]
+  },
+  {
+    text: '大模型问答',
+    icon: <IconCustomerSupport />,
+    itemKey: '5',
+    path: '/workspace/ai-chat'
   }
 ];
 
