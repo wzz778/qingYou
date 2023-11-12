@@ -1,5 +1,3 @@
-import { IconHome, IconGridRectangle } from '@douyinfe/semi-icons';
-
 export interface MenuItem {
   itemKey: string;
   text: string;
@@ -87,6 +85,10 @@ const Work_CONFIG: MenuCItem[] = [
   {
     text: '团队信息',
     path: '/workspace/teams/information'
+  },
+  {
+    text: '大模型问答',
+    path: '/workspace/ai-chat'
   }
 ];
 export { PROJECT_CONFIG, DOC_CONFIG, Work_CONFIG };

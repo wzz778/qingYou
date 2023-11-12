@@ -7,6 +7,7 @@ import styles from './index.module.scss';
 import { Descriptions } from '@douyinfe/semi-ui';
 import { IconArrowUp } from '@douyinfe/semi-icons';
 import None from '@/components/dataAcquisition/None';
+
 interface IProps {
   datas?: any[];
 }
@@ -31,7 +32,6 @@ const ProjectLog: FC<IProps> = (props) => {
     width: '100%',
     marginBottom: 20
   };
-
   return (
     <div className={styles.ProjectLog}>
       <Descriptions data={data} row align="center" size="large" style={style} />

@@ -5,6 +5,8 @@ import styles from './index.module.scss';
 import { Button, Spin } from '@douyinfe/semi-ui';
 import AiTool from '@/ai/server/AiTool';
 import None from '@/components/dataAcquisition/None';
+import { ToastInfo, ToastWaring } from '@/utils/common';
+import { marked } from 'marked';
 interface IProps {
   datas?: any[];
 }
@@ -23,6 +25,14 @@ const Chat: FC<IProps> = () => {
   const messageContainerRef = useRef<any>(null);
   const loadingRef = useRef<any>(null);
   const submit = () => {
+    if (!question) {
+      ToastWaring('请输入提问内容');
+      return;
+    }
+    if (isLoading) {
+      ToastInfo('加载中，请稍等。。。');
+      return;
+    }
     setQuestion('');
     if (!messageList.length) {
       setMessageList([
@@ -100,7 +110,7 @@ const Chat: FC<IProps> = () => {
                 <div className={styles.message__chats}>
                   <p>Ai</p>
                   <div className={styles.message__recipient}>
-                    <p>{item.text}</p>
+                    <div dangerouslySetInnerHTML={{ __html: marked(item.text) }} />
                   </div>
                 </div>
               );
@@ -130,12 +140,18 @@ const Chat: FC<IProps> = () => {
               onChange={(e) => setQuestion(e.target.value)}
               onKeyUp={handleKeyPress}
             />
-            <Button onClick={submit} type="primary" theme="solid" className={styles.sendBtn}>
+            <Button
+              loading={isLoading}
+              onClick={submit}
+              type="primary"
+              theme="solid"
+              className={styles.sendBtn}
+            >
               发送
             </Button>
           </form>
         </div>
-        <AiTool loadHoodle={overRespond} respondHoodle={respondHoodle} ref={ref} isText={false} />
+        <AiTool loadHoodle={overRespond} respondHoodle={respondHoodle} ref={ref} />
       </div>
     </div>
   );

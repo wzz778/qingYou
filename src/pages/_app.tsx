@@ -1,5 +1,5 @@
 import 'normalize.css';
-import 'reset-css';
+// import 'reset-css';
 import type { AppProps } from 'next/app';
 import Router, { useRouter } from 'next/router';
 import nprogress from 'nprogress';

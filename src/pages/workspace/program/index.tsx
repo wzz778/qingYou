@@ -393,12 +393,12 @@ const Program: FC<IProps> = (props) => {
             {addVisible && <SetTemplate setTemplate={(res) => addTem(res)} />}
           </Modal>
           <Modal
-            title={'ai正文助手'}
+            title={'Ai正文助手'}
             footer={null}
             visible={aiVisible}
             onCancel={() => setAiVisible(false)}
             closeOnEsc
-            width={700}
+            width={900}
             zIndex={99}
           >
             <TextHelper />
