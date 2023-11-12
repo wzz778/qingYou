@@ -1,11 +1,12 @@
 .chat {
   width: 100%;
-  height: calc(100vh - 122px);
-  .chat__main {
-    height: 100%;
+  position: relative;
+  min-height: 400px;
+  .chat_main {
+    height: calc(100% - 122px);
     width: 100%;
   }
-  .chat__mainHeader {
+  .chat_mainHeader {
     width: 100%;
     height: 40px;
     display: flex;
@@ -14,7 +15,7 @@
     justify-content: space-between;
     background-color: rgb(235, 249, 235);
   }
-  .message__container {
+  .message_container {
     width: 100%;
     height: calc(100% - 100px);
     background-color: #fff;
@@ -23,7 +24,7 @@
     scroll-behavior: smooth;
   }
 
-  .chat__footer {
+  .chat_footer {
     padding: 8px;
     background-color: #eef9eb;
     height: 55px;
@@ -53,7 +54,7 @@
     right: 2%;
     top: 7px;
   }
-  .message__recipient {
+  .message_recipient {
     background-color: #f5ccc2;
     padding: 10px;
     border-radius: 4px;
@@ -61,7 +62,7 @@
     width: 400px;
     font-size: 15px;
   }
-  .message__sender {
+  .message_sender {
     background-color: rgb(194, 243, 194);
     max-width: 400px;
     padding: 10px;
@@ -70,13 +71,13 @@
     line-height: 20px;
     font-size: 15px;
   }
-  .message__chats > p {
+  .message_chats > p {
     font-size: 13px;
   }
-  .sender__name {
+  .sender_name {
     text-align: right;
   }
-  .message__status {
+  .message_status {
     position: fixed;
     bottom: 50px;
     font-size: 13px;

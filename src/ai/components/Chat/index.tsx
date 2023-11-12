@@ -4,6 +4,7 @@ import type { FC } from 'react';
 import styles from './index.module.scss';
 import { Button, Spin } from '@douyinfe/semi-ui';
 import AiTool from '@/ai/server/AiTool';
+import None from '@/components/dataAcquisition/None';
 interface IProps {
   datas?: any[];
 }
@@ -86,23 +87,27 @@ const Chat: FC<IProps> = () => {
         </header>
         {/* 显示你发送消息的内容 */}
         <div className={styles.message__container} ref={messageContainerRef}>
-          {messageList.map((item, index) => {
-            return item.user ? (
-              <div key={item.user.toString() + index} className={styles.message__chats}>
-                <p className={styles.sender__name}>You</p>
-                <div className={styles.message__sender}>
-                  <p>{item.text}</p>
+          {messageList.length ? (
+            messageList.map((item, index) => {
+              return item.user ? (
+                <div key={item.user.toString() + index} className={styles.message__chats}>
+                  <p className={styles.sender__name}>你</p>
+                  <div className={styles.message__sender}>
+                    <p>{item.text}</p>
+                  </div>
                 </div>
-              </div>
-            ) : (
-              <div className={styles.message__chats}>
-                <p>Ai</p>
-                <div className={styles.message__recipient}>
-                  <p>{item.text}</p>
+              ) : (
+                <div className={styles.message__chats}>
+                  <p>Ai</p>
+                  <div className={styles.message__recipient}>
+                    <p>{item.text}</p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            <None description="暂无聊天记录" />
+          )}
           {isLoading ? (
             <div className={styles.message__chats}>
               <p>Ai</p>
@@ -130,7 +135,7 @@ const Chat: FC<IProps> = () => {
             </Button>
           </form>
         </div>
-        <AiTool loadHoodle={overRespond} respondHoodle={respondHoodle} ref={ref} />
+        <AiTool loadHoodle={overRespond} respondHoodle={respondHoodle} ref={ref} isText={false} />
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { FC, forwardRef, useImperativeHandle, useState } from 'react';
 import { requestObj } from '../config';
 import { getWebsocketUrl } from '../utils';
+import useMount from '@/hooks/useMount';
 interface AiToolProps {
   isText?: boolean;
   respondHoodle: (result: string) => void; //关联数据
@@ -9,7 +10,12 @@ interface AiToolProps {
 }
 
 interface CropperRef {
-  submitHoodle: (v: any) => void; //父类调用
+  submitHoodle: (v: string) => void; //父类调用
+}
+
+interface MessageInfo {
+  role: string;
+  content: string;
 }
 
 const AiTool = forwardRef<CropperRef, AiToolProps>(function AiTool(
@@ -17,14 +23,19 @@ const AiTool = forwardRef<CropperRef, AiToolProps>(function AiTool(
   ref
 ) {
   let result: string = '';
-  const [historyMessage, setHistoryMessage] = useState<any[]>([
-    { role: 'user', content: '你是谁' }, //# 用户的历史问题
-    { role: 'assistant', content: '我是AI助手' }
-  ]); //上下文内容
+  const [historyMessage, setHistoryMessage] = useState<MessageInfo[]>([]); //上下文内容
 
   useImperativeHandle(ref, () => ({
     submitHoodle: sendMsg
   }));
+  useMount(() => {
+    if (!isText) {
+      setHistoryMessage([
+        { role: 'user', content: '接下来我会提需求让你构建页面，你只要返回html的demo元素即可' }, //# 用户的历史问题
+        { role: 'assistant', content: '好的' }
+      ]);
+    }
+  });
   const sendMsg = async (questionText: string) => {
     result = ' ';
     // 获取请求地址
@@ -43,9 +54,9 @@ const AiTool = forwardRef<CropperRef, AiToolProps>(function AiTool(
         },
         parameter: {
           chat: {
-            domain: 'general',
+            domain: 'generalv3',
             temperature: 0.5,
-            max_tokens: 1024
+            max_tokens: 2048
           }
         },
         payload: {

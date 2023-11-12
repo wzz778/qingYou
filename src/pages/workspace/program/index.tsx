@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 import { Form, Button, Space, ArrayField, Modal, Upload } from '@douyinfe/semi-ui';
 import CronInput from '@/components/CronInput';
 import React from 'react';
-import { IconMinusCircle, IconPlusCircle } from '@douyinfe/semi-icons';
+import { IconMinusCircle, IconPlusCircle, IconVoteVideoStroked } from '@douyinfe/semi-icons';
 import { ToastError, ToastInfo, ToastSuccess, ToastWaring } from '@/utils/common';
 import { sendMail } from '@/api/modules/email';
 import useUserStore from '@/store/user';
@@ -22,6 +22,7 @@ import SetTemplate from '../mail-template/setTemplate';
 import useTeamStore from '@/store/team';
 import AddSelect from '@/components/AddSelect';
 import { queryMemberPage } from '@/api/modules/team';
+import TextHelper from '@/ai/components/TextHelper';
 interface IProps {
   datas?: any[];
 }
@@ -42,6 +43,7 @@ const Program: FC<IProps> = (props) => {
   const { push } = useRouter();
   let [date, setDate] = useState<string>();
   const [addVisible, setAddVisible] = useState(false);
+  const [aiVisible, setAiVisible] = useState(false);
   const [testLoading, setTestVisible] = useState(false);
   const [addLoading, setAddLoading] = useState<boolean>(false);
   const [receiveMailData, setReceiveMailData] = useState<string[]>(['@qq.com']);
@@ -73,34 +75,34 @@ const Program: FC<IProps> = (props) => {
       getInitialList();
     }
   }, [teamId]);
-  const { data, isLoading, error } = useSWR(
-    `/email/config/queryEmailConfigPersonal?page=1&limit=10&id=${user?.id}`,
-    fetcher
-  );
+  // const { data, isLoading, error } = useSWR(
+  //   `/email/config/queryEmailConfigPersonal?page=1&limit=10&id=${user?.id}`,
+  //   fetcher
+  // );
 
-  if (isLoading)
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
-  if (error)
-    return (
-      <div>
-        <Failure title={'请求失败！'} />
-      </div>
-    );
-  if (!data) {
-    return (
-      <div>
-        <Error title={'请求出错！'} />
-      </div>
-    );
-  }
-
+  // if (isLoading)
+  //   return (
+  //     <div>
+  //       <Loading />
+  //     </div>
+  //   );
+  // if (error)
+  //   return (
+  //     <div>
+  //       <Failure title={'请求失败！'} />
+  //     </div>
+  //   );
+  // if (!data) {
+  //   return (
+  //     <div>
+  //       <Error title={'请求出错！'} />
+  //     </div>
+  //   );
+  // }
+  const data = { records: [] };
   const { records } = data;
-  const isEmpty = records.length === 0;
-
+  // const isEmpty = records.length === 0;
+  const isEmpty = records.length !== 0;
   const addTemplateHandle = (data: any) => {
     if (teamId != '0') {
       if (receiveMails.length == 0) {
@@ -230,6 +232,15 @@ const Program: FC<IProps> = (props) => {
             </Button>
             <Button type="secondary" style={{ marginLeft: 10 }} onClick={() => setAddVisible(true)}>
               导入邮件模板
+            </Button>
+            <Button
+              type="secondary"
+              theme="solid"
+              style={{ marginLeft: 10 }}
+              icon={<IconVoteVideoStroked />}
+              onClick={() => setAiVisible(true)}
+            >
+              Ai生成正文
             </Button>
           </div>
           <Form
@@ -380,6 +391,17 @@ const Program: FC<IProps> = (props) => {
             zIndex={99}
           >
             {addVisible && <SetTemplate setTemplate={(res) => addTem(res)} />}
+          </Modal>
+          <Modal
+            title={'ai正文助手'}
+            footer={null}
+            visible={aiVisible}
+            onCancel={() => setAiVisible(false)}
+            closeOnEsc
+            width={700}
+            zIndex={99}
+          >
+            <TextHelper />
           </Modal>
         </>
       )}
