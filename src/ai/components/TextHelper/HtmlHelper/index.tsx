@@ -1,37 +1,85 @@
-import { memo, useRef, useState } from 'react';
+import { forwardRef, memo, useImperativeHandle, useRef, useState } from 'react';
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
+import { Button, Modal } from '@douyinfe/semi-ui';
+import { IconMaximize } from '@douyinfe/semi-icons';
 
-interface IProps {
-  datas?: any[];
+interface AiToolProps {
+  isText?: boolean;
+  respondHoodle?: (result: string) => void; //关联数据
+}
+interface CropperRef {
+  submitHoodle: (v: string) => void; //父类调用
 }
 
-const HtmlHelper: FC<IProps> = () => {
+const HtmlHelper = forwardRef<CropperRef, AiToolProps>(function HtmlHelper(
+  { isText, respondHoodle },
+  ref
+) {
+  useImperativeHandle(ref, () => ({
+    submitHoodle: setHtmlCode
+  }));
   const [htmlCode, setHtmlCode] = useState(''); // 用于存储用户输入的HTML代码
-
+  const [openVisible, setOpenVisible] = useState(false);
   const handleInputChange = (event: any) => {
     setHtmlCode(event.target.value); // 更新用户输入的HTML代码
   };
   return (
-    <div className={styles.chat}>
-      <div style={{ float: 'left', width: '50%', padding: '20px' }}>
-        <h2>输入HTML代码</h2>
+    <div className={styles.htmlHelper}>
+      <div style={{ width: '50%' }}>
+        <div className={styles.titleSpan}>输入HTML代码</div>
         <textarea
           value={htmlCode}
           onChange={handleInputChange}
-          style={{ width: '100%', height: '300px' }}
+          style={{ width: '100%', height: '300px', backgroundColor: '#EEF9EB' }}
         />
       </div>
-      <div style={{ float: 'left', width: '50%', padding: '20px' }}>
-        <h2>页面预览</h2>
+      <div style={{ width: '50%' }}>
+        <div className={styles.titleSpan}>
+          页面预览
+          <Button
+            onClick={() => setOpenVisible(true)}
+            style={{ float: 'right' }}
+            theme="solid"
+            icon={<IconMaximize />}
+          >
+            放大展示
+          </Button>
+        </div>
+        <div
+          onClick={() => setOpenVisible(true)}
+          dangerouslySetInnerHTML={{ __html: htmlCode }}
+          style={{
+            border: '1px solid #ccc',
+            minHeight: '300px',
+            backgroundColor: '#ffffff',
+            cursor: 'pointer'
+          }}
+        />
+      </div>
+      <Modal
+        title={'页面放大展示'}
+        footer={null}
+        visible={openVisible}
+        onCancel={() => setOpenVisible(false)}
+        closeOnEsc
+        width={'90vw'}
+        zIndex={99}
+      >
         <div
           dangerouslySetInnerHTML={{ __html: htmlCode }}
-          style={{ border: '1px solid #ccc', padding: '10px', minHeight: '300px' }}
+          style={{
+            border: '1px solid #ccc',
+            minHeight: 500,
+            minWidth: 700,
+            backgroundColor: '#ffffff',
+            marginBottom: 20
+          }}
         />
-      </div>
+      </Modal>
     </div>
   );
-};
+});
 
 export default memo(HtmlHelper);

@@ -398,7 +398,7 @@ const Program: FC<IProps> = (props) => {
             visible={aiVisible}
             onCancel={() => setAiVisible(false)}
             closeOnEsc
-            width={900}
+            width={'95vw'}
             zIndex={99}
           >
             <TextHelper />

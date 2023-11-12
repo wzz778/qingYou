@@ -26,6 +26,7 @@ const TextHelper: FC<IProps> = () => {
   const [message, setMessage] = useState<string>('');
   const [isText, setIsText] = useState<number>(1);
   const ref = useRef<any>(null);
+  const htmlHelperRef = useRef<any>(null);
   const messageContainerRef = useRef<any>(null);
   const loadingRef = useRef<any>(null);
   const submit = () => {
@@ -41,17 +42,35 @@ const TextHelper: FC<IProps> = () => {
     result = '';
     setIsLoading(true);
     if (ref.current) {
-      ref.current.submitHoodle(question);
+      if (!isText) {
+        ref.current.submitHoodle(
+          `原生html生成需求是${question}的页面，要求只能用内联样式，并且把body删除，换成div并保留样式`
+        );
+      } else {
+        ref.current.submitHoodle(question);
+      }
     }
   };
   const respondHoodle = (respond: string) => {
     result = respond;
-    setMessage(respond);
+    if (isText) {
+      setMessage(respond);
+    }
     // loadingRef.current.innerText = result;
   };
   const overRespond = (v: boolean) => {
     if (!v) {
-      setMessage(result);
+      if (isText) {
+        setMessage(result);
+      } else {
+        if (htmlHelperRef.current) {
+          var bodyContent = result.substring(
+            result.indexOf('<body>') + 9,
+            result.indexOf('</body>')
+          );
+          htmlHelperRef.current.submitHoodle(bodyContent);
+        }
+      }
     }
     setIsLoading(v);
   };
@@ -104,7 +123,9 @@ const TextHelper: FC<IProps> = () => {
             </>
           ) : (
             <>
-              <HtmlHelper />
+              <Spin spinning={isLoading} tip="努力生成中... 请稍等">
+                <HtmlHelper ref={htmlHelperRef} />
+              </Spin>
             </>
           )}
         </div>
@@ -112,7 +133,11 @@ const TextHelper: FC<IProps> = () => {
           <form className="form" onSubmit={handleSendMessage}>
             <input
               type="text"
-              placeholder="编写消息"
+              placeholder={
+                isText
+                  ? 'ai文本生成，您的需求，即可生成对应文档'
+                  : 'Html页面生成，输入您的需求（如：‘给老师的祝福’），即可生成对应页面代码'
+              }
               className={styles.message}
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
