@@ -29,9 +29,9 @@ const WorkSplaceLayout: React.FC<WorkSplaceLayoutProps> = ({ children }) => {
       return 'doc';
     }
   }, [pathname]);
-  // if (!user) {
-  //   return <FailPage />;
-  // }
+  if (!user) {
+    return <FailPage />;
+  }
 
   return (
     <div className={styles.Layout}>

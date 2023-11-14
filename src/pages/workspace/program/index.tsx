@@ -75,34 +75,32 @@ const Program: FC<IProps> = (props) => {
       getInitialList();
     }
   }, [teamId]);
-  // const { data, isLoading, error } = useSWR(
-  //   `/email/config/queryEmailConfigPersonal?page=1&limit=10&id=${user?.id}`,
-  //   fetcher
-  // );
+  const { data, isLoading, error } = useSWR(
+    `/email/config/queryEmailConfigPersonal?page=1&limit=10&id=${user?.id}`,
+    fetcher
+  );
 
-  // if (isLoading)
-  //   return (
-  //     <div>
-  //       <Loading />
-  //     </div>
-  //   );
-  // if (error)
-  //   return (
-  //     <div>
-  //       <Failure title={'请求失败！'} />
-  //     </div>
-  //   );
-  // if (!data) {
-  //   return (
-  //     <div>
-  //       <Error title={'请求出错！'} />
-  //     </div>
-  //   );
-  // }
-  const data = { records: [] };
+  if (isLoading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  if (error)
+    return (
+      <div>
+        <Failure title={'请求失败！'} />
+      </div>
+    );
+  if (!data) {
+    return (
+      <div>
+        <Error title={'请求出错！'} />
+      </div>
+    );
+  }
   const { records } = data;
-  // const isEmpty = records.length === 0;
-  const isEmpty = records.length !== 0;
+  const isEmpty = records.length === 0;
   const addTemplateHandle = (data: any) => {
     if (teamId != '0') {
       if (receiveMails.length == 0) {
@@ -244,7 +242,7 @@ const Program: FC<IProps> = (props) => {
             </Button>
           </div>
           <Form
-            labelWidth="120px"
+            labelWidth="100px"
             labelPosition="left"
             labelAlign="right"
             getFormApi={(formApi) => (formRef.current = formApi)}
