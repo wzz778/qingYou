@@ -1,7 +1,7 @@
 import styles from './index.module.scss';
-import { Form, Button, AutoComplete } from '@douyinfe/semi-ui';
+import { Form, Button } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { ToastError, ToastSuccess, ToastWaring } from '@/utils/common';
 import { IconHelpCircle, IconMail, IconUser } from '@douyinfe/semi-icons';
 import VerificationCodeInput from '@/components/VerificationCodeInput';

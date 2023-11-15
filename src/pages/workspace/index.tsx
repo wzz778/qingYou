@@ -13,7 +13,6 @@ interface IProps {
 }
 
 const Workspace: FC<IProps> = (props) => {
-  const { datas = [] } = props;
   const { teamName, teamId } = useTeamStore();
   const { user } = useUserStore();
   const { Text } = Typography;

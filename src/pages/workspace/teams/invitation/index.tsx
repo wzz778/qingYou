@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
 // import classNames from "classnames";
 import { ToastError, ToastSuccess, execConfirm } from '@/utils/common';
 //type
@@ -19,7 +19,6 @@ interface IProps {
 }
 
 const Invitation: FC<IProps> = (props) => {
-  const { datas = [] } = props;
   const { query, push } = useRouter();
   const { user } = useUserStore();
   const { data, isLoading, error } = useSWR(`user/team/queryTeamById/${query.teamId}`, fetcher);

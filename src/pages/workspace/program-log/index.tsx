@@ -1,11 +1,10 @@
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
 // import classNames from "classnames";
 
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
 import { Descriptions } from '@douyinfe/semi-ui';
-import { IconArrowUp } from '@douyinfe/semi-icons';
 import None from '@/components/dataAcquisition/None';
 
 interface IProps {

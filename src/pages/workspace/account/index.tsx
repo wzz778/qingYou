@@ -1,4 +1,3 @@
-import { Anchor } from '@douyinfe/semi-ui';
 import UserNameSettingCard from '@/components/SettingPageComps/components/UserName';
 import EmailSettingCard from '@/components/SettingPageComps/components/Email';
 //import DescriptionSettingCard from '@/components/SettingPageComps/components/Description';
@@ -6,14 +5,8 @@ import EmailSettingCard from '@/components/SettingPageComps/components/Email';
 import styles from './index.module.scss';
 // import ThirdPartyLoginInfoCard from '@/components/ThirdPartyLoginInfoCard';
 import AvatarettingCard from '@/components/SettingPageComps/components/Avatar';
-import useUserStore from '@/store/user';
 
 const Account = () => {
-  const { user } = useUserStore();
-  const getContainer = () => {
-    return document.querySelector('window') as HTMLElement | Window;
-  };
-
   return (
     <main className={styles.settingPage}>
       <div className={styles.settingContainer}>

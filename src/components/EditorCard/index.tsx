@@ -1,7 +1,7 @@
-import { Card, Button, Input, TextArea } from '@douyinfe/semi-ui';
+import { Card, Button, TextArea } from '@douyinfe/semi-ui';
 
 import styles from './index.module.scss';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface BaseSettingCardProps {
   title: string;

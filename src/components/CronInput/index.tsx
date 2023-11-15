@@ -1,12 +1,12 @@
-import { Button, ConfigProvider, TimePicker } from '@douyinfe/semi-ui';
-import { Fragment, useEffect, useState } from 'react';
+import { ConfigProvider, TimePicker } from '@douyinfe/semi-ui';
+import { Fragment, useState } from 'react';
 import { Select } from '@douyinfe/semi-ui';
 import moment from 'moment';
 //引入数据
 import { dayOfTheMonthOption, dayOfTheWeekData } from '@/utils/cron';
 import CronViewer from './CronViewer';
 import useMount from '@/hooks/useMount';
-import cronParser, { CronDate } from 'cron-parser';
+import cronParser from 'cron-parser';
 import styles from './index.module.scss';
 moment.locale('zh-cn');
 const { Option } = Select;

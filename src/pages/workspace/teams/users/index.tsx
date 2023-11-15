@@ -1,6 +1,5 @@
 import { memo, useState } from 'react';
 //type
-import type { FC, SetStateAction } from 'react';
 import styles from './index.module.scss';
 import { ToastError, ToastSuccess, handleCopy } from '@/utils/common';
 import { Button, Modal, Popconfirm, Space, Table, Typography } from '@douyinfe/semi-ui';
