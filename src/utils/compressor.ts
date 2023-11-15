@@ -7,13 +7,13 @@ export function compress(file: Blob, quality = 0.1): Promise<Blob> {
         // @ts-ignore
         await imageCompression(file, {
           useWebWorker: true,
-          initialQuality: quality,
+          initialQuality: quality
         })
       );
     } else {
       new Compressor(file, {
         quality,
-        success: resolve,
+        success: resolve
       });
     }
   });

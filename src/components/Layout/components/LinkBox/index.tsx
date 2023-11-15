@@ -9,24 +9,35 @@ const LinkBox = () => {
 
   return (
     <>
-      <Tooltip content={'去GitHub看看怎么个事~'}>
+      <Tooltip content={'去查看帮助文档 🐱‍🏍'}>
+        <Button
+          theme="borderless"
+          icon={<IconHelpCircle size="large" />}
+          style={{
+            color: '#626466',
+            margin: '0 6px'
+          }}
+          onClick={() => push('https://github.com/wzz778/qingYou')}
+        />
+      </Tooltip>
+      <Tooltip content={'去GitHub看看怎么个事 ~ 🐱‍👤'}>
         <Button
           theme="borderless"
           icon={<IconGithubLogo size="large" />}
           style={{
             color: 'black',
-            marginRight: '12px'
+            margin: '0 6px'
           }}
           onClick={() => push('https://github.com/wzz778/qingYou')}
         />
       </Tooltip>
-      <Tooltip content={'欢迎来掘金做客(*｀∀´*)ノ!'}>
+      <Tooltip content={'欢迎来我的掘金做客(*｀∀´*)ノ! 🛸'}>
         <Button
           theme="borderless"
           icon={<IconGlobeStroke size="large" />}
           style={{
             color: '#3381DA',
-            marginRight: '12px'
+            margin: '0 6px'
           }}
           onClick={() => push('https://juejin.cn/user/3004330270263432')}
         />

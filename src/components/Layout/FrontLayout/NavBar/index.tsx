@@ -7,6 +7,7 @@ import { useContext } from 'react';
 import { ThemeContext } from '@/store/theme';
 import useUserStore from '@/store/user';
 import AuthRightBox from '../../components/AuthRightBox';
+import LinkBox from '../../components/LinkBox';
 
 export default function NavBar() {
   const { push } = useRouter();
@@ -36,9 +37,14 @@ export default function NavBar() {
             <div className={styles.logoIcon}></div>
           </a>
           <div className={styles.themeArea}>
-            <Tooltip content={'切换显示模式'}>
+            <LinkBox />
+            <Tooltip content={'切换显示模式 👀'}>
               <div
                 className={styles.themeIcon}
+                style={{
+                  marginLeft: 12,
+                  marginRight: 32
+                }}
                 onClick={(): void => {
                   if (localStorage.getItem('theme') === Themes.light) {
                     setTheme(Themes.dark);

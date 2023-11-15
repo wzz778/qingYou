@@ -157,7 +157,6 @@ const Home: FC<IProps> = (props) => {
 
       <div className={cName([styles.rootTeam, 'fadeClass'])}>
         <div className={styles.rectangle331} />
-        <p className={cName([styles.text, styles.fade1])}>核心功能</p>
         <Image
           src={'/homeImages/rootModule1.png'}
           alt="rootModule1"
