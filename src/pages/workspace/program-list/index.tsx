@@ -255,7 +255,7 @@ const ProjectList = () => {
     return <Descriptions style={{ width: '100%' }} align="left" data={result} />;
   };
   return (
-    <div className={styles.mailProgram}>
+    <div className={styles.ProjectList}>
       <div className={styles.header}>
         <Button onClick={() => push('/workspace/program')}>创建应用</Button>
       </div>

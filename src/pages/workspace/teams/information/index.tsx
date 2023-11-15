@@ -1,18 +1,10 @@
 import styles from './index.module.scss';
-import useUserStore from '@/store/user';
 import TeamNameCard from '@/components/SettingPageComps/components/team/TeamName';
-import useSWR from 'swr';
-import useTeamStore from '@/store/team';
 import TeamDescription from '@/components/SettingPageComps/components/team/TeamDescription';
 
 const Information = () => {
-  const { user } = useUserStore();
-  const getContainer = () => {
-    return document.querySelector('window') as HTMLElement | Window;
-  };
-
   return (
-    <main className={styles.settingPage}>
+    <main className={styles.settingPage} style={{ padding: 15 }}>
       <div className={styles.settingContainer}>
         <div className={styles.settingView}>
           <div id="normalInfo">

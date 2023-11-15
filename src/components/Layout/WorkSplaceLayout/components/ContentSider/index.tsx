@@ -117,7 +117,7 @@ const ContentSider: FC<ContentSiderProps> = ({ contentSiderType, children }) => 
             <Breadcrumb.Item icon={<IconMonitorStroked />}>工作台</Breadcrumb.Item>
             {openTitle && <Breadcrumb.Item>{openTitle?.text}</Breadcrumb.Item>}
           </Breadcrumb>
-          <div style={{ width: '100%', height: '100%', padding: 15 }}>{children}</div>
+          <div style={{ width: '100%', height: '100%' }}>{children}</div>
         </div>
       )}
     </>

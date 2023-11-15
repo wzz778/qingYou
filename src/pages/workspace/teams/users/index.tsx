@@ -144,7 +144,7 @@ const TeamUsers = () => {
     mutate();
   };
   return (
-    <div className={styles.mailMember}>
+    <div className={styles.Workspace}>
       <div className={styles.header}>
         <Button onClick={() => setAddVisible(true)}>邀请成员</Button>
       </div>
