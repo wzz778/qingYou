@@ -41,7 +41,7 @@ const Index: FC = () => {
         }
       });
     }
-  }, [teamId]);
+  });
   const navList = useMemo(() => {
     return menuList.map((e) => {
       return {
@@ -65,6 +65,7 @@ const Index: FC = () => {
     const keys: string[] = findMenuByPath(menuList, pathname, []);
     setSelectedKeys([keys.pop() as string]);
     setOpenKeys(Array.from(new Set([...openKeys, ...keys])));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   return (

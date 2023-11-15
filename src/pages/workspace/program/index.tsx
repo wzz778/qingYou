@@ -23,6 +23,7 @@ import useTeamStore from '@/store/team';
 import AddSelect from '@/components/AddSelect';
 import { queryMemberPage } from '@/api/modules/team';
 import TextHelper from '@/ai/components/TextHelper';
+import useMount from '@/hooks/useMount';
 interface IProps {
   datas?: any[];
 }
@@ -70,11 +71,12 @@ const Program: FC<IProps> = (props) => {
         setAllReceiveMails([]);
       });
   };
-  useEffect(() => {
+  useMount(() => {
     if (teamId != '0') {
       getInitialList();
     }
-  }, [teamId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  });
   const { data, isLoading, error } = useSWR(
     `/email/config/queryEmailConfigPersonal?page=1&limit=10&id=${user?.id}`,
     fetcher

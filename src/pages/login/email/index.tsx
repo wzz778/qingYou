@@ -7,6 +7,7 @@ import useUserStore from '@/store/user';
 import { IconHelpCircle, IconMail } from '@douyinfe/semi-icons';
 import { loginApi } from '@/api/modules/login';
 import useTeamStore from '@/store/team';
+import SliderVerify from '@/components/Layout/LoginLayout/SliderVerify';
 interface loginRoot {
   username: string;
   password: string;
@@ -14,12 +15,21 @@ interface loginRoot {
 export default function Email() {
   const [loading, setLoading] = useState(false);
   const { getUser, setUser } = useUserStore();
+  const [showSlider, setShowSlider] = useState(false);
   const { setTeam, setTeamName } = useTeamStore();
   const { push } = useRouter();
   const { Text } = Typography;
   const handleSubmit = (values: any) => {
     setLoading(true);
     loginFn({ username: values.username, password: values.password });
+  };
+  const resultClick = (e: number) => {
+    if (e) {
+      console.log('成功');
+      setShowSlider(true);
+    } else if (e == 1) {
+      console.log('失败');
+    }
   };
   const loginFn = (values: loginRoot) => {
     const loginForm = {
@@ -85,7 +95,7 @@ export default function Email() {
                   style={{ width: '100%', height: 35 }}
                   placeholder="输入你的邮箱"
                   rules={[
-                    { required: true, message: '请输入您要注册的邮箱' },
+                    { required: true, message: '请输入您的账号邮箱' },
                     {
                       pattern:
                         /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/,
@@ -98,10 +108,14 @@ export default function Email() {
                   label="密码"
                   type="password"
                   mode="password"
+                  rules={[{ required: true, message: '请输入您的账号密码' }]}
                   prefix={<IconHelpCircle />}
                   style={{ width: '100%', height: 35 }}
                   placeholder="输入密码"
                 ></Form.Input>
+                <Form.Slot label={{ text: '安全验证' }}>
+                  <SliderVerify resultClick={resultClick}></SliderVerify>
+                </Form.Slot>
                 <Form.Checkbox field="agree" noLabel>
                   我已阅读并同意{'   '}
                   <Text link={{ href: '/home/statement', target: '_blank' }} underline>
@@ -128,7 +142,7 @@ export default function Email() {
                     </Button>
                   </p>
                   <Button
-                    disabled={!values.agree}
+                    disabled={!values.agree || !showSlider}
                     htmlType="submit"
                     type="primary"
                     theme="solid"

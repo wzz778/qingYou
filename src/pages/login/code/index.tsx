@@ -72,7 +72,7 @@ export default function Code() {
                   type="password"
                   mode="password"
                   style={{ width: '100%', height: 35 }}
-                  rules={[{ required: true, message: '请输入您要注册的设置的密码' }]}
+                  rules={[{ required: true, message: '请输入您要设置的新密码' }]}
                   placeholder="请输入您要设置的新密码"
                 ></Form.Input>
                 <div

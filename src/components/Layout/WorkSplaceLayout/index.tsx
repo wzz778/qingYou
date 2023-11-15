@@ -28,6 +28,8 @@ const WorkSplaceLayout: React.FC<WorkSplaceLayoutProps> = ({ children }) => {
     } else if (isSubRoute(pathname, '/workspace/doc')) {
       return 'doc';
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
   if (!user) {
     return <FailPage />;

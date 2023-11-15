@@ -78,6 +78,7 @@ const ContentSider: FC<ContentSiderProps> = ({ contentSiderType, children }) => 
     setSelectedKeys([keys.pop() as string]);
     setOpenKeys(Array.from(new Set([...openKeys, ...keys])));
     changeTitle();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   return (
