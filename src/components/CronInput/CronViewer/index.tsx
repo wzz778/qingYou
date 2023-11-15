@@ -12,6 +12,7 @@ const CronViewer: React.FC<CronViewerProps> = ({ cronExpression }) => {
 
   useEffect(() => {
     handleViewClick();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cronExpression]);
 
   const handleViewClick = () => {
