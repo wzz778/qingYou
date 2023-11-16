@@ -17,7 +17,7 @@ const LinkBox = () => {
             color: '#626466',
             margin: '0 6px'
           }}
-          onClick={() => push('https://github.com/wzz778/qingYou')}
+          onClick={() => push('https://zezhengyyds.gitee.io/qingYouDocs/')}
         />
       </Tooltip>
       <Tooltip content={'去GitHub看看怎么个事 ~ 🐱‍👤'}>

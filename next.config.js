@@ -6,8 +6,8 @@
 // };
 const semi = require('@douyinfe/semi-next').default({
   /* the extension options */
-  // reactStrictMode: true,
-  // omitCss: true,
+  reactStrictMode: true,
+  output: 'export',
   // async headers() {
   //   return [
   //     {
@@ -16,7 +16,7 @@ const semi = require('@douyinfe/semi-next').default({
   //     }
   //   ];
   // },
-  // swcMinify: true
+  swcMinify: true
   // transpilePackages: ['@douyinfe/semi-ui', '@douyinfe/semi-icons', '@douyinfe/semi-illustrations']
 });
 module.exports = semi({

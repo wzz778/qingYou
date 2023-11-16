@@ -27,17 +27,12 @@ import useMount from '@/hooks/useMount';
 interface IProps {
   datas?: any[];
 }
-interface initValueRoot {
-  title?: string;
-  content?: string;
-}
 interface MemberListProps {
   nickname: string;
   username: string;
   img?: string;
 }
 const Program: FC<IProps> = (props) => {
-  const { datas = [] } = props;
   const { Select, Switch } = Form;
   const { user } = useUserStore();
   const { teamId } = useTeamStore();
