@@ -1,1 +1,0 @@
-C:/Users/Lenovo/AppData/Roaming/nvm/v16.15.0/node_modules/npm run start
