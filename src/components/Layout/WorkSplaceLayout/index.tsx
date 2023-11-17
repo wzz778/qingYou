@@ -1,6 +1,6 @@
 import React, { Suspense, useCallback, useEffect, useState } from 'react';
 import { Layout } from '@douyinfe/semi-ui';
-import Header from './components/Header';
+import Header from './components/header';
 import Sider from './components/MenuSider';
 
 import styles from './index.module.scss';
