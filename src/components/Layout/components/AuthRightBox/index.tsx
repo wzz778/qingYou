@@ -5,7 +5,13 @@ import { Dropdown, DropdownDivider, Spin } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import AuthSwitchBox from '../AuthSwitchBox';
-import { IconForward, IconIdCard, IconMail, IconMailStroked1 } from '@douyinfe/semi-icons';
+import {
+  IconForward,
+  IconIdCard,
+  IconMail,
+  IconMailStroked1,
+  IconUserGroup
+} from '@douyinfe/semi-icons';
 
 const AuthRightBox = () => {
   const { push, pathname } = useRouter();
@@ -29,24 +35,31 @@ const AuthRightBox = () => {
           <Dropdown.Menu>
             <Dropdown.Item
               onClick={() => push('/workspace/account')}
-              style={{ color: '#06C05F' }}
+              type="tertiary"
               icon={<IconIdCard />}
             >
               账号设置
             </Dropdown.Item>
             <Dropdown.Item
-              style={{ color: '#06C05F' }}
               onClick={() => push('/workspace/mails')}
+              type="tertiary"
               icon={<IconMailStroked1 />}
             >
               邮箱绑定
             </Dropdown.Item>
             <Dropdown.Item
-              style={{ color: '#06C05F' }}
+              type="tertiary"
               onClick={() => push('/workspace/program-list')}
               icon={<IconMail />}
             >
-              我的定时邮箱
+              定时邮箱
+            </Dropdown.Item>
+            <Dropdown.Item
+              type="tertiary"
+              onClick={() => push('/workspace/teams')}
+              icon={<IconUserGroup />}
+            >
+              团队管理
             </Dropdown.Item>
             <DropdownDivider />
             <Dropdown.Item
@@ -57,7 +70,7 @@ const AuthRightBox = () => {
               }
             >
               {logoutIsLoading && <Spin />}
-              退出
+              退出账号
             </Dropdown.Item>
           </Dropdown.Menu>
         }

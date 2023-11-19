@@ -39,13 +39,13 @@ const AuthSwitchBox = () => {
     <>
       <Dropdown
         position="bottomLeft"
-        style={{ width: '220px' }}
+        style={{ width: '220px', padding: 10 }}
         render={
           <Dropdown.Menu>
             <Dropdown.Title>个人版</Dropdown.Title>
             <Dropdown.Item
               type="primary"
-              className={teamId == '0' ? styles.getSelected : ''}
+              className={teamId == '0' ? styles.getSelected : styles.allSelected}
               icon={<IconUserCircle />}
               onClick={() =>
                 execConfirm(
@@ -68,9 +68,9 @@ const AuthSwitchBox = () => {
                 {team.map((item) => (
                   <div key={item.id}>
                     <Dropdown.Item
-                      icon={<IconBranch />}
-                      type="secondary"
-                      className={teamId == item.id ? styles.getSelected : ''}
+                      icon={<IconUserGroup />}
+                      type="tertiary"
+                      className={teamId == item.id ? styles.getSelected : styles.allSelected}
                       onClick={() =>
                         execConfirm(
                           () => changeTeam(item.id, item.teamName, item),

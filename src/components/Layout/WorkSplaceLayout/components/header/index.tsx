@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Layout, Nav, RadioGroup, Radio, Button } from '@douyinfe/semi-ui';
+import { Layout, Nav } from '@douyinfe/semi-ui';
 import AuthRightBox from '@/components/Layout/components/AuthRightBox';
 import LinkBox from '@/components/Layout/components/LinkBox';
 const { Header } = Layout;

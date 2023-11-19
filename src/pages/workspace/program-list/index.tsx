@@ -84,14 +84,13 @@ const ProjectList = () => {
     {
       title: '标题',
       dataIndex: 'title',
-      width: 120,
+      width: 180,
       render: (text: string) => {
         return <Text ellipsis={{ showTooltip: true }}>{text}</Text>;
       }
     },
     {
       title: '内容',
-      width: 180,
       dataIndex: 'emailContent',
       render: (text: string) => {
         return <Text ellipsis={{ showTooltip: true }}>{text}</Text>;
@@ -99,8 +98,8 @@ const ProjectList = () => {
     },
     {
       title: '发送时间',
-      width: 70,
       dataIndex: 'regularTime',
+      width: 105,
       render: (text: string) => {
         return (
           <Text
@@ -115,7 +114,7 @@ const ProjectList = () => {
     },
     {
       title: '上线状态',
-      width: 120,
+      width: 100,
       dataIndex: 'status',
       render: (text: string, record: any) => {
         return (

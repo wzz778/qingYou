@@ -1,5 +1,12 @@
 .getSelected {
-  background-color: #d1d1d1;
-  color: #3a5f1e;
+  background-color: #f1ffe3;
+  border: 1.5px solid #06c05f;
+  border-radius: 3px;
   font-weight: 700;
+}
+.allSelected {
+  font-weight: 700;
+  border-radius: 3px;
+  border: 1.5px solid #c6c6c6;
+  margin: 2px 0;
 }

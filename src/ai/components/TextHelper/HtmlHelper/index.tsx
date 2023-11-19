@@ -3,7 +3,8 @@ import { forwardRef, memo, useImperativeHandle, useRef, useState } from 'react';
 import type { FC } from 'react';
 import styles from './index.module.scss';
 import { Button, Modal } from '@douyinfe/semi-ui';
-import { IconMaximize } from '@douyinfe/semi-icons';
+import { IconCopy, IconMaximize } from '@douyinfe/semi-icons';
+import { handleCopy } from '@/utils/common';
 
 interface AiToolProps {
   isText?: boolean;
@@ -45,6 +46,14 @@ const HtmlHelper = forwardRef<CropperRef, AiToolProps>(function HtmlHelper(
             icon={<IconMaximize />}
           >
             放大展示
+          </Button>
+          <Button
+            style={{ float: 'right', marginRight: 5 }}
+            type="secondary"
+            onClick={() => handleCopy(htmlCode)}
+            icon={<IconCopy />}
+          >
+            复制生成内容
           </Button>
         </div>
         <div

@@ -11,7 +11,7 @@ import LinkBox from '../../components/LinkBox';
 
 export default function NavBar() {
   const { push } = useRouter();
-  const { user, clearUser } = useUserStore();
+  const { user } = useUserStore();
   const { setTheme } = useContext(ThemeContext);
 
   const UnAuthRightBox = () => {
@@ -39,11 +39,11 @@ export default function NavBar() {
           <div className={styles.themeArea}>
             <LinkBox />
             <Tooltip content={'切换显示模式 👀'}>
-              <div
+              <Button
                 className={styles.themeIcon}
                 style={{
-                  marginLeft: 12,
-                  marginRight: 32
+                  marginLeft: 6,
+                  marginRight: 20
                 }}
                 onClick={(): void => {
                   if (localStorage.getItem('theme') === Themes.light) {
@@ -52,7 +52,7 @@ export default function NavBar() {
                     setTheme(Themes.light);
                   }
                 }}
-              ></div>
+              ></Button>
             </Tooltip>
             {renderRightBox()}
           </div>
