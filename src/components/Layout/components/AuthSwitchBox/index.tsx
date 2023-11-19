@@ -39,7 +39,7 @@ const AuthSwitchBox = () => {
     <>
       <Dropdown
         position="bottomLeft"
-        style={{ width: '220px', padding: 10 }}
+        style={{ width: '250px', padding: 10 }}
         render={
           <Dropdown.Menu>
             <Dropdown.Title>个人版</Dropdown.Title>

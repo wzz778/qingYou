@@ -315,7 +315,7 @@ const Program: FC<IProps> = (props) => {
                             onClick={add}
                             icon={<IconPlusCircle />}
                             theme="light"
-                            style={{ marginLeft: 120 }}
+                            style={{ marginLeft: 100 }}
                           >
                             添加收件人
                           </Button>
@@ -359,7 +359,7 @@ const Program: FC<IProps> = (props) => {
                     theme="solid"
                     htmlType="submit"
                     loading={addLoading}
-                    style={{ width: 120, marginTop: 12, marginLeft: 120 }}
+                    style={{ width: 120, marginTop: 12, marginLeft: 100 }}
                   >
                     发送{formState.values.open ? '定时邮箱' : '邮箱'}
                   </Button>

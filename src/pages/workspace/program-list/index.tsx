@@ -84,7 +84,7 @@ const ProjectList = () => {
     {
       title: '标题',
       dataIndex: 'title',
-      width: 180,
+      width: 200,
       render: (text: string) => {
         return <Text ellipsis={{ showTooltip: true }}>{text}</Text>;
       }

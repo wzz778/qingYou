@@ -1,11 +1,12 @@
 import CustomAvatar from '@/components/CustomAvatar';
 import useUserStore from '@/store/user';
 import { ToastSuccess, clearUserToken, execConfirm } from '@/utils/common';
-import { Dropdown, DropdownDivider, Spin } from '@douyinfe/semi-ui';
+import { Button, Dropdown, DropdownDivider, Spin } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import AuthSwitchBox from '../AuthSwitchBox';
 import {
+  IconBell,
   IconForward,
   IconIdCard,
   IconMail,
@@ -28,9 +29,17 @@ const AuthRightBox = () => {
   };
   return (
     <>
+      <Button
+        theme="borderless"
+        icon={<IconBell />}
+        style={{
+          color: 'var(--semi-color-text-2)'
+        }}
+      />
       <AuthSwitchBox />
       <Dropdown
         position="bottomLeft"
+        style={{ width: '120px' }}
         render={
           <Dropdown.Menu>
             <Dropdown.Item
