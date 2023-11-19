@@ -66,11 +66,6 @@ const Mails: FC<IProps> = (props) => {
     setuploadId(data.id);
     setAddVisible(true);
     setProgramDetail(data);
-    // testFormRef.current.setValues(
-    //   { accountEmail: data.accountEmail, emailKey: data.emailKey },
-    //   { isOverride: true }
-    // );
-    // console.log(testFormRef.current.getFormState().values);
   };
 
   const testMail = (formApi: any) => {

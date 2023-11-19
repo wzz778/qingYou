@@ -14,7 +14,7 @@ interface loginRoot {
 }
 export default function Email() {
   const [loading, setLoading] = useState(false);
-  const { getUser, setUser } = useUserStore();
+  const { setUser } = useUserStore();
   const [showSlider, setShowSlider] = useState(false);
   const { setTeam, setTeamName } = useTeamStore();
   const { push } = useRouter();

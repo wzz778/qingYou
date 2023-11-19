@@ -1,9 +1,7 @@
 import UserNameSettingCard from '@/components/SettingPageComps/components/UserName';
 import EmailSettingCard from '@/components/SettingPageComps/components/Email';
-//import DescriptionSettingCard from '@/components/SettingPageComps/components/Description';
 
 import styles from './index.module.scss';
-// import ThirdPartyLoginInfoCard from '@/components/ThirdPartyLoginInfoCard';
 import AvatarettingCard from '@/components/SettingPageComps/components/Avatar';
 
 const Account = () => {
