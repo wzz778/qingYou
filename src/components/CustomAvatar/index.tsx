@@ -1,6 +1,5 @@
 import { Avatar as AvatarSemi } from '@douyinfe/semi-ui';
 import { AvatarColor } from '@douyinfe/semi-ui/lib/es/avatar';
-import { useRouter } from 'next/router';
 const colors = [
   'amber',
   'blue',

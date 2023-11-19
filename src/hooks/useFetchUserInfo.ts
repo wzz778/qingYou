@@ -6,7 +6,7 @@ import useTeamStore from '@/store/team';
 const useFetchUserInfo = () => {
   const [userInfo, setUserInfo] = useState<User>();
   const { getUser, clearUser } = useUserStore();
-  const { getTeam, setTeam, setTeamName, setTeamId } = useTeamStore();
+  const { getTeam, setTeamName, setTeamId } = useTeamStore();
   const { push } = Router;
   useEffect(() => {
     const qyBearerToken = localStorage.getItem('qyBearerToken') || '';

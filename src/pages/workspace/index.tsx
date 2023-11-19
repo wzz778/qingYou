@@ -1,11 +1,9 @@
-import { memo, useEffect } from 'react';
-// import classNames from "classnames";
-import { ToastError } from '@/utils/common';
+import { memo } from 'react';
 //type
 import type { FC } from 'react';
 import styles from './index.module.scss';
 import useTeamStore from '@/store/team';
-import { Button, Empty, Highlight, Typography } from '@douyinfe/semi-ui';
+import { Empty, Typography } from '@douyinfe/semi-ui';
 import { IllustrationSuccess, IllustrationSuccessDark } from '@douyinfe/semi-illustrations';
 import useUserStore from '@/store/user';
 interface IProps {
@@ -64,4 +62,3 @@ const Workspace: FC<IProps> = (props) => {
 };
 
 export default memo(Workspace);
-Workspace.displayName = 'Workspace';

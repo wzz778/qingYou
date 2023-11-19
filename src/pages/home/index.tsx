@@ -1,4 +1,4 @@
-import { memo, useContext, useEffect, useRef } from 'react';
+import { memo, useEffect } from 'react';
 import cName from 'classnames';
 import { IconFolderOpen, IconArrowRight, IconTickCircle } from '@douyinfe/semi-icons';
 //type
@@ -12,7 +12,6 @@ interface IProps {
 }
 
 const Home: FC<IProps> = (props) => {
-  const { datas = [] } = props;
   const { push } = useRouter();
 
   useEffect(() => {
@@ -22,7 +21,6 @@ const Home: FC<IProps> = (props) => {
       threshold: 0.2 // 指定交叉比例为 50% 时触发回调函数
     };
     const observer = new IntersectionObserver(([entry]) => {
-      // ...
       if (entry.isIntersecting) {
         entry.target.classList.add(styles.withAnimation);
       }

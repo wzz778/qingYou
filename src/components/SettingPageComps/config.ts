@@ -5,7 +5,6 @@ export enum ConfigType {
   NICKNAME = 'nickname',
   TEAMNAEM = 'teamname',
   TEAMNDES = 'teamdes'
-
   // DESCRIPTION = 'description'
 }
 
@@ -38,7 +37,6 @@ export const settingConfig: settingConfigType = {
   teamname: {
     title: '团队称呼',
     tips: '请输入 2 至 10 位字符'
-    // tips: '我们将通过电子邮件向您确认更改',
   },
   teamdes: {
     title: '团队描述',
