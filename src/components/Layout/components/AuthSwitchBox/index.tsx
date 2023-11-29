@@ -1,18 +1,15 @@
-import None from '@/components/dataAcquisition/None';
 import useTeamStore from '@/store/team';
 import useUserStore from '@/store/user';
-import { ToastSuccess, clearUserToken, execConfirm } from '@/utils/common';
+import { execConfirm } from '@/utils/common';
 import {
-  IconBranch,
   IconCopyAdd,
   IconGallery,
   IconUser,
   IconUserCircle,
   IconUserGroup
 } from '@douyinfe/semi-icons';
-import { Button, Dropdown, DropdownDivider, Spin, Tag } from '@douyinfe/semi-ui';
+import { Button, Dropdown, DropdownDivider, Tag } from '@douyinfe/semi-ui';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import styles from './index.module.scss';
 const AuthSwitchBox = () => {
   const { push } = useRouter();

@@ -101,14 +101,16 @@ const Chat: FC<IProps> = () => {
             messageList.map((item, index) => {
               return item.user ? (
                 <div key={item.user.toString() + index} className={styles.message__chats}>
-                  <p className={styles.sender__name}>你</p>
+                  <p style={{ margin: 2 }} className={styles.sender__name}>
+                    你
+                  </p>
                   <div className={styles.message__sender}>
                     <p>{item.text}</p>
                   </div>
                 </div>
               ) : (
                 <div className={styles.message__chats}>
-                  <p>Ai</p>
+                  <p style={{ margin: 2 }}>Ai</p>
                   <div className={styles.message__recipient}>
                     <div dangerouslySetInnerHTML={{ __html: marked(item.text) }} />
                   </div>
@@ -120,7 +122,7 @@ const Chat: FC<IProps> = () => {
           )}
           {isLoading ? (
             <div className={styles.message__chats}>
-              <p>Ai</p>
+              <p style={{ margin: 2 }}>Ai</p>
               <div className={styles.message__recipient}>
                 <p ref={loadingRef}>{result}</p>
                 <Spin />

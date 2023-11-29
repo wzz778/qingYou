@@ -1,11 +1,7 @@
-import { useRouter } from 'next/router';
-import styles from './index.module.scss';
 import { Button, Tooltip, Typography } from '@douyinfe/semi-ui';
 import { IconGithubLogo, IconGlobeStroke, IconHelpCircle } from '@douyinfe/semi-icons';
 const LinkBox = () => {
-  const { push } = useRouter();
   const { Text } = Typography;
-  // push('/workspace');
   return (
     <>
       <Tooltip content={'去查看帮助文档 🐱‍🏍'}>

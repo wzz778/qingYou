@@ -55,23 +55,26 @@
   }
   .message__recipient {
     background-color: #f5ccc2;
-    padding: 1px 10px;
+    padding: 0.1px 10px;
+    max-width: 400px;
     border-radius: 4px;
-    line-height: 20px;
-    width: 400px;
-    font-size: 15px;
+    float: left;
+    font-size: 14px;
   }
   .message__sender {
     background-color: rgb(194, 243, 194);
     max-width: 400px;
-    padding: 1px 10px;
+    padding: 0.1px 10px;
     border-radius: 4px;
-    margin-left: auto;
-    line-height: 20px;
-    font-size: 15px;
+    float: right;
+    font-size: 14px;
+  }
+  .message__chats {
+    overflow: hidden;
   }
   .message__chats > p {
     font-size: 13px;
+    overflow: hidden;
   }
   .sender__name {
     text-align: right;

@@ -40,6 +40,7 @@ export default function NavBar() {
             <LinkBox />
             <Tooltip content={'切换显示模式 👀'}>
               <Button
+                theme="borderless"
                 className={styles.themeIcon}
                 style={{
                   marginLeft: 6,
