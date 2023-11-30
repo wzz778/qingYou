@@ -24,6 +24,7 @@ export default function Slider(props: any) {
       // if (successText == '验证成功') {
       //   return;
       // }
+
       setTextTitle('');
       if (
         rootRef.current.offsetWidth -
@@ -53,32 +54,36 @@ export default function Slider(props: any) {
           'px';
       }
     };
-    rootRef.current.onmouseup = function () {
-      setTextTitle('');
-      if (
-        rootRef.current.offsetWidth -
-          leftRef.current.offsetWidth -
-          centerRef.current.offsetWidth -
-          2 >
-        0
-      ) {
-        setLoading(true);
-        leftRef.current.style.backgroundColor = '#F6535B';
-        rootRef.current.style.borderColor = '#F6535B';
-        props.resultClick(false);
-        setTimeout(() => {
-          rootRef.current.style.borderColor = '#d9d9d9';
-          setTextTitle('请移动滑块至最右边');
-          leftRef.current.style.width = 0;
-          rightRef.current.style.width = 338 + 'px';
-          setLoading(false);
-        }, 500);
-      }
-      rootRef.current.onmousemove = null;
-    };
+    rootRef.current.onmouseup = failFn;
+  };
+  const failFn = () => {
+    if (leftRef.current.offsetWidth == 0) {
+      return;
+    }
+    setTextTitle('');
+    if (
+      rootRef.current.offsetWidth -
+        leftRef.current.offsetWidth -
+        centerRef.current.offsetWidth -
+        2 >
+      0
+    ) {
+      setLoading(true);
+      leftRef.current.style.backgroundColor = '#F6535B';
+      rootRef.current.style.borderColor = '#F6535B';
+      props.resultClick(false);
+      setTimeout(() => {
+        rootRef.current.style.borderColor = '#d9d9d9';
+        setTextTitle('请移动滑块至最右边');
+        leftRef.current.style.width = 0;
+        rightRef.current.style.width = 338 + 'px';
+        setLoading(false);
+      }, 500);
+    }
+    rootRef.current.onmousemove = null;
   };
   return (
-    <div className={styles['simple-wrap']}>
+    <div className={styles['simple-wrap']} onMouseLeave={() => failFn()}>
       <Spin indicator={antIcon} spinning={loading}>
         <div ref={rootRef} className={styles['simple-verify']}>
           <div ref={leftRef} className={styles['simple-left']}>
