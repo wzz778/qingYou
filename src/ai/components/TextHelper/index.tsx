@@ -44,7 +44,10 @@ const TextHelper: FC<IProps> = () => {
     if (ref.current) {
       if (!isText) {
         ref.current.submitHoodle(
-          `原生html生成需求是${question}的页面，要求只能用内联样式，并且把body删除，换成div并保留样式`
+          `
+          原生html生成${question}页面，要求只能用内联样式，并且把body删除，换成div并保留样式，最后吧生成的代码，就保留body里的内容输出，要有边框，有背景颜色和背影，有外边距。
+          
+          `
         );
       } else {
         ref.current.submitHoodle(question);

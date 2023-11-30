@@ -15,7 +15,7 @@ import {
 } from '@douyinfe/semi-icons';
 
 const AuthRightBox = () => {
-  const { push, pathname } = useRouter();
+  const { push } = useRouter();
   const [logoutIsLoading, setLogoutIsLoading] = useState(false);
   const { user, clearUser } = useUserStore();
   if (!user) return null;

@@ -31,7 +31,12 @@ const AiTool = forwardRef<CropperRef, AiToolProps>(function AiTool(
   useMount(() => {
     if (!isText) {
       setHistoryMessage([
-        { role: 'user', content: '接下来我会提需求让你构建页面，你只要返回html的demo元素即可' }, //# 用户的历史问题
+        {
+          role: 'user',
+          content: `
+            接下来我会提需求让你构建页面，你只要返回html的body元素即可，页面要求尽量花里胡哨
+            `
+        }, //# 用户的历史问题
         { role: 'assistant', content: '好的' }
       ]);
     }
@@ -56,7 +61,7 @@ const AiTool = forwardRef<CropperRef, AiToolProps>(function AiTool(
           chat: {
             domain: 'generalv3',
             temperature: 0.5,
-            max_tokens: 2048
+            max_tokens: 8192
           }
         },
         payload: {
