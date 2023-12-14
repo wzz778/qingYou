@@ -53,7 +53,7 @@ const Home: FC<IProps> = (props) => {
           青邮
           是一个托管邮箱定时发送的平台，为个人、团队提供高效专业的【平台+服务】解决方案，简化手动操作发送邮箱流程，提高邮箱管理效率，助力个人、企业对邮箱的托管。
         </p>
-        <p className={cName([styles.text1, styles.fade3])}>60+用户、2+团队已经接入青邮</p>
+        <p className={cName([styles.text1, styles.fade3])}>30+用户、2+团队已经接入青邮</p>
         <Button
           className={cName([styles.button, styles.fade2])}
           theme="solid"
