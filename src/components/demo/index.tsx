@@ -9,10 +9,9 @@ interface IProps {
 }
 
 const Demo: FC<IProps> = (props) => {
-  const { datas = [] } = props;
   return (
     <div className={styles.demo}>
-      <div>Demo</div>
+      <div></div>
     </div>
   );
 };

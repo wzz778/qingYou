@@ -45,7 +45,7 @@ export const footerData = {
     image: weixin,
     text: '阿泽爱干饭'
   },
-  copyRight: 'Copyright © 2022 xxx. 保留所有权利',
-  siteNumber: '粤ICP备123号-X',
-  publicNumber: '粤公网安备 123号'
+  copyRight: 'Copyright © 2023 青邮. 保留所有权利',
+  siteNumber: '豫ICP备2023036864',
+  publicNumber: '豫ICP备2023036864'
 };
