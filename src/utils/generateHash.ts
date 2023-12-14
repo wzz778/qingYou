@@ -11,12 +11,23 @@ export async function blobToHash(blob: Blob): Promise<string> {
   // 将 Blob 对象转换为 ArrayBuffer
   const arrayBuffer = await blob.arrayBuffer();
 
-  // 使用 SHA-256 算法计算哈希值
-  const hashBuffer = await window.crypto.subtle.digest('SHA-256', arrayBuffer);
+  // // 使用 SHA-256 算法计算哈希值
+  // const hashBuffer = await window.crypto.subtle.digest('SHA-256', arrayBuffer);
 
-  // 将 ArrayBuffer 转换为十六进制字符串
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
+  // // 将 ArrayBuffer 转换为十六进制字符串
+  // const hashArray = Array.from(new Uint8Array(hashBuffer));
+  // const hashHex = hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 
-  return hashHex;
+  // return hashHex;
+  // 使用 Node.js Crypto 模块计算 SHA-256
+
+  // 将 ArrayBuffer 转换为 Buffer
+  const buffer = Buffer.from(arrayBuffer);
+
+  const hash = crypto.createHash('sha256');
+
+  // 传入 Buffer 对象
+  hash.update(buffer);
+
+  return hash.digest('hex');
 }
