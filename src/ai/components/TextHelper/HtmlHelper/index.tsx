@@ -1,6 +1,5 @@
-import { forwardRef, memo, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, memo, useImperativeHandle, useState } from 'react';
 //type
-import type { FC } from 'react';
 import styles from './index.module.scss';
 import { Button, Modal } from '@douyinfe/semi-ui';
 import { IconCopy, IconMaximize } from '@douyinfe/semi-icons';

@@ -24,13 +24,13 @@ import Failure from '@/components/dataAcquisition/Failure';
 import Error from '@/components/dataAcquisition/Error';
 import { useRouter } from 'next/router';
 
-interface SetSetTemplateProps {
+interface setTemplateProps {
   setTemplate: (data: any) => void;
 }
 
 const { Text } = Typography;
 
-const SetTemplate: React.FC<SetSetTemplateProps> = ({ setTemplate }) => {
+const SetTemplate: React.FC<setTemplateProps> = ({ setTemplate }) => {
   const { user } = useUserStore();
   const [currentPage, setPage] = useState(1);
   const [limitPage, setLimitPage] = useState(5);

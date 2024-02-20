@@ -24,6 +24,7 @@ import AddSelect from '@/components/AddSelect';
 import { queryMemberPage } from '@/api/modules/team';
 import TextHelper from '@/ai/components/TextHelper';
 import useMount from '@/hooks/useMount';
+import EnvelopeTemplate from '@/components/EnvelopeTemplate';
 interface IProps {
   datas?: any[];
 }
@@ -39,6 +40,7 @@ const Program: FC<IProps> = (props) => {
   const { push } = useRouter();
   let [date, setDate] = useState<string>();
   const [addVisible, setAddVisible] = useState(false);
+  const [enVisible, setEnVisible] = useState(false);
   const [aiVisible, setAiVisible] = useState(false);
   const [testLoading, setTestVisible] = useState(false);
   const [addLoading, setAddLoading] = useState<boolean>(false);
@@ -214,6 +216,8 @@ const Program: FC<IProps> = (props) => {
     formRef.current.setValue('title', res.emailTitle);
     formRef.current.setValue('content', res.emailContent);
     setAddVisible(false);
+    setEnVisible(false);
+    ToastSuccess('导入成功！');
   };
   return (
     <div className={styles.Project}>
@@ -225,9 +229,6 @@ const Program: FC<IProps> = (props) => {
             <Button theme="solid" onClick={() => push('/workspace/mails')}>
               添加绑定邮箱
             </Button>
-            <Button type="secondary" style={{ marginLeft: 10 }} onClick={() => setAddVisible(true)}>
-              导入邮件模板
-            </Button>
             <Button
               type="secondary"
               theme="solid"
@@ -237,9 +238,15 @@ const Program: FC<IProps> = (props) => {
             >
               Ai生成正文
             </Button>
+            <Button type="secondary" style={{ marginLeft: 10 }} onClick={() => setAddVisible(true)}>
+              导入邮件模板
+            </Button>
+            <Button style={{ marginLeft: 10 }} onClick={() => setEnVisible(true)}>
+              书信格式生成器
+            </Button>
           </div>
           <Form
-            labelWidth="100px"
+            labelWidth="110px"
             labelPosition="left"
             labelAlign="right"
             getFormApi={(formApi) => (formRef.current = formApi)}
@@ -273,7 +280,7 @@ const Program: FC<IProps> = (props) => {
                   label={{ text: '邮件正文', required: true }}
                   rules={[{ required: true, message: '请输入内容' }]}
                   style={{ width: '100%' }}
-                  maxCount={400}
+                  maxCount={2000}
                 />
                 {teamId != '0' ? (
                   <Form.Slot label={{ text: '接收邮箱', required: true }}>
@@ -315,7 +322,7 @@ const Program: FC<IProps> = (props) => {
                             onClick={add}
                             icon={<IconPlusCircle />}
                             theme="light"
-                            style={{ marginLeft: 100 }}
+                            style={{ marginLeft: 110 }}
                           >
                             添加收件人
                           </Button>
@@ -386,6 +393,17 @@ const Program: FC<IProps> = (props) => {
             zIndex={99}
           >
             {addVisible && <SetTemplate setTemplate={(res) => addTem(res)} />}
+          </Modal>
+          <Modal
+            title={'书信格式生成器'}
+            footer={null}
+            visible={enVisible}
+            onCancel={() => setEnVisible(false)}
+            closeOnEsc
+            width={1000}
+            zIndex={99}
+          >
+            <EnvelopeTemplate setEnvelope={(res) => addTem(res)} />
           </Modal>
           <Modal
             title={'Ai正文助手'}

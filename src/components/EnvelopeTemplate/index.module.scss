@@ -1,0 +1,13 @@
+.envelopeTemplate {
+  width: 100%;
+  min-height: 500px;
+  display: flex;
+  .titleSpan {
+    font-size: 20px;
+    font-weight: 700;
+    height: 36px;
+    line-height: 36px;
+    color: #469c71;
+    overflow: hidden;
+  }
+}

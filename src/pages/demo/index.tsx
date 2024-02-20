@@ -1,9 +1,5 @@
-import Chat from '@/ai/components/Chat';
+import EnvelopeTemplate from '@/components/EnvelopeTemplate';
 
 export default function Index() {
-  return (
-    <main>
-      <Chat />
-    </main>
-  );
+  return <main>{/* <EnvelopeTemplate /> */}</main>;
 }
